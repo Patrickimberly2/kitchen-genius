@@ -216,13 +216,14 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
 
     /* =========================================================
      * RIGHT WING — 3 cabinets side by side, facing LEFT (toward center)
+     * Moved back 3 feet (~0.9m) from original position
      * Rotation: -Math.PI / 2 makes door face -X direction
      * ========================================================= */
     {
       id: generateId(),
       name: "Right Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: 2.2, y: LOWER_Y, z: -0.6 },
+      position: { x: 2.2, y: LOWER_Y, z: -1.5 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -230,7 +231,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: 2.2, y: LOWER_Y, z: 0 },
+      position: { x: 2.2, y: LOWER_Y, z: -0.9 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -238,7 +239,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: 2.2, y: LOWER_Y, z: 0.6 },
+      position: { x: 2.2, y: LOWER_Y, z: -0.3 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -246,32 +247,8 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Countertop",
       zone_type: "countertop",
-      position: { x: 2.2, y: COUNTERTOP_Y, z: 0 },
+      position: { x: 2.2, y: COUNTERTOP_Y, z: -0.9 },
       dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 1.8 },
-    },
-    {
-      id: generateId(),
-      name: "Right Wing Upper 1",
-      zone_type: "upper_cabinet",
-      position: { x: 2.2, y: UPPER_Y, z: -0.6 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
-    },
-    {
-      id: generateId(),
-      name: "Right Wing Upper 2",
-      zone_type: "upper_cabinet",
-      position: { x: 2.2, y: UPPER_Y, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
-    },
-    {
-      id: generateId(),
-      name: "Right Wing Upper 3",
-      zone_type: "upper_cabinet",
-      position: { x: 2.2, y: UPPER_Y, z: 0.6 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
   ],
 };
