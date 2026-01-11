@@ -617,7 +617,13 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
     
     // Drawers that slide out
     if (isDrawerType) {
-      const drawerFrontHeight = height / 3;
+      // Single drawer for short heights (<=0.3m), 3-drawer stack for taller units
+      const isSingleDrawer = height <= 0.3;
+      const drawerCount = isSingleDrawer ? 1 : 3;
+      const drawerFrontHeight = isSingleDrawer ? height - 0.02 : height / 3;
+      
+      // Calculate y offsets based on drawer count
+      const yOffsets = isSingleDrawer ? [0] : [0.28, 0, -0.28];
       
       return (
         <group>
@@ -633,15 +639,15 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             {getMaterial()}
           </mesh>
           
-          {/* Drawer fronts (3 drawer stack) */}
-          {[0.28, 0, -0.28].map((yOffset, idx) => (
+          {/* Drawer fronts */}
+          {yOffsets.map((yOffset, idx) => (
             <mesh
               key={idx}
-              ref={idx === 1 ? drawerRef : undefined}
+              ref={idx === 0 ? drawerRef : undefined}
               position={[
                 0,
                 yOffset,
-                depth / 2 + 0.01 + (idx === 1 ? openProgress * depth * 0.6 : 0)
+                depth / 2 + 0.01 + (idx === 0 ? openProgress * depth * 0.6 : 0)
               ]}
               castShadow
             >
@@ -651,13 +657,13 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           ))}
           
           {/* Drawer handles */}
-          {[0.28, 0, -0.28].map((yOffset, idx) => (
+          {yOffsets.map((yOffset, idx) => (
             <mesh
               key={`handle-${idx}`}
               position={[
                 0,
                 yOffset,
-                depth / 2 + 0.035 + (idx === 1 ? openProgress * depth * 0.6 : 0)
+                depth / 2 + 0.035 + (idx === 0 ? openProgress * depth * 0.6 : 0)
               ]}
               castShadow
             >
