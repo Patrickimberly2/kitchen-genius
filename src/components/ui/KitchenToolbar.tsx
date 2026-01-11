@@ -27,7 +27,7 @@ export function PresetSelector() {
     }
   };
 
-  const presets: KitchenPreset[] = ["l-shaped", "galley", "u-shaped", "island"];
+  const presets: KitchenPreset[] = ["custom-u-shaped", "l-shaped", "galley", "u-shaped", "island"];
 
   return (
     <div className="relative">

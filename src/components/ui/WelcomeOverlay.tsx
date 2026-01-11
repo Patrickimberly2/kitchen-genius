@@ -9,9 +9,10 @@ export function WelcomeOverlay() {
 
   if (zones.length > 0) return null;
 
-  const presets: KitchenPreset[] = ["l-shaped", "galley", "u-shaped", "island"];
+  const presets: KitchenPreset[] = ["custom-u-shaped", "l-shaped", "galley", "u-shaped", "island"];
 
-  const presetIcons = {
+  const presetIcons: Record<KitchenPreset, string> = {
+    "custom-u-shaped": "⊏⊐",
     "l-shaped": "⌐",
     "galley": "═",
     "u-shaped": "⊔",

@@ -48,7 +48,7 @@ export interface InventoryItem {
   barcode?: string;
 }
 
-export type KitchenPreset = "l-shaped" | "galley" | "u-shaped" | "island";
+export type KitchenPreset = "l-shaped" | "galley" | "u-shaped" | "island" | "custom-u-shaped";
 
 export interface AISuggestion {
   id: string;
