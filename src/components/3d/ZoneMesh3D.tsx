@@ -41,6 +41,8 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const isSinkType = zone.zone_type === "sink";
   const isStoveType = zone.zone_type === "stove";
   const isDishwasherType = zone.zone_type === "dishwasher";
+  const isWindowType = zone.zone_type === "window";
+  const isMicrowaveType = zone.zone_type === "microwave";
   
   useFrame((_, delta) => {
     if (meshRef.current) {
@@ -395,6 +397,110 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <mesh position={[0, -height / 6, depth / 2 + 0.012]}>
             <boxGeometry args={[width - 0.04, 0.003, 0.001]} />
             <meshBasicMaterial color="#999999" />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Window
+    if (isWindowType) {
+      return (
+        <group>
+          {/* Window frame */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#f5f5f5" roughness={0.4} metalness={0.1} />
+          </mesh>
+          
+          {/* Glass pane */}
+          <mesh position={[0, 0, depth / 2 - 0.02]}>
+            <boxGeometry args={[width - 0.08, height - 0.08, 0.02]} />
+            <meshStandardMaterial 
+              color="#87ceeb" 
+              transparent 
+              opacity={0.4} 
+              roughness={0.1} 
+              metalness={0.2} 
+            />
+          </mesh>
+          
+          {/* Window cross bars */}
+          <mesh position={[0, 0, depth / 2 + 0.01]}>
+            <boxGeometry args={[0.03, height - 0.04, 0.02]} />
+            <meshStandardMaterial color="#f5f5f5" roughness={0.4} metalness={0.1} />
+          </mesh>
+          <mesh position={[0, 0, depth / 2 + 0.01]}>
+            <boxGeometry args={[width - 0.04, 0.03, 0.02]} />
+            <meshStandardMaterial color="#f5f5f5" roughness={0.4} metalness={0.1} />
+          </mesh>
+          
+          {/* Light glow behind window */}
+          <mesh position={[0, 0, -depth / 2 - 0.01]}>
+            <boxGeometry args={[width - 0.1, height - 0.1, 0.01]} />
+            <meshBasicMaterial color="#ffffd0" transparent opacity={0.6} />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Mounted Microwave
+    if (isMicrowaveType) {
+      return (
+        <group>
+          {/* Microwave body */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#2a2a2a" roughness={0.3} metalness={0.4} />
+          </mesh>
+          
+          {/* Door with window */}
+          <mesh position={[-width / 6, 0, depth / 2 + 0.005]}>
+            <boxGeometry args={[width * 0.6, height - 0.04, 0.01]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.2} metalness={0.3} />
+          </mesh>
+          
+          {/* Door window */}
+          <mesh position={[-width / 6, 0, depth / 2 + 0.015]}>
+            <boxGeometry args={[width * 0.5, height - 0.1, 0.005]} />
+            <meshStandardMaterial 
+              color="#333333" 
+              transparent 
+              opacity={0.7} 
+              roughness={0.1} 
+              metalness={0.5} 
+            />
+          </mesh>
+          
+          {/* Control panel */}
+          <mesh position={[width / 3, 0, depth / 2 + 0.01]}>
+            <boxGeometry args={[width * 0.25, height - 0.04, 0.01]} />
+            <meshStandardMaterial color="#3a3a3a" roughness={0.4} metalness={0.2} />
+          </mesh>
+          
+          {/* Control buttons */}
+          {[0.08, 0.02, -0.04, -0.1].map((yOffset, i) => (
+            <mesh key={i} position={[width / 3, yOffset, depth / 2 + 0.02]}>
+              <boxGeometry args={[0.04, 0.03, 0.005]} />
+              <meshStandardMaterial color="#555555" roughness={0.3} metalness={0.3} />
+            </mesh>
+          ))}
+          
+          {/* Handle */}
+          <mesh position={[width / 8, 0, depth / 2 + 0.025]}>
+            <boxGeometry args={[0.02, height * 0.5, 0.02]} />
+            <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.8} />
           </mesh>
         </group>
       );

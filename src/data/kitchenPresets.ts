@@ -217,6 +217,26 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 1.8 },
     },
     /* =========================================================
+     * WINDOWS — Above sink and above Sink Wall Cabinet 1 & 2
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Sink Window",
+      zone_type: "window",
+      position: { x: -0.7, y: UPPER_Y, z: -1.45 },
+      dimensions: { width: 1.2, height: 0.8, depth: 0.1 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Cabinet Window",
+      zone_type: "window",
+      position: { x: 1.78, y: UPPER_Y, z: -1.45 },
+      dimensions: { width: 1.2, height: 0.8, depth: 0.1 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+
+    /* =========================================================
      * UPPER CABINETS ABOVE DRAWER STACK 1
      * Side by side skinny cabinets aligned with Drawer Stack 1 at x: -1.6, z: -1.2
      * Each cabinet is 0.3m wide (half of standard)
@@ -235,6 +255,58 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       zone_type: "upper_cabinet",
       position: { x: -1.45, y: UPPER_Y, z: -1.2 },
       dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+
+    /* =========================================================
+     * SKINNY UPPER CABINETS ABOVE DISHWASHER
+     * Aligned with Dishwasher at x: 0.2, z: -1.2
+     * Each cabinet is 0.3m wide
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Dishwasher Upper 1",
+      zone_type: "upper_cabinet",
+      position: { x: 0.05, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Dishwasher Upper 2",
+      zone_type: "upper_cabinet",
+      position: { x: 0.35, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+
+    /* =========================================================
+     * MICROWAVE ABOVE OVEN + HALF-SIZE SKINNY CABINETS ABOVE
+     * Oven at x: 0.8, z: -1.2
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Mounted Microwave",
+      zone_type: "microwave",
+      position: { x: 0.8, y: 1.3, z: -1.2 },
+      dimensions: { width: 0.76, height: 0.35, depth: 0.4 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    /* Half-size skinny cabinets above microwave, next to dishwasher uppers */
+    {
+      id: generateId(),
+      name: "Oven Upper 1",
+      zone_type: "upper_cabinet",
+      position: { x: 0.65, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT / 2, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Oven Upper 2",
+      zone_type: "upper_cabinet",
+      position: { x: 0.95, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT / 2, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
 

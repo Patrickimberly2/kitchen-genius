@@ -19,6 +19,8 @@ export function getZoneColor(zoneType: ZoneType): string {
     sink: "#c0c0c0",
     stove: "#f5f5f5",
     dishwasher: "#d0d0d0",
+    window: "#87ceeb",
+    microwave: "#2a2a2a",
   };
   return colors[zoneType] || "#b89b6a";
 }
@@ -42,6 +44,8 @@ export function getZoneLabel(zoneType: ZoneType): string {
     sink: "Sink",
     stove: "Stove",
     dishwasher: "Dishwasher",
+    window: "Window",
+    microwave: "Microwave",
   };
   return labels[zoneType] || "Zone";
 }
@@ -65,6 +69,8 @@ export function getZoneIcon(zoneType: ZoneType): string {
     sink: "🚰",
     stove: "🔥",
     dishwasher: "🍽️",
+    window: "🪟",
+    microwave: "📻",
   };
   return icons[zoneType] || "📦";
 }

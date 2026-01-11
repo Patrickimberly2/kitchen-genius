@@ -15,7 +15,9 @@ export type ZoneType =
   | "floor"
   | "sink"
   | "stove"
-  | "dishwasher";
+  | "dishwasher"
+  | "window"
+  | "microwave";
 
 export type ItemCategory =
   | "food"
