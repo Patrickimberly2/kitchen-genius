@@ -154,41 +154,9 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     { id: generateId(), name: "Lower Cabinet R4", zone_type: "lower_cabinet", position: { x: 3.45, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH } },
     
     // ═══════════════════════════════════════════════════════════════════════
-    // WALL 2: LEFT 90° WING (Dining Area #1 Separator) - Left wall at x = -3.6
-    // Perpendicular to sink wall, wraps corner cleanly
+    // OPEN LAYOUT - No left/right wing walls
+    // Only 2 parallel walls: Sink Wall (z=-3) and Appliance Wall (z=3)
     // ═══════════════════════════════════════════════════════════════════════
-    
-    // Left Wing Upper Cabinets - rotated to face INTO kitchen (doors visible from center)
-    { id: generateId(), name: "Left Wing Upper 2", zone_type: "upper_cabinet", position: { x: -3.6, y: UPPER_Y, z: -1.35 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "Facing kitchen" },
-    { id: generateId(), name: "Left Wing Upper 1", zone_type: "upper_cabinet", position: { x: -3.6, y: UPPER_Y, z: -2.0 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "Facing kitchen" },
-    { id: generateId(), name: "Left Wing Corner Upper", zone_type: "upper_cabinet", position: { x: -3.6, y: UPPER_Y, z: -2.65 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "Facing kitchen" },
-    
-    // Left wing countertop (perpendicular, wraps corner)
-    { id: generateId(), name: "Left Wing Countertop", zone_type: "countertop", position: { x: -3.6, y: COUNTERTOP_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 } },
-    
-    // Left Wing Lower Cabinets - rotated to face INTO kitchen (doors visible from center)
-    { id: generateId(), name: "Left Wing Corner Base", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
-    { id: generateId(), name: "Left Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
-    { id: generateId(), name: "Left Wing Cabinet 2", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
-    
-    // ═══════════════════════════════════════════════════════════════════════
-    // WALL 3: RIGHT 90° WING (Dining Area #2 Separator) - Right wall at x = 4.6
-    // Asymmetric from left - matches real-world layout
-    // ═══════════════════════════════════════════════════════════════════════
-    
-    // Right Wing Upper Cabinets - rotated to face INTO kitchen (doors visible from center)
-    { id: generateId(), name: "Right Wing Corner Upper", zone_type: "upper_cabinet", position: { x: 4.6, y: UPPER_Y, z: -2.65 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Facing kitchen" },
-    { id: generateId(), name: "Right Wing Upper 1", zone_type: "upper_cabinet", position: { x: 4.6, y: UPPER_Y, z: -2.0 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Facing kitchen" },
-    { id: generateId(), name: "Right Wing Upper 2", zone_type: "upper_cabinet", position: { x: 4.6, y: UPPER_Y, z: -1.35 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Facing kitchen" },
-    
-    // Right wing countertop
-    { id: generateId(), name: "Right Wing Countertop", zone_type: "countertop", position: { x: 4.6, y: COUNTERTOP_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 } },
-    
-    // Right Wing Lower Cabinets - rotated to face INTO kitchen (doors visible from center)
-    { id: generateId(), name: "Right Wing Corner Base", zone_type: "lower_cabinet", position: { x: 4.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
-    { id: generateId(), name: "Right Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: 4.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
-    { id: generateId(), name: "Right Wing Cabinet 2", zone_type: "lower_cabinet", position: { x: 4.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
-    
     // ═══════════════════════════════════════════════════════════════════════
     // WALL 4: PARALLEL APPLIANCE WALL (Opposite Sink Wall) - Front wall at z = 3
     // ═══════════════════════════════════════════════════════════════════════
@@ -242,5 +210,5 @@ export const presetLabels: Record<KitchenPreset, { name: string; description: st
   "galley": { name: "Galley", description: "Two parallel counters, efficient for cooking" },
   "u-shaped": { name: "U-Shaped", description: "Three-sided layout with maximum counter space" },
   "island": { name: "Island Kitchen", description: "Open layout with a central island workspace" },
-  "custom-u-shaped": { name: "My Kitchen", description: "U-shaped with 90° wings, appliance wall, center island" },
+  "custom-u-shaped": { name: "My Kitchen", description: "Open layout with 2 parallel walls and center island" },
 };
