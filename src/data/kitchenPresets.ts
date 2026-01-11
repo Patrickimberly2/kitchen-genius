@@ -609,6 +609,21 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI, z: 0 },
     },
+
+    /* =========================================================
+     * FRENCH DOOR FRIDGE — Parallel to Oven, opposite side of island
+     * Oven is at x: 0.8, z: -1.2, island at z: 0.6
+     * Distance from oven to island = 1.8m, so fridge at z: 2.4
+     * Facing the island (rotation y: 0 since it opens toward negative z)
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "French Door Fridge",
+      zone_type: "refrigerator",
+      position: { x: 0.8, y: LOWER_Y + 0.15, z: 2.4 },
+      dimensions: { width: 0.9, height: 1.8, depth: 0.8 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
   ],
 };
 
