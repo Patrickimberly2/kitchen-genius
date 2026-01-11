@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ChefHat, Grid3X3, Sparkles, Package } from "lucide-react";
 import { useKitchen } from "@/context/KitchenContext";
-import { KitchenPreset } from "@/types/kitchen";
+import { KitchenPresetKey } from "@/types/kitchen";
 import { presetLabels } from "@/data/kitchenPresets";
 
 export function WelcomeOverlay() {
@@ -9,14 +9,15 @@ export function WelcomeOverlay() {
 
   if (zones.length > 0) return null;
 
-  const presets: KitchenPreset[] = ["custom-u-shaped", "l-shaped", "galley", "u-shaped", "island"];
+  const presets: KitchenPresetKey[] = ["custom-u-shaped", "l-shaped", "galley", "u-shaped", "island"];
 
-  const presetIcons: Record<KitchenPreset, string> = {
+  const presetIcons: Record<KitchenPresetKey, string> = {
     "custom-u-shaped": "⊏⊐",
     "l-shaped": "⌐",
     "galley": "═",
     "u-shaped": "⊔",
     "island": "◫",
+    "empty-room": "□",
   };
 
   return (

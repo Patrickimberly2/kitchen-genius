@@ -9,7 +9,10 @@ export type ZoneType =
   | "peninsula"
   | "appliance"
   | "shelf"
-  | "countertop";
+  | "countertop"
+  | "cabinet_upper"
+  | "cabinet_lower"
+  | "floor";
 
 export type ItemCategory =
   | "food"
@@ -29,9 +32,10 @@ export interface KitchenZone {
   zone_type: ZoneType;
   position: { x: number; y: number; z: number };
   dimensions: { width: number; height: number; depth: number };
-  rotation?: { x: number; y: number; z: number }; // Rotation in radians
+  rotation?: { x: number; y: number; z: number };
   color?: string;
   notes?: string;
+  inventory?: any[];
 }
 
 export interface InventoryItem {
@@ -49,7 +53,21 @@ export interface InventoryItem {
   barcode?: string;
 }
 
-export type KitchenPreset = "l-shaped" | "galley" | "u-shaped" | "island" | "custom-u-shaped";
+export type KitchenPresetKey = "l-shaped" | "galley" | "u-shaped" | "island" | "custom-u-shaped" | "empty-room";
+
+// Alias for backward compatibility
+export type KitchenPreset = KitchenPresetKey;
+
+export interface KitchenPresetData {
+  id: string;
+  name: string;
+  zones: KitchenZone[];
+}
+
+export interface PresetLabel {
+  name: string;
+  description: string;
+}
 
 export interface AISuggestion {
   id: string;
