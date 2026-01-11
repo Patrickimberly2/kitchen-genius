@@ -94,6 +94,14 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
+    {
+      id: generateId(),
+      name: "Left Wing Drawer 1",
+      zone_type: "drawer",
+      position: { x: -1.9, y: LOWER_Y, z: -0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
     /* 3-Drawer Stack — Front-left corner connects to front-right corner of Left Wing Base 1
      * Left Wing Base 1 (rotated 90°): front-right corner at x=-1.9, z=-0.9
      * Drawer stack positioned forward so both fronts are fully visible */
@@ -175,12 +183,28 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
+    {
+      id: generateId(),
+      name: "Sink Wall Drawer 1",
+      zone_type: "drawer",
+      position: { x: 1.48, y: LOWER_Y, z: -0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
     /* Sink Wall Cabinet 2 */
     {
       id: generateId(),
       name: "Sink Wall Cabinet 2",
       zone_type: "lower_cabinet",
       position: { x: 2.08, y: LOWER_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Sink Wall Drawer 2",
+      zone_type: "drawer",
+      position: { x: 2.08, y: LOWER_Y, z: -0.6 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
@@ -195,6 +219,14 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     },
     {
       id: generateId(),
+      name: "Sink Wall Drawer 3",
+      zone_type: "drawer",
+      position: { x: 2.68, y: LOWER_Y, z: -0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
       name: "Left Wing Base 2",
       zone_type: "lower_cabinet",
       position: { x: -2.2, y: LOWER_Y, z: 0 },
@@ -203,9 +235,25 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     },
     {
       id: generateId(),
+      name: "Left Wing Drawer 2",
+      zone_type: "drawer",
+      position: { x: -1.9, y: LOWER_Y, z: 0 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
       name: "Left Wing Base 3",
       zone_type: "lower_cabinet",
       position: { x: -2.2, y: LOWER_Y, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Left Wing Drawer 3",
+      zone_type: "drawer",
+      position: { x: -1.9, y: LOWER_Y, z: 0.6 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
@@ -233,6 +281,23 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       zone_type: "window",
       position: { x: 1.78, y: UPPER_Y, z: -1.45 },
       dimensions: { width: 1.2, height: 0.8, depth: 0.1 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    /* Upper cabinets above Sink Wall Cabinet 3 — next to Cabinet Window */
+    {
+      id: generateId(),
+      name: "Sink Wall Upper 1",
+      zone_type: "upper_cabinet",
+      position: { x: 2.53, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Sink Wall Upper 2",
+      zone_type: "upper_cabinet",
+      position: { x: 2.83, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
 
@@ -363,10 +428,25 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     },
     {
       id: generateId(),
+      name: "Right Wing Drawer 1",
+      zone_type: "drawer",
+      position: { x: 2.98, y: 0.425, z: -0.65 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
       name: "Right Wing Base 2",
       zone_type: "lower_cabinet",
-      // Connected to Base 1: z + CABINET_WIDTH (0.6)
       position: { x: 3.28, y: 0.425, z: -0.05 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Right Wing Drawer 2",
+      zone_type: "drawer",
+      position: { x: 2.98, y: 0.425, z: -0.05 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -374,8 +454,15 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 3",
       zone_type: "lower_cabinet",
-      // Connected to Base 2: z + CABINET_WIDTH (0.6)
       position: { x: 3.28, y: 0.425, z: 0.55 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Right Wing Drawer 3",
+      zone_type: "drawer",
+      position: { x: 2.98, y: 0.425, z: 0.55 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
