@@ -15,10 +15,10 @@ export function KitchenEnvironment() {
       <mesh
         ref={floorRef}
         rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, 0, 0]}
+        position={[1, 0, 0]}
         receiveShadow
       >
-        <planeGeometry args={[12, 12]} />
+        <planeGeometry args={[16, 14]} />
         <meshStandardMaterial
           color="#8b6914"
           roughness={0.8}
@@ -29,10 +29,10 @@ export function KitchenEnvironment() {
       {/* Floor pattern overlay for wood effect */}
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, 0.001, 0]}
+        position={[1, 0.001, 0]}
         receiveShadow
       >
-        <planeGeometry args={[12, 12]} />
+        <planeGeometry args={[16, 14]} />
         <meshStandardMaterial
           color="#7a5c10"
           roughness={0.9}
@@ -42,9 +42,15 @@ export function KitchenEnvironment() {
         />
       </mesh>
       
-      {/* Back wall */}
-      <mesh position={[0, 2, -3.5]} receiveShadow>
-        <planeGeometry args={[12, 5]} />
+      {/* Back wall (sink wall) */}
+      <mesh position={[1, 2, -3.5]} receiveShadow>
+        <planeGeometry args={[16, 5]} />
+        <meshStandardMaterial color="#f5f0e8" roughness={0.9} metalness={0} />
+      </mesh>
+      
+      {/* Front wall (fridge/freezer wall) */}
+      <mesh position={[1, 2, 3.5]} rotation={[0, Math.PI, 0]} receiveShadow>
+        <planeGeometry args={[16, 5]} />
         <meshStandardMaterial color="#f5f0e8" roughness={0.9} metalness={0} />
       </mesh>
       
@@ -55,19 +61,23 @@ export function KitchenEnvironment() {
       </mesh>
       
       {/* Right wall */}
-      <mesh position={[5, 2, 0]} rotation={[0, -Math.PI / 2, 0]} receiveShadow>
+      <mesh position={[7, 2, 0]} rotation={[0, -Math.PI / 2, 0]} receiveShadow>
         <planeGeometry args={[8, 5]} />
         <meshStandardMaterial color="#f5f0e8" roughness={0.9} metalness={0} />
       </mesh>
       
       {/* Ceiling - subtle */}
-      <mesh position={[0, 4, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[12, 12]} />
+      <mesh position={[1, 4, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[16, 14]} />
         <meshStandardMaterial color="#ffffff" roughness={1} metalness={0} />
       </mesh>
       
-      {/* Ambient lighting simulation - subtle glow planes */}
-      <mesh position={[0, 3.9, 0]} rotation={[Math.PI / 2, 0, 0]}>
+      {/* Ambient lighting simulation - ceiling lights */}
+      <mesh position={[-1, 3.9, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.5, 32]} />
+        <meshBasicMaterial color="#fff8e8" transparent opacity={0.8} />
+      </mesh>
+      <mesh position={[3, 3.9, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.5, 32]} />
         <meshBasicMaterial color="#fff8e8" transparent opacity={0.8} />
       </mesh>
@@ -78,12 +88,23 @@ export function KitchenEnvironment() {
         <meshBasicMaterial color="#fffef5" transparent opacity={0.15} />
       </mesh>
       
-      {/* Baseboard */}
-      <mesh position={[0, 0.05, -3.45]}>
-        <boxGeometry args={[12, 0.1, 0.1]} />
+      {/* Baseboard - back wall */}
+      <mesh position={[1, 0.05, -3.45]}>
+        <boxGeometry args={[16, 0.1, 0.1]} />
         <meshStandardMaterial color="#d4c4a8" roughness={0.6} />
       </mesh>
+      {/* Baseboard - front wall */}
+      <mesh position={[1, 0.05, 3.45]}>
+        <boxGeometry args={[16, 0.1, 0.1]} />
+        <meshStandardMaterial color="#d4c4a8" roughness={0.6} />
+      </mesh>
+      {/* Baseboard - left wall */}
       <mesh position={[-4.95, 0.05, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <boxGeometry args={[8, 0.1, 0.1]} />
+        <meshStandardMaterial color="#d4c4a8" roughness={0.6} />
+      </mesh>
+      {/* Baseboard - right wall */}
+      <mesh position={[6.95, 0.05, 0]} rotation={[0, Math.PI / 2, 0]}>
         <boxGeometry args={[8, 0.1, 0.1]} />
         <meshStandardMaterial color="#d4c4a8" roughness={0.6} />
       </mesh>
