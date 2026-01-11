@@ -16,6 +16,16 @@ const LOWER_Y = LOWER_HEIGHT / 2;
 const COUNTERTOP_Y = LOWER_HEIGHT + COUNTERTOP_HEIGHT / 2;
 const UPPER_Y = 1.5 + UPPER_HEIGHT / 2;
 
+// Lower cabinet dimensions when drawer is above
+const DRAWER_HEIGHT = 0.2;
+const LOWER_DOOR_HEIGHT = LOWER_HEIGHT - DRAWER_HEIGHT; // 0.65
+const LOWER_DOOR_Y = LOWER_DOOR_HEIGHT / 2; // 0.325
+
+// Upper cabinet shelf sections
+const UPPER_SHELF_HEIGHT = UPPER_HEIGHT / 2; // 0.36
+const UPPER_Y_LOWER = 1.5 + UPPER_SHELF_HEIGHT / 2; // 1.68 - center of lower shelf
+const UPPER_Y_UPPER = 1.5 + UPPER_HEIGHT - UPPER_SHELF_HEIGHT / 2; // 2.04 - center of upper shelf
+
 // ─────────────────────────────────────────────────────────────
 // PRESETS
 // ─────────────────────────────────────────────────────────────
@@ -90,16 +100,16 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Left Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: -2.2, y: LOWER_Y, z: -0.6 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: -2.2, y: LOWER_DOOR_Y, z: -0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Drawer 1",
       zone_type: "drawer",
-      position: { x: -2.2, y: LOWER_HEIGHT - 0.1, z: -0.6 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: -2.2, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: -0.6 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     /* 3-Drawer Stack — Front-left corner connects to front-right corner of Left Wing Base 1
@@ -174,87 +184,87 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: 0.76, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Sink Wall Cabinet 1 — connects to right side of oven */
+    /* Sink Wall Cabinet 1 — connects to right side of oven (door only, drawer above) */
     {
       id: generateId(),
       name: "Sink Wall Cabinet 1",
       zone_type: "lower_cabinet",
-      position: { x: 1.48, y: LOWER_Y, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 1.48, y: LOWER_DOOR_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
       name: "Sink Wall Drawer 1",
       zone_type: "drawer",
-      position: { x: 1.48, y: LOWER_HEIGHT - 0.1, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: 1.48, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Sink Wall Cabinet 2 */
+    /* Sink Wall Cabinet 2 (door only, drawer above) */
     {
       id: generateId(),
       name: "Sink Wall Cabinet 2",
       zone_type: "lower_cabinet",
-      position: { x: 2.08, y: LOWER_Y, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 2.08, y: LOWER_DOOR_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
       name: "Sink Wall Drawer 2",
       zone_type: "drawer",
-      position: { x: 2.08, y: LOWER_HEIGHT - 0.1, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: 2.08, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Sink Wall Cabinet 3 — front-right corner at (2.98, -1.5) connects to Right Wing Base 1 */
+    /* Sink Wall Cabinet 3 — front-right corner at (2.98, -1.5) connects to Right Wing Base 1 (door only, drawer above) */
     {
       id: generateId(),
       name: "Sink Wall Cabinet 3",
       zone_type: "lower_cabinet",
-      position: { x: 2.68, y: LOWER_Y, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 2.68, y: LOWER_DOOR_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
       name: "Sink Wall Drawer 3",
       zone_type: "drawer",
-      position: { x: 2.68, y: LOWER_HEIGHT - 0.1, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: 2.68, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: -2.2, y: LOWER_Y, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: -2.2, y: LOWER_DOOR_Y, z: 0 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Drawer 2",
       zone_type: "drawer",
-      position: { x: -2.2, y: LOWER_HEIGHT - 0.1, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: -2.2, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: 0 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: -2.2, y: LOWER_Y, z: 0.6 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: -2.2, y: LOWER_DOOR_Y, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Drawer 3",
       zone_type: "drawer",
-      position: { x: -2.2, y: LOWER_HEIGHT - 0.1, z: 0.6 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: -2.2, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
@@ -283,65 +293,113 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: 1.2, height: 0.8, depth: 0.1 },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Upper cabinets above Sink Wall Cabinet 3 — next to Cabinet Window */
+    /* Upper cabinets above Sink Wall Cabinet 3 — next to Cabinet Window (wide cabinets with shelves) */
     {
       id: generateId(),
-      name: "Sink Wall Upper 1",
+      name: "Sink Wall Upper 1 - Lower Shelf",
       zone_type: "upper_cabinet",
-      position: { x: 2.53, y: UPPER_Y, z: -1.2 },
-      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: 2.53, y: UPPER_Y_LOWER, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
-      name: "Sink Wall Upper 2",
+      name: "Sink Wall Upper 1 - Upper Shelf",
       zone_type: "upper_cabinet",
-      position: { x: 2.83, y: UPPER_Y, z: -1.2 },
-      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: 2.53, y: UPPER_Y_UPPER, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Sink Wall Upper 2 - Lower Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: 3.13, y: UPPER_Y_LOWER, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Sink Wall Upper 2 - Upper Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: 3.13, y: UPPER_Y_UPPER, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
 
     /* =========================================================
      * UPPER CABINETS ABOVE DRAWER STACK 1
      * Side by side skinny cabinets aligned with Drawer Stack 1 at x: -1.6, z: -1.2
-     * Each cabinet is 0.3m wide (half of standard)
+     * Each cabinet is 0.3m wide (half of standard), split into upper/lower shelves
      * ========================================================= */
     {
       id: generateId(),
-      name: "Drawer Stack Upper 1",
+      name: "Drawer Stack Upper 1 - Lower Shelf",
       zone_type: "upper_cabinet",
-      position: { x: -1.75, y: UPPER_Y, z: -1.2 },
-      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -1.75, y: UPPER_Y_LOWER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
-      name: "Drawer Stack Upper 2",
+      name: "Drawer Stack Upper 1 - Upper Shelf",
       zone_type: "upper_cabinet",
-      position: { x: -1.45, y: UPPER_Y, z: -1.2 },
-      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -1.75, y: UPPER_Y_UPPER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Drawer Stack Upper 2 - Lower Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: -1.45, y: UPPER_Y_LOWER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Drawer Stack Upper 2 - Upper Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: -1.45, y: UPPER_Y_UPPER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
 
     /* =========================================================
      * SKINNY UPPER CABINETS ABOVE DISHWASHER
      * Aligned with Dishwasher at x: 0.2, z: -1.2
-     * Each cabinet is 0.3m wide
+     * Each cabinet is 0.3m wide, split into upper/lower shelves
      * ========================================================= */
     {
       id: generateId(),
-      name: "Dishwasher Upper 1",
+      name: "Dishwasher Upper 1 - Lower Shelf",
       zone_type: "upper_cabinet",
-      position: { x: 0.05, y: UPPER_Y, z: -1.2 },
-      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: 0.05, y: UPPER_Y_LOWER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
-      name: "Dishwasher Upper 2",
+      name: "Dishwasher Upper 1 - Upper Shelf",
       zone_type: "upper_cabinet",
-      position: { x: 0.35, y: UPPER_Y, z: -1.2 },
-      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: 0.05, y: UPPER_Y_UPPER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Dishwasher Upper 2 - Lower Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: 0.35, y: UPPER_Y_LOWER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Dishwasher Upper 2 - Upper Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: 0.35, y: UPPER_Y_UPPER, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
 
@@ -377,38 +435,70 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
 
     /* =========================================================
      * LEFT WING UPPER CABINETS — 4 cabinets aligned with Left Wing Base 1-3
-     * Connected side by side, facing RIGHT (toward center)
+     * Connected side by side, facing RIGHT (toward center), split into upper/lower shelves
      * ========================================================= */
     {
       id: generateId(),
-      name: "Left Wing Upper 1",
+      name: "Left Wing Upper 1 - Lower Shelf",
       zone_type: "upper_cabinet",
-      position: { x: -2.2, y: UPPER_Y, z: -0.6 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -2.2, y: UPPER_Y_LOWER, z: -0.6 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
-      name: "Left Wing Upper 2",
+      name: "Left Wing Upper 1 - Upper Shelf",
       zone_type: "upper_cabinet",
-      position: { x: -2.2, y: UPPER_Y, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -2.2, y: UPPER_Y_UPPER, z: -0.6 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
-      name: "Left Wing Upper 3",
+      name: "Left Wing Upper 2 - Lower Shelf",
       zone_type: "upper_cabinet",
-      position: { x: -2.2, y: UPPER_Y, z: 0.6 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -2.2, y: UPPER_Y_LOWER, z: 0 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
-      name: "Left Wing Upper 4",
+      name: "Left Wing Upper 2 - Upper Shelf",
       zone_type: "upper_cabinet",
-      position: { x: -2.2, y: UPPER_Y, z: 1.2 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -2.2, y: UPPER_Y_UPPER, z: 0 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Left Wing Upper 3 - Lower Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: -2.2, y: UPPER_Y_LOWER, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Left Wing Upper 3 - Upper Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: -2.2, y: UPPER_Y_UPPER, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Left Wing Upper 4 - Lower Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: -2.2, y: UPPER_Y_LOWER, z: 1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Left Wing Upper 4 - Upper Shelf",
+      zone_type: "upper_cabinet",
+      position: { x: -2.2, y: UPPER_Y_UPPER, z: 1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_SHELF_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
 
@@ -422,55 +512,55 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: 3.28, y: 0.425, z: -0.65 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 3.28, y: LOWER_DOOR_Y, z: -0.65 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Drawer 1",
       zone_type: "drawer",
-      position: { x: 3.28, y: LOWER_HEIGHT - 0.1, z: -0.65 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: 3.28, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: -0.65 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: 3.28, y: 0.425, z: -0.05 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 3.28, y: LOWER_DOOR_Y, z: -0.05 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Drawer 2",
       zone_type: "drawer",
-      position: { x: 3.28, y: LOWER_HEIGHT - 0.1, z: -0.05 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: 3.28, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: -0.05 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: 3.28, y: 0.425, z: 0.55 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 3.28, y: LOWER_DOOR_Y, z: 0.55 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Drawer 3",
       zone_type: "drawer",
-      position: { x: 3.28, y: LOWER_HEIGHT - 0.1, z: 0.55 },
-      dimensions: { width: CABINET_WIDTH, height: 0.2, depth: LOWER_DEPTH },
+      position: { x: 3.28, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: 0.55 },
+      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Countertop",
       zone_type: "countertop",
-      position: { x: 3.28, y: 0.87, z: 0 },
+      position: { x: 3.28, y: COUNTERTOP_Y, z: 0 },
       dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 1.8 },
     },
   ],
