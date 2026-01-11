@@ -56,8 +56,12 @@ function KitchenLighting() {
 }
 
 function SceneContent() {
-  const { zones, selectZone } = useKitchen();
+  const { zones, selectZone, currentPreset } = useKitchen();
   const controlsRef = useRef<any>(null);
+  
+  // Adjust camera target based on kitchen size
+  const isCustomKitchen = currentPreset === "custom-u-shaped";
+  const cameraTarget: [number, number, number] = isCustomKitchen ? [0.5, 1, 0] : [0, 1, 0];
 
   const handleBackgroundClick = () => {
     selectZone(null);
@@ -66,7 +70,7 @@ function SceneContent() {
   return (
     <>
       <KitchenLighting />
-      <KitchenEnvironment />
+      <KitchenEnvironment preset={currentPreset || undefined} />
       
       {/* Render all zones */}
       {zones.map((zone) => (
@@ -75,9 +79,9 @@ function SceneContent() {
       
       {/* Contact shadows for grounding */}
       <ContactShadows
-        position={[0, 0.01, 0]}
+        position={[0.5, 0.01, 0]}
         opacity={0.4}
-        scale={15}
+        scale={20}
         blur={2}
         far={4}
         color="#3d2914"
@@ -100,11 +104,11 @@ function SceneContent() {
         enablePan={true}
         enableZoom={true}
         enableRotate={true}
-        minDistance={2}
-        maxDistance={12}
+        minDistance={3}
+        maxDistance={18}
         minPolarAngle={0.2}
         maxPolarAngle={Math.PI / 2 - 0.1}
-        target={[0, 1, 0]}
+        target={cameraTarget}
         enableDamping
         dampingFactor={0.05}
       />
@@ -139,7 +143,7 @@ export function KitchenScene3D() {
         <Suspense fallback={<LoadingFallback />}>
           <PerspectiveCamera
             makeDefault
-            position={[4, 4, 6]}
+            position={[6, 6, 10]}
             fov={50}
             near={0.1}
             far={100}
