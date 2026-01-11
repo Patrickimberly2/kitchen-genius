@@ -228,7 +228,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Left Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: -3.6, y: LOWER_Y, z: -2.65 },
+      position: { x: -3.6, y: LOWER_Y, z: -2.7 },
       dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -244,7 +244,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Left Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: -3.6, y: LOWER_Y, z: -1.35 },
+      position: { x: -3.6, y: LOWER_Y, z: -1.3 },
       dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -254,7 +254,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       name: "Left Wing Countertop",
       zone_type: "countertop",
       position: { x: -3.6, y: COUNTERTOP_Y, z: -2.0 },
-      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 },
+      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.1 },
     },
 
     {
@@ -289,7 +289,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: 4.6, y: LOWER_Y, z: -2.65 },
+      position: { x: 4.6, y: LOWER_Y, z: -2.7 },
       dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
@@ -305,7 +305,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: 4.6, y: LOWER_Y, z: -1.35 },
+      position: { x: 4.6, y: LOWER_Y, z: -1.3 },
       dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
@@ -315,7 +315,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       name: "Right Wing Countertop",
       zone_type: "countertop",
       position: { x: 4.6, y: COUNTERTOP_Y, z: -2.0 },
-      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 },
+      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.1 },
     },
 
     {
