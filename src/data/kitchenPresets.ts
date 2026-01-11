@@ -94,6 +94,17 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
+    /* 3-Drawer Stack — Front-left corner connects to front-right corner of Left Wing Base 1
+     * Left Wing Base 1 center: x=-2.2, z=-0.6, rotated 90°, so front-right corner at x=-1.9, z=-0.9
+     * Drawer stack (no rotation): center offset so front-left corner meets that point */
+    {
+      id: generateId(),
+      name: "Drawer Stack 1",
+      zone_type: "drawer",
+      position: { x: -1.6, y: LOWER_Y, z: -0.9 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
     {
       id: generateId(),
       name: "Left Wing Base 2",
