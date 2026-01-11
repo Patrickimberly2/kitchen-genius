@@ -166,12 +166,12 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     // Left wing countertop (perpendicular, wraps corner)
     { id: generateId(), name: "Left Wing Countertop", zone_type: "countertop", position: { x: -3.6, y: COUNTERTOP_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 } },
     
-    // Left Wing Corner Base - facing kitchen (rotated 90°), no corner style
-    { id: generateId(), name: "Left Wing Corner Base", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen - no corner - front right connects to front left of 3-Drawer Stack" },
+    // Left Wing Corner Base - facing kitchen, parallel layout like right side
+    { id: generateId(), name: "Left Wing Corner Base", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
     
-    // Left wing - lower cabinets (all facing kitchen, rotated 90°)
-    { id: generateId(), name: "Left Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
-    { id: generateId(), name: "Left Wing Cabinet 2", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, rotation: { x: 0, y: Math.PI / 2, z: 0 }, notes: "Cabinet facing kitchen" },
+    // Left wing - lower cabinets (parallel like right side)
+    { id: generateId(), name: "Left Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
+    { id: generateId(), name: "Left Wing Cabinet 2", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
     
     // ═══════════════════════════════════════════════════════════════════════
     // WALL 3: RIGHT 90° WING (Dining Area #2 Separator) - Right wall at x = 4.6
