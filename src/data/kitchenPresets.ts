@@ -216,14 +216,14 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
 
     /* =========================================================
      * RIGHT WING — 3 cabinets side by side, facing LEFT (toward center)
-     * Moved back 3 feet (~0.9m) from original position
+     * Starting at x:3.5, z:1.0, connecting Base 3 → Base 2 → Base 1
      * Rotation: -Math.PI / 2 makes door face -X direction
      * ========================================================= */
     {
       id: generateId(),
       name: "Right Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: 2.2, y: LOWER_Y, z: -1.5 },
+      position: { x: 3.5, y: LOWER_Y, z: -0.2 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -231,7 +231,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: 2.2, y: LOWER_Y, z: -0.9 },
+      position: { x: 3.5, y: LOWER_Y, z: 0.4 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -239,7 +239,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: 2.2, y: LOWER_Y, z: -0.3 },
+      position: { x: 3.5, y: LOWER_Y, z: 1.0 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -247,7 +247,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Countertop",
       zone_type: "countertop",
-      position: { x: 2.2, y: COUNTERTOP_Y, z: -0.9 },
+      position: { x: 3.5, y: COUNTERTOP_Y, z: 0.4 },
       dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 1.8 },
     },
   ],
