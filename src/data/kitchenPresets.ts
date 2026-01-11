@@ -98,20 +98,19 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     
     // ⚠️ NO UPPERS ABOVE SINK WINDOWS - Gap from x:-1.35 to x:0.15
     
-    // 4️⃣ Above stove - 2 half-size upper cabinets (vent hood area)
-    { id: generateId(), name: "Half Upper Above Stove L", zone_type: "upper_cabinet", position: { x: 0.6, y: UPPER_Y + 0.15, z: -3 }, dimensions: { width: 0.45, height: 0.45, depth: UPPER_DEPTH }, notes: "Half size - left of hood" },
-    { id: generateId(), name: "Half Upper Above Stove R", zone_type: "upper_cabinet", position: { x: 1.1, y: UPPER_Y + 0.15, z: -3 }, dimensions: { width: 0.45, height: 0.45, depth: UPPER_DEPTH }, notes: "Half size - right of hood" },
+    // 4️⃣ Upper cabinets left of stove (C1 and C2 connected to half uppers)
+    { id: generateId(), name: "Upper Cabinet C1", zone_type: "upper_cabinet", position: { x: -0.05, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf - left of half uppers" },
+    { id: generateId(), name: "Upper Cabinet C2", zone_type: "upper_cabinet", position: { x: 0.6, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf - connected to C1" },
     
-    // 5️⃣ Right of stove - 2 upper cabinets with inner shelf
-    { id: generateId(), name: "Upper Cabinet C1", zone_type: "upper_cabinet", position: { x: 1.7, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf" },
-    { id: generateId(), name: "Upper Cabinet C2", zone_type: "upper_cabinet", position: { x: 2.35, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf" },
+    // 5️⃣ Above stove - 2 half-size upper cabinets (vent hood area) - connected
+    { id: generateId(), name: "Half Upper Above Stove L", zone_type: "upper_cabinet", position: { x: 1.25, y: UPPER_Y + 0.15, z: -3 }, dimensions: { width: 0.45, height: 0.45, depth: UPPER_DEPTH }, notes: "Half size - left of hood" },
+    { id: generateId(), name: "Half Upper Above Stove R", zone_type: "upper_cabinet", position: { x: 1.7, y: UPPER_Y + 0.15, z: -3 }, dimensions: { width: 0.45, height: 0.45, depth: UPPER_DEPTH }, notes: "Half size - right of hood - connected" },
     
     // 6️⃣ Far right uppers (before right corner)
-    { id: generateId(), name: "Upper Cabinet D1", zone_type: "upper_cabinet", position: { x: 3.0, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf" },
-    { id: generateId(), name: "Upper Cabinet D2", zone_type: "upper_cabinet", position: { x: 3.65, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf" },
-    
-    // 7️⃣ Right corner upper
-    { id: generateId(), name: "Right Corner Upper", zone_type: "upper_cabinet", position: { x: 4.3, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "Corner upper, with inner shelf" },
+    { id: generateId(), name: "Upper Cabinet D1", zone_type: "upper_cabinet", position: { x: 2.15, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf" },
+    // D2 and Right Corner Upper connected
+    { id: generateId(), name: "Upper Cabinet D2", zone_type: "upper_cabinet", position: { x: 2.8, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "With inner shelf - connected to corner" },
+    { id: generateId(), name: "Right Corner Upper", zone_type: "upper_cabinet", position: { x: 3.4, y: UPPER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH }, notes: "Corner upper - connected to D2" },
     
     // --- SINK WALL COUNTERTOP (continuous) ---
     { id: generateId(), name: "Sink Wall Countertop", zone_type: "countertop", position: { x: 0.5, y: COUNTERTOP_Y, z: -3 }, dimensions: { width: 8.2, height: COUNTERTOP_HEIGHT, depth: LOWER_DEPTH } },
@@ -125,18 +124,18 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     
     // --- LOWER CABINETS (Sink Wall) - Left → Right ---
     
-    // 1️⃣ Left Corner Base Cabinet (return wall transition)
-    { id: generateId(), name: "Left Corner Base", zone_type: "lower_cabinet", position: { x: -3.3, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Corner base cabinet - no drawers" },
+    // 1️⃣ Left Corner Base Cabinet (facing kitchen, not corner style)
+    { id: generateId(), name: "Left Corner Base", zone_type: "lower_cabinet", position: { x: -3.3, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Base cabinet facing kitchen - no corner" },
     
-    // 2️⃣ ⚠️ CRITICAL: 3-Drawer Stack Cabinet LEFT of Sink
-    { id: generateId(), name: "3-Drawer Stack (Left of Sink)", zone_type: "drawer", position: { x: -2.65, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "3 vertical drawers - CRITICAL cabinet" },
+    // 2️⃣ ⚠️ CRITICAL: 3-Drawer Stack Cabinet LEFT of Sink - connected to Sink Base L
+    { id: generateId(), name: "3-Drawer Stack (Left of Sink)", zone_type: "drawer", position: { x: -2.65, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "3 vertical drawers - CRITICAL - connected to sink base" },
     
     // Additional drawer cabinet next to 3-drawer
     { id: generateId(), name: "Drawer Cabinet Near Sink", zone_type: "drawer", position: { x: -2.0, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "With drawers" },
     
-    // 3️⃣ Sink Base Cabinet (two-door under sink)
-    { id: generateId(), name: "Sink Base Cabinet L", zone_type: "lower_cabinet", position: { x: -1.1, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Under sink left - two door" },
-    { id: generateId(), name: "Sink Base Cabinet R", zone_type: "lower_cabinet", position: { x: -0.45, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Under sink right - two door" },
+    // 3️⃣ Sink Base Cabinet (two-door under sink) - L and R connected
+    { id: generateId(), name: "Sink Base Cabinet L", zone_type: "lower_cabinet", position: { x: -1.35, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Under sink left - connected to 3-drawer" },
+    { id: generateId(), name: "Sink Base Cabinet R", zone_type: "lower_cabinet", position: { x: -0.7, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Under sink right - connected to L" },
     
     // Dishwasher (right side of sink)
     { id: generateId(), name: "Dishwasher", zone_type: "appliance", position: { x: 0.2, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Dishwasher" },
@@ -146,16 +145,13 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     
     // 5️⃣ Stove/Range sits at base level (already defined above)
     
-    // 6️⃣ Right-side base cabinets (before corner) - 3 lower cabinets with drawers
-    { id: generateId(), name: "Drawer Cabinet R1", zone_type: "drawer", position: { x: 1.5, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "With drawers" },
-    { id: generateId(), name: "Drawer Cabinet R2", zone_type: "drawer", position: { x: 2.15, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "With drawers" },
-    { id: generateId(), name: "Drawer Cabinet R3", zone_type: "drawer", position: { x: 2.8, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "With drawers" },
+    // 6️⃣ Right-side base cabinets (before corner) - 3 cabinets (not drawers) - all connected
+    { id: generateId(), name: "Base Cabinet R1", zone_type: "lower_cabinet", position: { x: 1.5, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Cabinet - connected to R2" },
+    { id: generateId(), name: "Base Cabinet R2", zone_type: "lower_cabinet", position: { x: 2.15, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Cabinet - connected to R1 and R3" },
+    { id: generateId(), name: "Base Cabinet R3", zone_type: "lower_cabinet", position: { x: 2.8, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Cabinet - connected to R2" },
     
-    // Additional base cabinets continuing right
+    // Additional base cabinet continuing right
     { id: generateId(), name: "Lower Cabinet R4", zone_type: "lower_cabinet", position: { x: 3.45, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH } },
-    
-    // 7️⃣ Right Corner Base Cabinet (return wall transition)
-    { id: generateId(), name: "Right Corner Base", zone_type: "lower_cabinet", position: { x: 4.1, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH }, notes: "Corner base cabinet" },
     
     // ═══════════════════════════════════════════════════════════════════════
     // WALL 2: LEFT 90° WING (Dining Area #1 Separator) - Left wall at x = -3.6
@@ -172,11 +168,11 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     // Left wing countertop (perpendicular, wraps corner)
     { id: generateId(), name: "Left Wing Countertop", zone_type: "countertop", position: { x: -3.6, y: COUNTERTOP_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 } },
     
-    // Left wing - corner base (L-corner or blind corner)
-    { id: generateId(), name: "Left Wing Corner Base", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Corner base - L-corner" },
+    // Left wing - corner base (facing kitchen, not corner style)
+    { id: generateId(), name: "Left Wing Corner Base", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
     
-    // Left wing - lower cabinets with drawers
-    { id: generateId(), name: "Left Wing Drawer 1", zone_type: "drawer", position: { x: -3.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "With drawers" },
+    // Left wing - lower cabinets (not drawers)
+    { id: generateId(), name: "Left Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: -3.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
     { id: generateId(), name: "Left Wing Drawer 2", zone_type: "drawer", position: { x: -3.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "With drawers" },
     
     // ═══════════════════════════════════════════════════════════════════════
@@ -194,12 +190,12 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     // Right wing countertop
     { id: generateId(), name: "Right Wing Countertop", zone_type: "countertop", position: { x: 4.6, y: COUNTERTOP_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 } },
     
-    // Right wing - corner base (wraps from sink wall)
-    { id: generateId(), name: "Right Wing Corner Base", zone_type: "lower_cabinet", position: { x: 4.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Corner base" },
+    // Right wing - corner base (facing kitchen, not corner style)
+    { id: generateId(), name: "Right Wing Corner Base", zone_type: "lower_cabinet", position: { x: 4.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
     
-    // Right wing - lower cabinets with drawers
-    { id: generateId(), name: "Right Wing Drawer 1", zone_type: "drawer", position: { x: 4.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "With drawers" },
-    { id: generateId(), name: "Right Wing Drawer 2", zone_type: "drawer", position: { x: 4.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "With drawers" },
+    // Right wing - lower cabinets (not drawers, facing kitchen)
+    { id: generateId(), name: "Right Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: 4.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
+    { id: generateId(), name: "Right Wing Cabinet 2", zone_type: "lower_cabinet", position: { x: 4.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, notes: "Cabinet facing kitchen" },
     
     // ═══════════════════════════════════════════════════════════════════════
     // WALL 4: PARALLEL APPLIANCE WALL (Opposite Sink Wall) - Front wall at z = 3
