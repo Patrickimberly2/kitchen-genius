@@ -1,13 +1,28 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { KitchenProvider } from "@/context/KitchenContext";
+import { KitchenScene3D } from "@/components/3d/KitchenScene3D";
+import { KitchenToolbar } from "@/components/ui/KitchenToolbar";
+import { InventoryPanel } from "@/components/ui/InventoryPanel";
+import { AISuggestionsPanel } from "@/components/ui/AISuggestionsPanel";
+import { WelcomeOverlay } from "@/components/ui/WelcomeOverlay";
+import { ControlsHelp } from "@/components/ui/ControlsHelp";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <KitchenProvider>
+      <div className="fixed inset-0 bg-background">
+        {/* 3D Scene */}
+        <KitchenScene3D />
+        
+        {/* UI Overlays */}
+        <KitchenToolbar />
+        <InventoryPanel />
+        <AISuggestionsPanel />
+        <ControlsHelp />
+        
+        {/* Welcome / Onboarding */}
+        <WelcomeOverlay />
       </div>
-    </div>
+    </KitchenProvider>
   );
 };
 
