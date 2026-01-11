@@ -16,6 +16,9 @@ export function getZoneColor(zoneType: ZoneType): string {
     shelf: "#c09870",
     countertop: "#e8ddd0",
     floor: "#8b7355",
+    sink: "#c0c0c0",
+    stove: "#f5f5f5",
+    dishwasher: "#d0d0d0",
   };
   return colors[zoneType] || "#b89b6a";
 }
@@ -36,6 +39,9 @@ export function getZoneLabel(zoneType: ZoneType): string {
     shelf: "Shelf",
     countertop: "Countertop",
     floor: "Floor",
+    sink: "Sink",
+    stove: "Stove",
+    dishwasher: "Dishwasher",
   };
   return labels[zoneType] || "Zone";
 }
@@ -56,6 +62,9 @@ export function getZoneIcon(zoneType: ZoneType): string {
     shelf: "📚",
     countertop: "📐",
     floor: "🟫",
+    sink: "🚰",
+    stove: "🔥",
+    dishwasher: "🍽️",
   };
   return icons[zoneType] || "📦";
 }

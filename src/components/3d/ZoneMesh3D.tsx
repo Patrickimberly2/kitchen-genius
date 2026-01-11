@@ -34,10 +34,13 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const baseColor = zone.color || getZoneColor(zone.zone_type);
   
   // Determine if this zone can be opened
-  const canOpen = ["upper_cabinet", "lower_cabinet", "drawer", "refrigerator", "freezer", "pantry"].includes(zone.zone_type);
+  const canOpen = ["upper_cabinet", "lower_cabinet", "drawer", "refrigerator", "freezer", "pantry", "dishwasher"].includes(zone.zone_type);
   const isDrawerType = zone.zone_type === "drawer";
   const isCabinetType = ["upper_cabinet", "lower_cabinet", "pantry"].includes(zone.zone_type);
   const isApplianceType = ["refrigerator", "freezer"].includes(zone.zone_type);
+  const isSinkType = zone.zone_type === "sink";
+  const isStoveType = zone.zone_type === "stove";
+  const isDishwasherType = zone.zone_type === "dishwasher";
   
   useFrame((_, delta) => {
     if (meshRef.current) {
@@ -257,7 +260,147 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       );
     }
     
-    // Appliances (sink, stove)
+    // Sink - double bowl with faucet
+    if (isSinkType) {
+      return (
+        <group>
+          {/* Sink counter surface */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#c0c0c0" roughness={0.1} metalness={0.6} />
+          </mesh>
+          
+          {/* Left basin */}
+          <mesh position={[-width / 4, height / 2 - 0.03, 0]}>
+            <boxGeometry args={[width / 2.5, 0.06, depth * 0.7]} />
+            <meshStandardMaterial color="#a0a0a0" roughness={0.1} metalness={0.7} />
+          </mesh>
+          {/* Right basin */}
+          <mesh position={[width / 4, height / 2 - 0.03, 0]}>
+            <boxGeometry args={[width / 2.5, 0.06, depth * 0.7]} />
+            <meshStandardMaterial color="#a0a0a0" roughness={0.1} metalness={0.7} />
+          </mesh>
+          {/* Faucet base */}
+          <mesh position={[0, height / 2 + 0.02, -depth / 3]}>
+            <cylinderGeometry args={[0.02, 0.03, 0.04, 16]} />
+            <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.8} />
+          </mesh>
+          {/* Faucet neck */}
+          <mesh position={[0, height / 2 + 0.1, -depth / 3 + 0.05]} rotation={[Math.PI / 6, 0, 0]}>
+            <cylinderGeometry args={[0.012, 0.012, 0.15, 12]} />
+            <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.8} />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Stove/Oven with burners
+    if (isStoveType) {
+      return (
+        <group>
+          {/* Stove body */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#f5f5f5" roughness={0.3} metalness={0.1} />
+          </mesh>
+          
+          {/* Cooktop surface */}
+          <mesh position={[0, height / 2 + 0.005, 0]}>
+            <boxGeometry args={[width - 0.02, 0.01, depth - 0.02]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.4} metalness={0.3} />
+          </mesh>
+          
+          {/* 4 burners */}
+          {[[-0.15, -0.12], [0.15, -0.12], [-0.15, 0.12], [0.15, 0.12]].map(([dx, dz], i) => (
+            <group key={i} position={[dx, height / 2 + 0.02, dz]}>
+              <mesh>
+                <cylinderGeometry args={[0.08, 0.08, 0.015, 24]} />
+                <meshStandardMaterial color="#333333" roughness={0.3} metalness={0.2} />
+              </mesh>
+              {/* Grate */}
+              <mesh position={[0, 0.015, 0]}>
+                <cylinderGeometry args={[0.065, 0.065, 0.01, 6]} />
+                <meshStandardMaterial color="#222222" roughness={0.5} metalness={0.4} />
+              </mesh>
+            </group>
+          ))}
+          
+          {/* Control panel */}
+          <mesh position={[0, height / 2 + 0.005, -depth / 2 + 0.05]}>
+            <boxGeometry args={[width - 0.1, 0.02, 0.08]} />
+            <meshStandardMaterial color="#2a2a2a" roughness={0.4} metalness={0.2} />
+          </mesh>
+          
+          {/* Oven door */}
+          <mesh position={[0, -height / 4, depth / 2 + 0.01]}>
+            <boxGeometry args={[width - 0.04, height / 2 - 0.04, 0.02]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.2} metalness={0.3} />
+          </mesh>
+          {/* Oven handle */}
+          <mesh position={[0, 0.05, depth / 2 + 0.03]}>
+            <boxGeometry args={[width * 0.6, 0.02, 0.02]} />
+            <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.8} />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Dishwasher
+    if (isDishwasherType) {
+      return (
+        <group>
+          {/* Dishwasher body */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#d0d0d0" roughness={0.25} metalness={0.3} />
+          </mesh>
+          
+          {/* Front panel */}
+          <mesh position={[0, 0, depth / 2 + 0.005]}>
+            <boxGeometry args={[width - 0.02, height - 0.02, 0.01]} />
+            <meshStandardMaterial color="#e5e5e5" roughness={0.3} metalness={0.2} />
+          </mesh>
+          
+          {/* Control panel at top */}
+          <mesh position={[0, height / 2 - 0.05, depth / 2 + 0.015]}>
+            <boxGeometry args={[width - 0.06, 0.06, 0.01]} />
+            <meshStandardMaterial color="#2a2a2a" roughness={0.4} metalness={0.3} />
+          </mesh>
+          
+          {/* Handle */}
+          <mesh position={[0, height / 4, depth / 2 + 0.025]}>
+            <boxGeometry args={[width * 0.7, 0.025, 0.02]} />
+            <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.8} />
+          </mesh>
+          
+          {/* Door seam line */}
+          <mesh position={[0, -height / 6, depth / 2 + 0.012]}>
+            <boxGeometry args={[width - 0.04, 0.003, 0.001]} />
+            <meshBasicMaterial color="#999999" />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Generic appliance (legacy support)
     if (zone.zone_type === "appliance") {
       const isSink = zone.name.toLowerCase().includes("sink");
       const isStove = zone.name.toLowerCase().includes("stove") || zone.name.toLowerCase().includes("oven");

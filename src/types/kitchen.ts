@@ -12,7 +12,10 @@ export type ZoneType =
   | "countertop"
   | "cabinet_upper"
   | "cabinet_lower"
-  | "floor";
+  | "floor"
+  | "sink"
+  | "stove"
+  | "dishwasher";
 
 export type ItemCategory =
   | "food"
