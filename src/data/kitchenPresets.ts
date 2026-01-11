@@ -243,14 +243,15 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
 
     /* =========================================================
      * RIGHT WING — 3 cabinets side by side, facing LEFT (toward center)
-     * Right Wing Base 1 front-left corner connects to Sink Wall Cabinet 3 front-right corner
+     * Slight offset so only the front corners visually connect and Base 1 door stays visible
      * Rotation: -Math.PI / 2 makes door face -X direction
      * ========================================================= */
     {
       id: generateId(),
       name: "Right Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: 3.28, y: LOWER_Y, z: -1.2 },
+      // Slightly nudged (+x, +z) to avoid fully overlapping faces with Sink Wall Cabinet 3
+      position: { x: 3.36, y: LOWER_Y, z: -1.12 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -258,7 +259,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: 3.28, y: LOWER_Y, z: -0.6 },
+      position: { x: 3.36, y: LOWER_Y, z: -0.52 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -266,7 +267,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: 3.28, y: LOWER_Y, z: 0 },
+      position: { x: 3.36, y: LOWER_Y, z: 0.08 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
@@ -274,7 +275,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Right Wing Countertop",
       zone_type: "countertop",
-      position: { x: 3.28, y: COUNTERTOP_Y, z: -0.6 },
+      position: { x: 3.36, y: COUNTERTOP_Y, z: -0.52 },
       dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 1.8 },
     },
   ],
