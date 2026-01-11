@@ -84,13 +84,13 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
   "custom-u-shaped": [
     /* =========================================================
      * LEFT WING — Facing right (+X direction)
-     * Extends from back wall into kitchen center
+     * 3 base cabinets aligned under countertop
      * ========================================================= */
     {
       id: generateId(),
       name: "Left Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: -2.5, y: LOWER_Y, z: 0 },
+      position: { x: -2.5, y: LOWER_Y, z: -0.3 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
@@ -98,7 +98,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Left Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: -2.5, y: LOWER_Y, z: 0.65 },
+      position: { x: -2.5, y: LOWER_Y, z: 0.35 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
@@ -106,7 +106,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Left Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: -2.5, y: LOWER_Y, z: 1.3 },
+      position: { x: -2.5, y: LOWER_Y, z: 1.0 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
@@ -114,8 +114,8 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Left Wing Countertop",
       zone_type: "countertop",
-      position: { x: -2.5, y: COUNTERTOP_Y, z: 0.65 },
-      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.1 },
+      position: { x: -2.5, y: COUNTERTOP_Y, z: 0.35 },
+      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 },
     },
     {
       id: generateId(),
