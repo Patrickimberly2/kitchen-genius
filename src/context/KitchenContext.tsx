@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { KitchenZone, InventoryItem, KitchenPreset, AISuggestion } from "@/types/kitchen";
+import { KitchenZone, InventoryItem, KitchenPresetKey, AISuggestion } from "@/types/kitchen";
 import { kitchenPresets } from "@/data/kitchenPresets";
 import { sampleInventory } from "@/data/sampleInventory";
 
@@ -9,7 +9,8 @@ interface KitchenContextType {
   selectedZoneId: string | null;
   hoveredZoneId: string | null;
   suggestions: AISuggestion[];
-  currentPreset: KitchenPreset | null;
+  currentPreset: KitchenPresetKey | null;
+  isLoadingAI: boolean;
   
   // Zone actions
   setZones: (zones: KitchenZone[]) => void;
@@ -18,7 +19,7 @@ interface KitchenContextType {
   removeZone: (id: string) => void;
   selectZone: (id: string | null) => void;
   hoverZone: (id: string | null) => void;
-  loadPreset: (preset: KitchenPreset) => void;
+  loadPreset: (preset: KitchenPresetKey) => void;
   
   // Item actions
   addItem: (item: InventoryItem) => void;
@@ -28,7 +29,9 @@ interface KitchenContextType {
   
   // AI actions
   generateSuggestions: () => void;
+  generateAISuggestions: () => Promise<void>;
   dismissSuggestion: (id: string) => void;
+  setSuggestions: (suggestions: AISuggestion[]) => void;
   
   // Helpers
   getItemsInZone: (zoneId: string) => InventoryItem[];
@@ -43,7 +46,8 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [hoveredZoneId, setHoveredZoneId] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<AISuggestion[]>([]);
-  const [currentPreset, setCurrentPreset] = useState<KitchenPreset | null>(null);
+  const [currentPreset, setCurrentPreset] = useState<KitchenPresetKey | null>(null);
+  const [isLoadingAI, setIsLoadingAI] = useState(false);
 
   const addZone = useCallback((zone: KitchenZone) => {
     setZones((prev) => [...prev, zone]);
@@ -55,7 +59,6 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
 
   const removeZone = useCallback((id: string) => {
     setZones((prev) => prev.filter((z) => z.id !== id));
-    // Move items from removed zone to unassigned
     setItems((prev) => prev.map((item) => (item.zone_id === id ? { ...item, zone_id: "" } : item)));
   }, []);
 
@@ -67,7 +70,7 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
     setHoveredZoneId(id);
   }, []);
 
-  const loadPreset = useCallback((preset: KitchenPreset) => {
+  const loadPreset = useCallback((preset: KitchenPresetKey) => {
     const presetZones = kitchenPresets[preset].map((zone) => ({
       ...zone,
       id: Math.random().toString(36).substring(2, 11),
@@ -76,15 +79,14 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
     setCurrentPreset(preset);
     setSelectedZoneId(null);
     
-    // Auto-assign some items to zones based on category
     const newItems = [...items];
     const refrigerator = presetZones.find((z) => z.zone_type === "refrigerator");
     const pantry = presetZones.find((z) => z.zone_type === "pantry");
     const drawer = presetZones.find((z) => z.zone_type === "drawer");
-    const cabinet = presetZones.find((z) => z.zone_type === "lower_cabinet" || z.zone_type === "upper_cabinet");
+    const cabinet = presetZones.find((z) => z.zone_type === "lower_cabinet" || z.zone_type === "upper_cabinet" || z.zone_type === "cabinet_lower" || z.zone_type === "cabinet_upper");
     
     newItems.forEach((item, idx) => {
-      if (item.category === "beverages" || item.category === "food" && item.expiry_date) {
+      if (item.category === "beverages" || (item.category === "food" && item.expiry_date)) {
         if (refrigerator) newItems[idx] = { ...item, zone_id: refrigerator.id };
       } else if (item.category === "food" || item.category === "spices") {
         if (pantry) newItems[idx] = { ...item, zone_id: pantry.id };
@@ -127,7 +129,6 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
   const generateSuggestions = useCallback(() => {
     const newSuggestions: AISuggestion[] = [];
     
-    // Check for expiring items
     const today = new Date();
     const expiringItems = items.filter((item) => {
       if (!item.expiry_date) return false;
@@ -141,26 +142,24 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
         id: "exp-1",
         type: "expiry",
         title: "Items expiring soon",
-        description: `${expiringItems.map((i) => i.name).join(", ")} will expire within a week. Consider moving them to the front of your refrigerator.`,
+        description: `${expiringItems.map((i) => i.name).join(", ")} will expire within a week. Consider using them first.`,
         item_ids: expiringItems.map((i) => i.id),
         priority: "high",
       });
     }
     
-    // Check for unassigned items
     const unassignedItems = items.filter((i) => !i.zone_id);
     if (unassignedItems.length > 0) {
       newSuggestions.push({
         id: "unassigned-1",
         type: "placement",
         title: "Unassigned items",
-        description: `${unassignedItems.length} items haven't been placed in any zone. Drag them to the appropriate cabinet or drawer.`,
+        description: `${unassignedItems.length} items haven't been placed in any zone.`,
         item_ids: unassignedItems.map((i) => i.id),
         priority: "medium",
       });
     }
     
-    // Check for overcrowded zones
     zones.forEach((zone) => {
       const zoneItems = getItemsInZone(zone.id);
       const volume = zone.dimensions.width * zone.dimensions.height * zone.dimensions.depth;
@@ -169,14 +168,13 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
           id: `crowd-${zone.id}`,
           type: "optimization",
           title: `${zone.name} is overcrowded`,
-          description: `Consider redistributing items from ${zone.name} to nearby zones for better organization.`,
+          description: `Consider redistributing items from ${zone.name} to nearby zones.`,
           zone_id: zone.id,
           priority: "medium",
         });
       }
     });
     
-    // Spice organization suggestion
     const spices = items.filter((i) => i.category === "spices");
     const spiceZones = new Set(spices.map((i) => i.zone_id).filter(Boolean));
     if (spiceZones.size > 1) {
@@ -184,7 +182,7 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
         id: "spice-1",
         type: "organization",
         title: "Group your spices",
-        description: "Your spices are spread across multiple zones. Consider consolidating them in one drawer or shelf for easier access while cooking.",
+        description: "Your spices are spread across multiple zones. Consider consolidating them.",
         item_ids: spices.map((i) => i.id),
         priority: "low",
       });
@@ -192,6 +190,57 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
     
     setSuggestions(newSuggestions);
   }, [items, zones, getItemsInZone]);
+
+  const generateAISuggestions = useCallback(async () => {
+    setIsLoadingAI(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/kitchen-assistant`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          zones: zones.map(z => ({
+            id: z.id,
+            name: z.name,
+            zone_type: z.zone_type,
+            dimensions: z.dimensions,
+          })),
+          items: items.map(i => ({
+            id: i.id,
+            name: i.name,
+            category: i.category,
+            zone_id: i.zone_id,
+            quantity: i.quantity,
+            unit: i.unit,
+            expiry_date: i.expiry_date,
+          })),
+        }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error("Rate limit exceeded. Please try again later.");
+        }
+        if (response.status === 402) {
+          throw new Error("Usage limit reached. Please add credits.");
+        }
+        throw new Error("Failed to get AI suggestions");
+      }
+
+      const data = await response.json();
+      if (data.suggestions && Array.isArray(data.suggestions)) {
+        setSuggestions(data.suggestions);
+      }
+    } catch (error) {
+      console.error("AI suggestion error:", error);
+      // Fall back to local suggestions
+      generateSuggestions();
+    } finally {
+      setIsLoadingAI(false);
+    }
+  }, [zones, items, generateSuggestions]);
 
   const dismissSuggestion = useCallback((id: string) => {
     setSuggestions((prev) => prev.filter((s) => s.id !== id));
@@ -206,6 +255,7 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
         hoveredZoneId,
         suggestions,
         currentPreset,
+        isLoadingAI,
         setZones,
         addZone,
         updateZone,
@@ -218,7 +268,9 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
         removeItem,
         moveItemToZone,
         generateSuggestions,
+        generateAISuggestions,
         dismissSuggestion,
+        setSuggestions,
         getItemsInZone,
         getItemCountInZone,
       }}

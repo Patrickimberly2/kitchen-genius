@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChefHat, Grid3X3, Lightbulb, Package, ChevronDown } from "lucide-react";
+import { ChefHat, Grid3X3, Lightbulb, Package, ChevronDown, Loader2, Sparkles } from "lucide-react";
 import { useKitchen } from "@/context/KitchenContext";
-import { KitchenPreset } from "@/types/kitchen";
+import { KitchenPresetKey } from "@/types/kitchen";
 import { presetLabels } from "@/data/kitchenPresets";
 
 export function PresetSelector() {
   const { loadPreset, currentPreset, zones } = useKitchen();
   const [isOpen, setIsOpen] = useState(false);
-  const [confirmPreset, setConfirmPreset] = useState<KitchenPreset | null>(null);
+  const [confirmPreset, setConfirmPreset] = useState<KitchenPresetKey | null>(null);
 
-  const handleSelectPreset = (preset: KitchenPreset) => {
+  const handleSelectPreset = (preset: KitchenPresetKey) => {
     if (zones.length > 0 && currentPreset !== preset) {
       setConfirmPreset(preset);
     } else {
@@ -27,7 +27,7 @@ export function PresetSelector() {
     }
   };
 
-  const presets: KitchenPreset[] = ["custom-u-shaped", "l-shaped", "galley", "u-shaped", "island"];
+  const presets: KitchenPresetKey[] = ["custom-u-shaped", "l-shaped", "galley", "u-shaped", "island"];
 
   return (
     <div className="relative">
@@ -119,7 +119,7 @@ export function PresetSelector() {
 }
 
 export function KitchenToolbar() {
-  const { zones, items, generateSuggestions, suggestions } = useKitchen();
+  const { zones, items, generateAISuggestions, suggestions, isLoadingAI } = useKitchen();
 
   return (
     <div className="fixed top-4 left-4 z-20 flex flex-col gap-3">
@@ -155,18 +155,26 @@ export function KitchenToolbar() {
       {/* AI Suggestions Button */}
       {zones.length > 0 && (
         <button
-          onClick={generateSuggestions}
-          className="kitchen-panel px-4 py-3 flex items-center gap-3 hover:bg-card transition-colors group"
+          onClick={generateAISuggestions}
+          disabled={isLoadingAI}
+          className="kitchen-panel px-4 py-3 flex items-center gap-3 hover:bg-card transition-colors group disabled:opacity-70"
         >
           <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center group-hover:bg-accent/30 transition-colors">
-            <Lightbulb className="w-4 h-4 text-accent" />
+            {isLoadingAI ? (
+              <Loader2 className="w-4 h-4 text-accent animate-spin" />
+            ) : (
+              <Sparkles className="w-4 h-4 text-accent" />
+            )}
           </div>
           <div className="text-left">
-            <p className="text-sm font-medium text-foreground">AI Suggestions</p>
+            <p className="text-sm font-medium text-foreground flex items-center gap-2">
+              AI Assistant
+              {isLoadingAI && <span className="text-xs text-muted-foreground">Analyzing...</span>}
+            </p>
             <p className="text-xs text-muted-foreground">
               {suggestions.length > 0
                 ? `${suggestions.length} suggestion${suggestions.length > 1 ? "s" : ""}`
-                : "Get organization tips"}
+                : "Get smart organization tips"}
             </p>
           </div>
         </button>

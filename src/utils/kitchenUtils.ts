@@ -4,6 +4,8 @@ export function getZoneColor(zoneType: ZoneType): string {
   const colors: Record<ZoneType, string> = {
     upper_cabinet: "#c4a77d",
     lower_cabinet: "#b89b6a",
+    cabinet_upper: "#c4a77d",
+    cabinet_lower: "#b89b6a",
     drawer: "#a88b5a",
     pantry: "#d4b896",
     refrigerator: "#b8c8d4",
@@ -13,6 +15,7 @@ export function getZoneColor(zoneType: ZoneType): string {
     appliance: "#9ca3af",
     shelf: "#c09870",
     countertop: "#e8ddd0",
+    floor: "#8b7355",
   };
   return colors[zoneType] || "#b89b6a";
 }
@@ -21,6 +24,8 @@ export function getZoneLabel(zoneType: ZoneType): string {
   const labels: Record<ZoneType, string> = {
     upper_cabinet: "Upper Cabinet",
     lower_cabinet: "Lower Cabinet",
+    cabinet_upper: "Upper Cabinet",
+    cabinet_lower: "Lower Cabinet",
     drawer: "Drawer",
     pantry: "Pantry",
     refrigerator: "Refrigerator",
@@ -30,6 +35,7 @@ export function getZoneLabel(zoneType: ZoneType): string {
     appliance: "Appliance",
     shelf: "Shelf",
     countertop: "Countertop",
+    floor: "Floor",
   };
   return labels[zoneType] || "Zone";
 }
@@ -38,6 +44,8 @@ export function getZoneIcon(zoneType: ZoneType): string {
   const icons: Record<ZoneType, string> = {
     upper_cabinet: "🗄️",
     lower_cabinet: "🗄️",
+    cabinet_upper: "🗄️",
+    cabinet_lower: "🗄️",
     drawer: "📦",
     pantry: "🚪",
     refrigerator: "🧊",
@@ -47,6 +55,7 @@ export function getZoneIcon(zoneType: ZoneType): string {
     appliance: "🔌",
     shelf: "📚",
     countertop: "📐",
+    floor: "🟫",
   };
   return icons[zoneType] || "📦";
 }

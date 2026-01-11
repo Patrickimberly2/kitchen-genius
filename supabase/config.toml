@@ -1,1 +1,4 @@
 project_id = "zqlvbypmytesinclnucd"
+
+[functions.kitchen-assistant]
+verify_jwt = false
