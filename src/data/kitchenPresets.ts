@@ -139,13 +139,13 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: 1.2, height: 0.1, depth: 0.55 },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Sink Wall Countertop — spans drawer stack through oven */
+    /* Sink Wall Countertop — spans drawer stack through new cabinets */
     {
       id: generateId(),
       name: "Sink Wall Countertop",
       zone_type: "countertop",
-      position: { x: -0.1, y: COUNTERTOP_Y, z: -1.2 },
-      dimensions: { width: 3.0, height: COUNTERTOP_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 0.54, y: COUNTERTOP_Y, z: -1.2 },
+      dimensions: { width: 4.88, height: COUNTERTOP_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     /* Dishwasher — connects to right side of sink cabinets */
@@ -164,6 +164,33 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       zone_type: "stove",
       position: { x: 0.8, y: LOWER_Y, z: -1.2 },
       dimensions: { width: 0.76, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    /* Sink Wall Cabinet 1 — connects to right side of oven */
+    {
+      id: generateId(),
+      name: "Sink Wall Cabinet 1",
+      zone_type: "lower_cabinet",
+      position: { x: 1.48, y: LOWER_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    /* Sink Wall Cabinet 2 */
+    {
+      id: generateId(),
+      name: "Sink Wall Cabinet 2",
+      zone_type: "lower_cabinet",
+      position: { x: 2.08, y: LOWER_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    /* Sink Wall Cabinet 3 */
+    {
+      id: generateId(),
+      name: "Sink Wall Cabinet 3",
+      zone_type: "lower_cabinet",
+      position: { x: 2.68, y: LOWER_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
