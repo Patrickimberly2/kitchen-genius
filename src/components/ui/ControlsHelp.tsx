@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { RotateCcw, ZoomIn, ZoomOut, Move } from "lucide-react";
+import { RotateCcw, ZoomIn, Move, MousePointer2 } from "lucide-react";
 
 export function ControlsHelp() {
   return (
@@ -23,6 +23,11 @@ export function ControlsHelp() {
         <div className="flex items-center gap-1.5">
           <Move className="w-3.5 h-3.5" />
           <span>Right-click to pan</span>
+        </div>
+        <div className="w-px h-3 bg-border" />
+        <div className="flex items-center gap-1.5">
+          <MousePointer2 className="w-3.5 h-3.5" />
+          <span>Select + drag to move items</span>
         </div>
       </div>
     </motion.div>
