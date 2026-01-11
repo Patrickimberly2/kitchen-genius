@@ -5,6 +5,7 @@ import { InventoryPanel } from "@/components/ui/InventoryPanel";
 import { AISuggestionsPanel } from "@/components/ui/AISuggestionsPanel";
 import { WelcomeOverlay } from "@/components/ui/WelcomeOverlay";
 import { ControlsHelp } from "@/components/ui/ControlsHelp";
+import { ZoneEditPanel } from "@/components/ui/ZoneEditPanel";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
         <InventoryPanel />
         <AISuggestionsPanel />
         <ControlsHelp />
+        <ZoneEditPanel />
         
         {/* Welcome / Onboarding */}
         <WelcomeOverlay />
