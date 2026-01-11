@@ -582,13 +582,14 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     /* =========================================================
      * KITCHEN ISLAND — In front of Oven
      * Oven is at x: 0.8, z: -1.2
-     * Island positioned forward (z: 0) with 2 cabinets facing the oven
+     * Island positioned ~1 foot further forward (z: 0.6) with 2 cabinets facing the oven
+     * No drawers on island cabinets
      * ========================================================= */
     {
       id: generateId(),
       name: "Island Countertop",
       zone_type: "countertop",
-      position: { x: 0.8, y: COUNTERTOP_Y, z: 0.3 },
+      position: { x: 0.8, y: COUNTERTOP_Y, z: 0.6 },
       dimensions: { width: 1.5, height: COUNTERTOP_HEIGHT, depth: 0.8 },
       rotation: { x: 0, y: 0, z: 0 },
     },
@@ -596,32 +597,16 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Island Cabinet 1",
       zone_type: "lower_cabinet",
-      position: { x: 0.5, y: LOWER_DOOR_Y, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
-      rotation: { x: 0, y: Math.PI, z: 0 },
-    },
-    {
-      id: generateId(),
-      name: "Island Drawer 1",
-      zone_type: "drawer",
-      position: { x: 0.5, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 0.5, y: LOWER_Y, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI, z: 0 },
     },
     {
       id: generateId(),
       name: "Island Cabinet 2",
       zone_type: "lower_cabinet",
-      position: { x: 1.1, y: LOWER_DOOR_Y, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: LOWER_DOOR_HEIGHT, depth: LOWER_DEPTH },
-      rotation: { x: 0, y: Math.PI, z: 0 },
-    },
-    {
-      id: generateId(),
-      name: "Island Drawer 2",
-      zone_type: "drawer",
-      position: { x: 1.1, y: LOWER_DOOR_HEIGHT + DRAWER_HEIGHT / 2, z: 0 },
-      dimensions: { width: CABINET_WIDTH, height: DRAWER_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: 1.1, y: LOWER_Y, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: Math.PI, z: 0 },
     },
   ],
