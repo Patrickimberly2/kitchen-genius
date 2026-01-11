@@ -29,6 +29,7 @@ export interface KitchenZone {
   zone_type: ZoneType;
   position: { x: number; y: number; z: number };
   dimensions: { width: number; height: number; depth: number };
+  rotation?: { x: number; y: number; z: number }; // Rotation in radians
   color?: string;
   notes?: string;
 }
