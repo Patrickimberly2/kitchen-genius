@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { useFrame, ThreeEvent } from "@react-three/fiber";
+import { useRef, useState, useCallback } from "react";
+import { useFrame, useThree, ThreeEvent } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { KitchenZone } from "@/types/kitchen";
@@ -12,13 +12,20 @@ interface ZoneMesh3DProps {
 
 export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const doorRef = useRef<THREE.Group>(null);
   const drawerRef = useRef<THREE.Mesh>(null);
   
-  const { selectedZoneId, hoveredZoneId, selectZone, hoverZone, getItemCountInZone } = useKitchen();
+  const { selectedZoneId, hoveredZoneId, selectZone, hoverZone, getItemCountInZone, updateZone } = useKitchen();
   const [hoverScale, setHoverScale] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [openProgress, setOpenProgress] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState<THREE.Vector3 | null>(null);
+  const [originalPosition, setOriginalPosition] = useState<{ x: number; y: number; z: number } | null>(null);
+  
+  const { camera, raycaster, gl } = useThree();
+  const planeRef = useRef(new THREE.Plane(new THREE.Vector3(0, 1, 0), 0));
   
   const isSelected = selectedZoneId === zone.id;
   const isHovered = hoveredZoneId === zone.id;
@@ -65,9 +72,64 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
     }
   });
 
+  // Snap to 0.25m grid
+  const snapToGrid = useCallback((value: number) => Math.round(value * 4) / 4, []);
+
+  const handlePointerDown = (e: ThreeEvent<PointerEvent>) => {
+    if (!isSelected) return;
+    e.stopPropagation();
+    
+    // Start dragging
+    setIsDragging(true);
+    setOriginalPosition({ ...zone.position });
+    
+    // Get the intersection point on the horizontal plane at the zone's Y position
+    planeRef.current.constant = -zone.position.y;
+    const intersect = new THREE.Vector3();
+    raycaster.ray.intersectPlane(planeRef.current, intersect);
+    setDragStart(intersect);
+    
+    document.body.style.cursor = "grabbing";
+    gl.domElement.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: ThreeEvent<PointerEvent>) => {
+    if (!isDragging || !dragStart || !originalPosition) return;
+    e.stopPropagation();
+    
+    // Get current intersection point
+    const intersect = new THREE.Vector3();
+    raycaster.ray.intersectPlane(planeRef.current, intersect);
+    
+    // Calculate delta
+    const deltaX = intersect.x - dragStart.x;
+    const deltaZ = intersect.z - dragStart.z;
+    
+    // Update zone position (snapped to grid)
+    const newX = snapToGrid(originalPosition.x + deltaX);
+    const newZ = snapToGrid(originalPosition.z + deltaZ);
+    
+    updateZone(zone.id, {
+      position: { x: newX, y: zone.position.y, z: newZ },
+    });
+  };
+
+  const handlePointerUp = (e: ThreeEvent<PointerEvent>) => {
+    if (!isDragging) return;
+    e.stopPropagation();
+    
+    setIsDragging(false);
+    setDragStart(null);
+    setOriginalPosition(null);
+    document.body.style.cursor = "auto";
+    gl.domElement.releasePointerCapture(e.pointerId);
+  };
+
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
-    selectZone(zone.id);
+    if (!isDragging) {
+      selectZone(zone.id);
+    }
   };
   
   const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
@@ -80,12 +142,14 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     hoverZone(zone.id);
-    document.body.style.cursor = "pointer";
+    document.body.style.cursor = isSelected ? "grab" : "pointer";
   };
 
   const handlePointerOut = () => {
-    hoverZone(null);
-    document.body.style.cursor = "auto";
+    if (!isDragging) {
+      hoverZone(null);
+      document.body.style.cursor = "auto";
+    }
   };
 
   // Material based on zone type and state
@@ -139,15 +203,24 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
 
   // Render different geometry based on zone type
   const renderZone = () => {
+    // Common event handlers for all mesh types
+    const commonProps = {
+      onClick: handleClick,
+      onDoubleClick: handleDoubleClick,
+      onPointerOver: handlePointerOver,
+      onPointerOut: handlePointerOut,
+      onPointerDown: handlePointerDown,
+      onPointerMove: handlePointerMove,
+      onPointerUp: handlePointerUp,
+    };
+
     // Countertops are simple slabs
     if (zone.zone_type === "countertop") {
       return (
         <mesh
           ref={meshRef}
           position={[zone.position.x, zone.position.y, zone.position.z]}
-          onClick={handleClick}
-          onPointerOver={handlePointerOver}
-          onPointerOut={handlePointerOut}
+          {...commonProps}
           castShadow
           receiveShadow
         >
@@ -165,10 +238,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <mesh
             ref={meshRef}
             position={[zone.position.x, zone.position.y, zone.position.z]}
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
-            onPointerOver={handlePointerOver}
-            onPointerOut={handlePointerOut}
+            {...commonProps}
             castShadow
             receiveShadow
           >
@@ -197,9 +267,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <mesh
             ref={meshRef}
             position={[zone.position.x, zone.position.y, zone.position.z]}
-            onClick={handleClick}
-            onPointerOver={handlePointerOver}
-            onPointerOut={handlePointerOut}
+            {...commonProps}
             castShadow
             receiveShadow
           >
@@ -252,10 +320,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <mesh
             ref={meshRef}
             position={[zone.position.x, zone.position.y, zone.position.z]}
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
-            onPointerOver={handlePointerOver}
-            onPointerOut={handlePointerOut}
+            {...commonProps}
             castShadow
             receiveShadow
           >
@@ -311,10 +376,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <mesh
             ref={meshRef}
             position={[zone.position.x, zone.position.y, zone.position.z]}
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
-            onPointerOver={handlePointerOver}
-            onPointerOut={handlePointerOut}
+            {...commonProps}
             castShadow
             receiveShadow
           >
@@ -361,7 +423,6 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
     // Refrigerator/Freezer with French doors or single door
     if (isApplianceType) {
       const isFrenchDoor = zone.notes?.includes("French");
-      const doorWidth = isFrenchDoor ? (width - 0.02) / 2 : width - 0.02;
       
       return (
         <group>
@@ -369,10 +430,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <mesh
             ref={meshRef}
             position={[zone.position.x, zone.position.y, zone.position.z]}
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
-            onPointerOver={handlePointerOver}
-            onPointerOut={handlePointerOut}
+            {...commonProps}
             castShadow
             receiveShadow
           >
@@ -417,9 +475,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       <mesh
         ref={meshRef}
         position={[zone.position.x, zone.position.y, zone.position.z]}
-        onClick={handleClick}
-        onPointerOver={handlePointerOver}
-        onPointerOut={handlePointerOut}
+        {...commonProps}
         castShadow
         receiveShadow
       >
@@ -433,7 +489,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const rotation = zone.rotation || { x: 0, y: 0, z: 0 };
   
   return (
-    <group rotation={[rotation.x, rotation.y, rotation.z]}>
+    <group ref={groupRef} rotation={[rotation.x, rotation.y, rotation.z]}>
       {renderZone()}
       
       {/* Selection outline */}
@@ -471,6 +527,9 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             )}
             {canOpen && (
               <p className="text-xs text-muted-foreground/60 mt-1 italic">Double-click to {isOpen ? "close" : "open"}</p>
+            )}
+            {isSelected && (
+              <p className="text-xs text-primary/80 mt-1 font-medium">Drag to move</p>
             )}
           </div>
         </Html>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trash2, Move, Save, X, AlertTriangle } from "lucide-react";
+import { Trash2, Move, Save, X, AlertTriangle, RotateCw } from "lucide-react";
 import { useKitchen } from "@/context/KitchenContext";
 import { getZoneLabel, getZoneIcon } from "@/utils/kitchenUtils";
 
@@ -16,10 +16,14 @@ export function ZoneEditPanel() {
 
   const selectedZone = zones.find((z) => z.id === selectedZoneId);
   const [isEditing, setIsEditing] = useState(false);
+  const [isRotating, setIsRotating] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   
   // Position editing state
   const [editPosition, setEditPosition] = useState({ x: 0, y: 0, z: 0 });
+  
+  // Rotation editing state (in degrees for user display)
+  const [editRotation, setEditRotation] = useState({ x: 0, y: 0, z: 0 });
   
   // Reset edit state when zone changes
   useEffect(() => {
@@ -29,8 +33,16 @@ export function ZoneEditPanel() {
         y: selectedZone.position.y,
         z: selectedZone.position.z,
       });
+      // Convert radians to degrees for display
+      const rot = selectedZone.rotation || { x: 0, y: 0, z: 0 };
+      setEditRotation({
+        x: Math.round((rot.x * 180) / Math.PI),
+        y: Math.round((rot.y * 180) / Math.PI),
+        z: Math.round((rot.z * 180) / Math.PI),
+      });
     }
     setIsEditing(false);
+    setIsRotating(false);
     setShowDeleteConfirm(false);
   }, [selectedZoneId, selectedZone]);
 
@@ -43,6 +55,18 @@ export function ZoneEditPanel() {
       position: editPosition,
     });
     setIsEditing(false);
+  };
+
+  const handleSaveRotation = () => {
+    // Convert degrees to radians
+    updateZone(selectedZone.id, {
+      rotation: {
+        x: (editRotation.x * Math.PI) / 180,
+        y: (editRotation.y * Math.PI) / 180,
+        z: (editRotation.z * Math.PI) / 180,
+      },
+    });
+    setIsRotating(false);
   };
 
   const handleDeleteZone = () => {
@@ -58,8 +82,18 @@ export function ZoneEditPanel() {
     }));
   };
 
+  const handleRotationChange = (axis: 'x' | 'y' | 'z', value: number) => {
+    setEditRotation((prev) => ({
+      ...prev,
+      [axis]: value,
+    }));
+  };
+
   // Snap to 0.25m grid
   const snapToGrid = (value: number) => Math.round(value * 4) / 4;
+  
+  // Snap rotation to 15 degree increments
+  const snapRotation = (value: number) => Math.round(value / 15) * 15;
 
   return (
     <AnimatePresence>
@@ -136,6 +170,64 @@ export function ZoneEditPanel() {
               <X className="w-4 h-4 text-muted-foreground" />
             </button>
           </div>
+        ) : isRotating ? (
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <label className="text-xs text-muted-foreground w-6">X°:</label>
+              <input
+                type="number"
+                step="15"
+                value={editRotation.x}
+                onChange={(e) => handleRotationChange('x', parseFloat(e.target.value) || 0)}
+                onBlur={(e) => handleRotationChange('x', snapRotation(parseFloat(e.target.value) || 0))}
+                className="w-16 px-2 py-1 text-sm rounded-lg bg-muted border border-border focus:border-primary focus:outline-none"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-xs text-muted-foreground w-6">Y°:</label>
+              <input
+                type="number"
+                step="15"
+                value={editRotation.y}
+                onChange={(e) => handleRotationChange('y', parseFloat(e.target.value) || 0)}
+                onBlur={(e) => handleRotationChange('y', snapRotation(parseFloat(e.target.value) || 0))}
+                className="w-16 px-2 py-1 text-sm rounded-lg bg-muted border border-border focus:border-primary focus:outline-none"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-xs text-muted-foreground w-6">Z°:</label>
+              <input
+                type="number"
+                step="15"
+                value={editRotation.z}
+                onChange={(e) => handleRotationChange('z', parseFloat(e.target.value) || 0)}
+                onBlur={(e) => handleRotationChange('z', snapRotation(parseFloat(e.target.value) || 0))}
+                className="w-16 px-2 py-1 text-sm rounded-lg bg-muted border border-border focus:border-primary focus:outline-none"
+              />
+            </div>
+            
+            <button
+              onClick={handleSaveRotation}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm hover:bg-primary/90 transition-colors"
+            >
+              <Save className="w-3.5 h-3.5" />
+              Save
+            </button>
+            <button
+              onClick={() => {
+                const rot = selectedZone.rotation || { x: 0, y: 0, z: 0 };
+                setEditRotation({
+                  x: Math.round((rot.x * 180) / Math.PI),
+                  y: Math.round((rot.y * 180) / Math.PI),
+                  z: Math.round((rot.z * 180) / Math.PI),
+                });
+                setIsRotating(false);
+              }}
+              className="p-1.5 rounded-lg hover:bg-muted transition-colors"
+            >
+              <X className="w-4 h-4 text-muted-foreground" />
+            </button>
+          </div>
         ) : (
           <div className="flex items-center gap-2">
             {/* Move button */}
@@ -145,6 +237,15 @@ export function ZoneEditPanel() {
             >
               <Move className="w-3.5 h-3.5" />
               Move
+            </button>
+            
+            {/* Rotate button */}
+            <button
+              onClick={() => setIsRotating(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted hover:bg-muted/80 text-foreground text-sm transition-colors"
+            >
+              <RotateCw className="w-3.5 h-3.5" />
+              Rotate
             </button>
             
             {/* Delete button */}
