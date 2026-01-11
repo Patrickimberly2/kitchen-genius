@@ -154,9 +154,25 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     { id: generateId(), name: "Lower Cabinet R4", zone_type: "lower_cabinet", position: { x: 3.45, y: LOWER_Y, z: -3 }, dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH } },
     
     // ═══════════════════════════════════════════════════════════════════════
-    // OPEN LAYOUT - No left/right wing walls
-    // Only 2 parallel walls: Sink Wall (z=-3) and Appliance Wall (z=3)
+    // LEFT WING PENINSULA - No wall, just cabinets extending into kitchen
+    // 3 lower cabinets with drawers, 4 upper cabinets with inner shelf
+    // Perpendicular to sink wall, aligned upper/lower
     // ═══════════════════════════════════════════════════════════════════════
+    
+    // Left Wing Upper Cabinets (4 uppers with inner shelf, connected)
+    { id: generateId(), name: "Left Wing Upper 1", zone_type: "upper_cabinet", position: { x: -3.6, y: UPPER_Y, z: -2.65 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "With inner shelf - connected" },
+    { id: generateId(), name: "Left Wing Upper 2", zone_type: "upper_cabinet", position: { x: -3.6, y: UPPER_Y, z: -2.0 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "With inner shelf - connected" },
+    { id: generateId(), name: "Left Wing Upper 3", zone_type: "upper_cabinet", position: { x: -3.6, y: UPPER_Y, z: -1.35 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "With inner shelf - connected" },
+    { id: generateId(), name: "Left Wing Upper 4", zone_type: "upper_cabinet", position: { x: -3.6, y: UPPER_Y, z: -0.7 }, dimensions: { width: UPPER_DEPTH, height: UPPER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "With inner shelf - connected" },
+    
+    // Left Wing Countertop
+    { id: generateId(), name: "Left Wing Countertop", zone_type: "countertop", position: { x: -3.6, y: COUNTERTOP_Y, z: -1.675 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.55 } },
+    
+    // Left Wing Lower Cabinets (3 lowers with drawers, connected, aligned under uppers)
+    { id: generateId(), name: "Left Wing Drawer 1", zone_type: "drawer", position: { x: -3.6, y: LOWER_Y, z: -2.65 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "With drawers - connected" },
+    { id: generateId(), name: "Left Wing Drawer 2", zone_type: "drawer", position: { x: -3.6, y: LOWER_Y, z: -2.0 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "With drawers - connected" },
+    { id: generateId(), name: "Left Wing Drawer 3", zone_type: "drawer", position: { x: -3.6, y: LOWER_Y, z: -1.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -Math.PI / 2, z: 0 }, notes: "With drawers - connected" },
+    
     // ═══════════════════════════════════════════════════════════════════════
     // WALL 4: PARALLEL APPLIANCE WALL (Opposite Sink Wall) - Front wall at z = 3
     // ═══════════════════════════════════════════════════════════════════════
