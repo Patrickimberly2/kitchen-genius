@@ -172,18 +172,18 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     { id: generateId(), name: "Left Wing Cabinet 3", zone_type: "lower_cabinet", position: { x: -3.25, y: LOWER_Y, z: -1.05 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: 90, z: 0 }, notes: "Cabinet with drawer above door - connected" },
     
     // ═══════════════════════════════════════════════════════════════════════
-    // RIGHT WING PENINSULA - No wall, lower cabinets only extending into kitchen center
-    // Perpendicular to sink wall, next to Right Corner Base
+    // RIGHT WING PENINSULA - Positioned at sink wall corner, extending into kitchen
+    // Perpendicular to sink wall, connected to Lower Cabinet R4
     // 3 lower cabinets with drawer above door, rotated to face kitchen center
     // ═══════════════════════════════════════════════════════════════════════
     
-    // Right Wing Countertop (perpendicular, extending into kitchen)
-    { id: generateId(), name: "Right Wing Countertop", zone_type: "countertop", position: { x: 3.45, y: COUNTERTOP_Y, z: -1.375 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.6 } },
+    // Right Wing Countertop (perpendicular, extending into kitchen from sink wall)
+    { id: generateId(), name: "Right Wing Countertop", zone_type: "countertop", position: { x: 4.1, y: COUNTERTOP_Y, z: -1.375 }, dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.6 } },
     
     // Right Wing Lower Cabinets (3 cabinets with drawer above door, rotated to face kitchen center)
-    { id: generateId(), name: "Right Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: 3.45, y: LOWER_Y, z: -2.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -90, z: 0 }, notes: "Cabinet with drawer above door - rotated to face kitchen" },
-    { id: generateId(), name: "Right Wing Cabinet 2", zone_type: "lower_cabinet", position: { x: 3.45, y: LOWER_Y, z: -1.7 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -90, z: 0 }, notes: "Cabinet with drawer above door - connected" },
-    { id: generateId(), name: "Right Wing Cabinet 3", zone_type: "lower_cabinet", position: { x: 3.45, y: LOWER_Y, z: -1.05 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -90, z: 0 }, notes: "Cabinet with drawer above door - connected" },
+    { id: generateId(), name: "Right Wing Cabinet 1", zone_type: "lower_cabinet", position: { x: 4.1, y: LOWER_Y, z: -2.35 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -90, z: 0 }, notes: "Cabinet with drawer above door - rotated to face kitchen" },
+    { id: generateId(), name: "Right Wing Cabinet 2", zone_type: "lower_cabinet", position: { x: 4.1, y: LOWER_Y, z: -1.7 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -90, z: 0 }, notes: "Cabinet with drawer above door - connected" },
+    { id: generateId(), name: "Right Wing Cabinet 3", zone_type: "lower_cabinet", position: { x: 4.1, y: LOWER_Y, z: -1.05 }, dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH }, rotation: { x: 0, y: -90, z: 0 }, notes: "Cabinet with drawer above door - connected" },
     
     // ═══════════════════════════════════════════════════════════════════════
     // WALL 4: PARALLEL APPLIANCE WALL (Opposite Sink Wall) - Front wall at z = 3
