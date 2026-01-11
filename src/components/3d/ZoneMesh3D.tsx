@@ -429,8 +429,11 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
     );
   };
 
+  // Apply rotation if specified
+  const rotation = zone.rotation || { x: 0, y: 0, z: 0 };
+  
   return (
-    <group>
+    <group rotation={[rotation.x, rotation.y, rotation.z]}>
       {renderZone()}
       
       {/* Selection outline */}
