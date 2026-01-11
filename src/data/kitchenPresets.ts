@@ -139,13 +139,22 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: 1.2, height: 0.1, depth: 0.55 },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Sink Wall Countertop — spans drawer stack through new cabinets */
+    /* Sink Wall Countertop — spans drawer stack through oven */
     {
       id: generateId(),
       name: "Sink Wall Countertop",
       zone_type: "countertop",
-      position: { x: 0.54, y: COUNTERTOP_Y, z: -1.2 },
-      dimensions: { width: 4.88, height: COUNTERTOP_HEIGHT, depth: LOWER_DEPTH },
+      position: { x: -0.4, y: COUNTERTOP_Y, z: -1.2 },
+      dimensions: { width: 2.76, height: COUNTERTOP_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    /* Connecting Countertop — spans the 3 cabinets connecting to right wing */
+    {
+      id: generateId(),
+      name: "Connecting Countertop",
+      zone_type: "countertop",
+      position: { x: 2.3, y: COUNTERTOP_Y, z: -0.2 },
+      dimensions: { width: 1.8, height: COUNTERTOP_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     /* Dishwasher — connects to right side of sink cabinets */
@@ -166,12 +175,12 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       dimensions: { width: 0.76, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Sink Wall Cabinet 1 — connects to right side of oven */
+    /* Sink Wall Cabinet 1 — perpendicular run connecting to right wing */
     {
       id: generateId(),
       name: "Sink Wall Cabinet 1",
       zone_type: "lower_cabinet",
-      position: { x: 1.48, y: LOWER_Y, z: -1.2 },
+      position: { x: 1.7, y: LOWER_Y, z: -0.2 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
@@ -180,16 +189,16 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Sink Wall Cabinet 2",
       zone_type: "lower_cabinet",
-      position: { x: 2.08, y: LOWER_Y, z: -1.2 },
+      position: { x: 2.3, y: LOWER_Y, z: -0.2 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
-    /* Sink Wall Cabinet 3 */
+    /* Sink Wall Cabinet 3 — front-right corner connects to Right Wing Base 1 front-left corner */
     {
       id: generateId(),
       name: "Sink Wall Cabinet 3",
       zone_type: "lower_cabinet",
-      position: { x: 2.68, y: LOWER_Y, z: -1.2 },
+      position: { x: 2.9, y: LOWER_Y, z: -0.2 },
       dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
