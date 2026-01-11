@@ -78,6 +78,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
   galley: [],
   "u-shaped": [],
   island: [],
+  "empty-room": [],
 
   /* ============================================================
    * CUSTOM U-SHAPED — DIGITAL TWIN
@@ -388,4 +389,5 @@ export const presetLabels: Record<KitchenPreset, { name: string; description: st
   "u-shaped": { name: "U-Shaped", description: "Three-sided layout" },
   island: { name: "Island Kitchen", description: "Central island workspace" },
   "custom-u-shaped": { name: "My Kitchen", description: "Digital twin of your real kitchen" },
+  "empty-room": { name: "Empty Room", description: "Start with a blank canvas" },
 };
