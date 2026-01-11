@@ -218,22 +218,23 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     },
     /* =========================================================
      * UPPER CABINETS ABOVE DRAWER STACK 1
-     * Aligned with Drawer Stack 1 at x: -1.6, z: -1.2
+     * Side by side skinny cabinets aligned with Drawer Stack 1 at x: -1.6, z: -1.2
+     * Each cabinet is 0.3m wide (half of standard)
      * ========================================================= */
     {
       id: generateId(),
       name: "Drawer Stack Upper 1",
       zone_type: "upper_cabinet",
-      position: { x: -1.6, y: UPPER_Y, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -1.75, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
     {
       id: generateId(),
       name: "Drawer Stack Upper 2",
       zone_type: "upper_cabinet",
-      position: { x: -1.6, y: UPPER_Y + UPPER_HEIGHT, z: -1.2 },
-      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      position: { x: -1.45, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: 0.3, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: 0, z: 0 },
     },
 
