@@ -75,127 +75,131 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
   galley: [],
   "u-shaped": [],
   island: [],
+  "empty-room": [],
 
   /* ============================================================
-   * CUSTOM U-SHAPED — DIGITAL TWIN
+   * CUSTOM U-SHAPED — DIGITAL TWIN (FRESH START)
+   * Wings extend into kitchen center (positive Z direction)
    * ============================================================ */
   "custom-u-shaped": [
     /* =========================================================
-     * LEFT WING — FIXED STACKING
+     * LEFT WING — Facing right (+X direction)
+     * Extends from back wall into kitchen center
      * ========================================================= */
     {
       id: generateId(),
       name: "Left Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: -3.6, y: LOWER_Y, z: -2.65 },
-      dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+      position: { x: -2.5, y: LOWER_Y, z: 0 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: -3.6, y: LOWER_Y, z: -2.0 },
-      dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+      position: { x: -2.5, y: LOWER_Y, z: 0.65 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: -3.6, y: LOWER_Y, z: -1.35 },
-      dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+      position: { x: -2.5, y: LOWER_Y, z: 1.3 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Countertop",
       zone_type: "countertop",
-      position: { x: -3.6, y: COUNTERTOP_Y, z: -2.0 },
-      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 },
+      position: { x: -2.5, y: COUNTERTOP_Y, z: 0.65 },
+      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.1 },
     },
     {
       id: generateId(),
       name: "Left Wing Upper 1",
       zone_type: "upper_cabinet",
-      position: { x: -3.6, y: UPPER_Y, z: -2.65 },
+      position: { x: -2.5, y: UPPER_Y, z: 0 },
       dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Upper 2",
       zone_type: "upper_cabinet",
-      position: { x: -3.6, y: UPPER_Y, z: -2.0 },
+      position: { x: -2.5, y: UPPER_Y, z: 0.65 },
       dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Left Wing Upper 3",
       zone_type: "upper_cabinet",
-      position: { x: -3.6, y: UPPER_Y, z: -1.35 },
+      position: { x: -2.5, y: UPPER_Y, z: 1.3 },
       dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
 
     /* =========================================================
-     * RIGHT WING — FIXED STACKING (CORRECTED)
+     * RIGHT WING — Facing left (-X direction)
+     * Extends from back wall into kitchen center
      * ========================================================= */
     {
       id: generateId(),
       name: "Right Wing Base 1",
       zone_type: "lower_cabinet",
-      position: { x: 4.6, y: LOWER_Y, z: -2.65 },
-      dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
-      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+      position: { x: 2.5, y: LOWER_Y, z: 0 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Base 2",
       zone_type: "lower_cabinet",
-      position: { x: 4.6, y: LOWER_Y, z: -2.0 },
-      dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
-      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+      position: { x: 2.5, y: LOWER_Y, z: 0.65 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Base 3",
       zone_type: "lower_cabinet",
-      position: { x: 4.6, y: LOWER_Y, z: -1.35 },
-      dimensions: { width: LOWER_DEPTH, height: LOWER_HEIGHT, depth: CABINET_WIDTH },
-      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+      position: { x: 2.5, y: LOWER_Y, z: 1.3 },
+      dimensions: { width: CABINET_WIDTH, height: LOWER_HEIGHT, depth: LOWER_DEPTH },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Countertop",
       zone_type: "countertop",
-      position: { x: 4.6, y: COUNTERTOP_Y, z: -2.0 },
-      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.0 },
+      position: { x: 2.5, y: COUNTERTOP_Y, z: 0.65 },
+      dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 2.1 },
     },
     {
       id: generateId(),
       name: "Right Wing Upper 1",
       zone_type: "upper_cabinet",
-      position: { x: 4.6, y: UPPER_Y, z: -2.65 },
+      position: { x: 2.5, y: UPPER_Y, z: 0 },
       dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Upper 2",
       zone_type: "upper_cabinet",
-      position: { x: 4.6, y: UPPER_Y, z: -2.0 },
+      position: { x: 2.5, y: UPPER_Y, z: 0.65 },
       dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
     {
       id: generateId(),
       name: "Right Wing Upper 3",
       zone_type: "upper_cabinet",
-      position: { x: 4.6, y: UPPER_Y, z: -1.35 },
+      position: { x: 2.5, y: UPPER_Y, z: 1.3 },
       dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
-      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+      rotation: { x: 0, y: -Math.PI / 2, z: 0 },
     },
   ],
 };
@@ -207,4 +211,5 @@ export const presetLabels: Record<KitchenPreset, { name: string; description: st
   "u-shaped": { name: "U-Shaped", description: "Three-sided layout" },
   island: { name: "Island Kitchen", description: "Central island workspace" },
   "custom-u-shaped": { name: "My Kitchen", description: "Digital twin of your real kitchen" },
+  "empty-room": { name: "Empty Room", description: "Start with an empty kitchen space" },
 };
