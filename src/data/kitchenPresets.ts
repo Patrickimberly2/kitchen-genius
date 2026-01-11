@@ -216,6 +216,31 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       position: { x: -2.2, y: COUNTERTOP_Y, z: 0 },
       dimensions: { width: LOWER_DEPTH, height: COUNTERTOP_HEIGHT, depth: 1.8 },
     },
+    /* =========================================================
+     * UPPER CABINETS ABOVE DRAWER STACK 1
+     * Aligned with Drawer Stack 1 at x: -1.6, z: -1.2
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Drawer Stack Upper 1",
+      zone_type: "upper_cabinet",
+      position: { x: -1.6, y: UPPER_Y, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Drawer Stack Upper 2",
+      zone_type: "upper_cabinet",
+      position: { x: -1.6, y: UPPER_Y + UPPER_HEIGHT, z: -1.2 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+
+    /* =========================================================
+     * LEFT WING UPPER CABINETS — 4 cabinets aligned with Left Wing Base 1-3
+     * Connected side by side, facing RIGHT (toward center)
+     * ========================================================= */
     {
       id: generateId(),
       name: "Left Wing Upper 1",
@@ -237,6 +262,14 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       name: "Left Wing Upper 3",
       zone_type: "upper_cabinet",
       position: { x: -2.2, y: UPPER_Y, z: 0.6 },
+      dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
+      rotation: { x: 0, y: Math.PI / 2, z: 0 },
+    },
+    {
+      id: generateId(),
+      name: "Left Wing Upper 4",
+      zone_type: "upper_cabinet",
+      position: { x: -2.2, y: UPPER_Y, z: 1.2 },
       dimensions: { width: CABINET_WIDTH, height: UPPER_HEIGHT, depth: UPPER_DEPTH },
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
     },
