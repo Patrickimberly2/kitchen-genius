@@ -46,11 +46,11 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       setHoverScale((prev) => THREE.MathUtils.lerp(prev, targetScale, delta * 8));
       meshRef.current.scale.setScalar(hoverScale);
       
-      // Subtle floating animation for selected
+      // Subtle floating animation for selected (relative to local origin)
       if (isSelected) {
-        meshRef.current.position.y = zone.position.y + Math.sin(Date.now() * 0.002) * 0.015;
+        meshRef.current.position.y = Math.sin(Date.now() * 0.002) * 0.015;
       } else {
-        meshRef.current.position.y = zone.position.y;
+        meshRef.current.position.y = 0;
       }
     }
     
@@ -66,9 +66,9 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       doorRef.current.rotation.y = -openProgress * Math.PI * 0.45; // 81 degree swing
     }
     
-    // Apply drawer translation
+    // Apply drawer translation (relative to local origin)
     if (drawerRef.current && isDrawerType) {
-      drawerRef.current.position.z = zone.position.z + zone.dimensions.depth / 2 + openProgress * zone.dimensions.depth * 0.6;
+      drawerRef.current.position.z = zone.dimensions.depth / 2 + openProgress * zone.dimensions.depth * 0.6;
     }
   });
 
@@ -214,12 +214,12 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       onPointerUp: handlePointerUp,
     };
 
-    // Countertops are simple slabs
+    // Countertops are simple slabs (no rotation needed for position)
     if (zone.zone_type === "countertop") {
       return (
         <mesh
           ref={meshRef}
-          position={[zone.position.x, zone.position.y, zone.position.z]}
+          position={[0, 0, 0]}
           {...commonProps}
           castShadow
           receiveShadow
@@ -237,7 +237,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {/* Island base */}
           <mesh
             ref={meshRef}
-            position={[zone.position.x, zone.position.y, zone.position.z]}
+            position={[0, 0, 0]}
             {...commonProps}
             castShadow
             receiveShadow
@@ -247,7 +247,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           </mesh>
           {/* Island countertop */}
           <mesh
-            position={[zone.position.x, zone.position.y + height / 2 - 0.02, zone.position.z]}
+            position={[0, height / 2 - 0.02, 0]}
             castShadow
           >
             <boxGeometry args={[width + 0.05, 0.04, depth + 0.05]} />
@@ -266,7 +266,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
         <group>
           <mesh
             ref={meshRef}
-            position={[zone.position.x, zone.position.y, zone.position.z]}
+            position={[0, 0, 0]}
             {...commonProps}
             castShadow
             receiveShadow
@@ -282,11 +282,11 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {/* Sink basins */}
           {isSink && (
             <>
-              <mesh position={[zone.position.x - 0.15, zone.position.y + 0.02, zone.position.z]}>
+              <mesh position={[-0.15, 0.02, 0]}>
                 <boxGeometry args={[0.32, 0.08, 0.38]} />
                 <meshStandardMaterial color="#c0c0c0" roughness={0.1} metalness={0.7} />
               </mesh>
-              <mesh position={[zone.position.x + 0.2, zone.position.y + 0.02, zone.position.z]}>
+              <mesh position={[0.2, 0.02, 0]}>
                 <boxGeometry args={[0.32, 0.08, 0.38]} />
                 <meshStandardMaterial color="#c0c0c0" roughness={0.1} metalness={0.7} />
               </mesh>
@@ -297,7 +297,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {isStove && (
             <>
               {[[-0.18, -0.12], [0.18, -0.12], [-0.18, 0.12], [0.18, 0.12]].map(([dx, dz], i) => (
-                <mesh key={i} position={[zone.position.x + dx, zone.position.y + height / 2 + 0.01, zone.position.z + dz]}>
+                <mesh key={i} position={[dx, height / 2 + 0.01, dz]}>
                   <cylinderGeometry args={[0.1, 0.1, 0.02, 16]} />
                   <meshStandardMaterial color="#1a1a1a" roughness={0.3} metalness={0.2} />
                 </mesh>
@@ -319,7 +319,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {/* Cabinet body */}
           <mesh
             ref={meshRef}
-            position={[zone.position.x, zone.position.y, zone.position.z]}
+            position={[0, 0, 0]}
             {...commonProps}
             castShadow
             receiveShadow
@@ -332,9 +332,9 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <group
             ref={doorRef}
             position={[
-              zone.position.x - width / 2 + 0.01,
-              zone.position.y,
-              zone.position.z + depth / 2
+              -width / 2 + 0.01,
+              0,
+              depth / 2
             ]}
           >
             <mesh
@@ -355,7 +355,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {/* Interior shelf hint (visible when open) */}
           {zone.notes?.includes("shelf") && openProgress > 0.3 && (
             <mesh
-              position={[zone.position.x, zone.position.y, zone.position.z]}
+              position={[0, 0, 0]}
               castShadow
             >
               <boxGeometry args={[width - 0.04, 0.015, depth - 0.04]} />
@@ -375,7 +375,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {/* Drawer body/cavity */}
           <mesh
             ref={meshRef}
-            position={[zone.position.x, zone.position.y, zone.position.z]}
+            position={[0, 0, 0]}
             {...commonProps}
             castShadow
             receiveShadow
@@ -390,9 +390,9 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
               key={idx}
               ref={idx === 1 ? drawerRef : undefined}
               position={[
-                zone.position.x,
-                zone.position.y + yOffset,
-                zone.position.z + depth / 2 + 0.01 + (idx === 1 ? openProgress * depth * 0.6 : 0)
+                0,
+                yOffset,
+                depth / 2 + 0.01 + (idx === 1 ? openProgress * depth * 0.6 : 0)
               ]}
               castShadow
             >
@@ -406,9 +406,9 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             <mesh
               key={`handle-${idx}`}
               position={[
-                zone.position.x,
-                zone.position.y + yOffset,
-                zone.position.z + depth / 2 + 0.035 + (idx === 1 ? openProgress * depth * 0.6 : 0)
+                0,
+                yOffset,
+                depth / 2 + 0.035 + (idx === 1 ? openProgress * depth * 0.6 : 0)
               ]}
               castShadow
             >
@@ -429,7 +429,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {/* Appliance body */}
           <mesh
             ref={meshRef}
-            position={[zone.position.x, zone.position.y, zone.position.z]}
+            position={[0, 0, 0]}
             {...commonProps}
             castShadow
             receiveShadow
@@ -442,18 +442,18 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           {isFrenchDoor ? (
             <>
               {/* Left door handle */}
-              <mesh position={[zone.position.x - 0.02, zone.position.y, zone.position.z + depth / 2 + 0.02]}>
+              <mesh position={[-0.02, 0, depth / 2 + 0.02]}>
                 <boxGeometry args={[0.02, 0.35, 0.03]} />
                 <meshStandardMaterial color="#888888" metalness={0.8} roughness={0.2} />
               </mesh>
               {/* Right door handle */}
-              <mesh position={[zone.position.x + 0.02, zone.position.y, zone.position.z + depth / 2 + 0.02]}>
+              <mesh position={[0.02, 0, depth / 2 + 0.02]}>
                 <boxGeometry args={[0.02, 0.35, 0.03]} />
                 <meshStandardMaterial color="#888888" metalness={0.8} roughness={0.2} />
               </mesh>
             </>
           ) : (
-            <mesh position={[zone.position.x - width / 2 + 0.06, zone.position.y, zone.position.z + depth / 2 + 0.02]}>
+            <mesh position={[-width / 2 + 0.06, 0, depth / 2 + 0.02]}>
               <boxGeometry args={[0.02, 0.35, 0.03]} />
               <meshStandardMaterial color="#888888" metalness={0.8} roughness={0.2} />
             </mesh>
@@ -461,7 +461,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           
           {/* Door seam lines */}
           {isFrenchDoor && (
-            <mesh position={[zone.position.x, zone.position.y, zone.position.z + depth / 2 + 0.001]}>
+            <mesh position={[0, 0, depth / 2 + 0.001]}>
               <boxGeometry args={[0.005, height - 0.02, 0.001]} />
               <meshBasicMaterial color="#333333" />
             </mesh>
@@ -474,7 +474,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
     return (
       <mesh
         ref={meshRef}
-        position={[zone.position.x, zone.position.y, zone.position.z]}
+        position={[0, 0, 0]}
         {...commonProps}
         castShadow
         receiveShadow
@@ -488,13 +488,18 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   // Apply rotation if specified
   const rotation = zone.rotation || { x: 0, y: 0, z: 0 };
   
+  // Position the group at zone location, apply rotation around zone center
   return (
-    <group ref={groupRef} rotation={[rotation.x, rotation.y, rotation.z]}>
+    <group 
+      ref={groupRef} 
+      position={[zone.position.x, zone.position.y, zone.position.z]}
+      rotation={[rotation.x, rotation.y, rotation.z]}
+    >
       {renderZone()}
       
       {/* Selection outline */}
       {isSelected && (
-        <lineSegments position={[zone.position.x, zone.position.y, zone.position.z]}>
+        <lineSegments position={[0, 0, 0]}>
           <edgesGeometry args={[new THREE.BoxGeometry(
             width + 0.03,
             height + 0.03,
@@ -507,11 +512,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       {/* Label and item count badge */}
       {(isHovered || isSelected) && (
         <Html
-          position={[
-            zone.position.x,
-            zone.position.y + height / 2 + 0.2,
-            zone.position.z,
-          ]}
+          position={[0, height / 2 + 0.2, 0]}
           center
           distanceFactor={8}
         >
