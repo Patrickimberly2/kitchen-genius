@@ -657,26 +657,27 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     },
 
     /* =========================================================
-     * UPPER CABINETS ABOVE FRIDGE — Two side-by-side cabinets
+     * UPPER CABINETS ABOVE FRIDGE — Two side-by-side half-height cabinets
      * Aligned with fridge (x: 0.8, width: 0.9), positioned above it
+     * Half height (UPPER_HEIGHT / 2), positioned at top of upper cabinet zone
      * ========================================================= */
     {
       id: generateId(),
       name: "Fridge Upper Left",
       zone_type: "upper_cabinet",
-      position: { x: 0.575, y: UPPER_Y, z: 2.4 },
-      dimensions: { width: 0.45, height: UPPER_HEIGHT, depth: 0.35 },
+      position: { x: 0.575, y: 1.5 + UPPER_HEIGHT - (UPPER_HEIGHT / 2) / 2, z: 2.4 },
+      dimensions: { width: 0.45, height: UPPER_HEIGHT / 2, depth: 0.35 },
       rotation: { x: 0, y: Math.PI, z: 0 },
-      notes: "Upper cabinet above fridge (left)",
+      notes: "Half-height upper cabinet above fridge (left)",
     },
     {
       id: generateId(),
       name: "Fridge Upper Right",
       zone_type: "upper_cabinet",
-      position: { x: 1.025, y: UPPER_Y, z: 2.4 },
-      dimensions: { width: 0.45, height: UPPER_HEIGHT, depth: 0.35 },
+      position: { x: 1.025, y: 1.5 + UPPER_HEIGHT - (UPPER_HEIGHT / 2) / 2, z: 2.4 },
+      dimensions: { width: 0.45, height: UPPER_HEIGHT / 2, depth: 0.35 },
       rotation: { x: 0, y: Math.PI, z: 0 },
-      notes: "Upper cabinet above fridge (right)",
+      notes: "Half-height upper cabinet above fridge (right)",
     },
   ],
 };
