@@ -655,6 +655,29 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       rotation: { x: 0, y: Math.PI, z: 0 },
       notes: "French door fridge with deli drawer and freezer drawer",
     },
+
+    /* =========================================================
+     * UPPER CABINETS ABOVE FRIDGE — Two side-by-side cabinets
+     * Aligned with fridge (x: 0.8, width: 0.9), positioned above it
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Fridge Upper Left",
+      zone_type: "upper_cabinet",
+      position: { x: 0.575, y: UPPER_Y, z: 2.4 },
+      dimensions: { width: 0.45, height: UPPER_HEIGHT, depth: 0.35 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upper cabinet above fridge (left)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Upper Right",
+      zone_type: "upper_cabinet",
+      position: { x: 1.025, y: UPPER_Y, z: 2.4 },
+      dimensions: { width: 0.45, height: UPPER_HEIGHT, depth: 0.35 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upper cabinet above fridge (right)",
+    },
   ],
 };
 
