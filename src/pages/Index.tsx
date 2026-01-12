@@ -16,7 +16,7 @@ function KitchenApp() {
   const isMobile = useIsMobile();
   const { setMobileView, isMobileView, zones, selectedZoneId, selectZone } = useKitchen();
   const [interiorModalZone, setInteriorModalZone] = useState<KitchenZone | null>(null);
-  
+
   useEffect(() => {
     setMobileView(isMobile);
   }, [isMobile, setMobileView]);
@@ -24,9 +24,19 @@ function KitchenApp() {
   // Open modal when a storage zone is selected (double-click triggers this)
   const handleOpenInterior = (zone: KitchenZone) => {
     const storageTypes = [
-      "upper_cabinet", "lower_cabinet", "drawer", "pantry", "pantry_shelf",
-      "refrigerator", "freezer", "upright_freezer", "freezer_shelf",
-      "fridge_door", "fridge_drawer", "cabinet_upper", "cabinet_lower"
+      "upper_cabinet",
+      "lower_cabinet",
+      "drawer",
+      "pantry",
+      "pantry_shelf",
+      "refrigerator",
+      "freezer",
+      "upright_freezer",
+      "freezer_shelf",
+      "fridge_door",
+      "fridge_drawer",
+      "cabinet_upper",
+      "cabinet_lower",
     ];
     if (storageTypes.includes(zone.zone_type)) {
       setInteriorModalZone(zone);
@@ -36,7 +46,7 @@ function KitchenApp() {
   // Watch for selected zone changes to potentially open interior view
   useEffect(() => {
     if (selectedZoneId) {
-      const zone = zones.find(z => z.id === selectedZoneId);
+      const zone = zones.find((z) => z.id === selectedZoneId);
       if (zone) {
         // We'll use a custom event or context to trigger the modal
         // For now, clicking once selects, the modal can be opened via ZoneMesh3D double-click
@@ -57,21 +67,21 @@ function KitchenApp() {
     <div className="fixed inset-0 bg-background">
       {/* 3D Scene */}
       <KitchenScene3D onOpenInterior={handleOpenInterior} />
-      
+
       {/* UI Overlays */}
       <KitchenToolbar />
       <InventoryPanel />
       <AISuggestionsPanel />
       <ControlsHelp />
       <ZoneEditPanel />
-      
+
       {/* Cabinet Interior Modal */}
       <CabinetInteriorModal
         zone={interiorModalZone}
         isOpen={interiorModalZone !== null}
         onClose={() => setInteriorModalZone(null)}
       />
-      
+
       {/* Welcome / Onboarding */}
       <WelcomeOverlay />
     </div>
