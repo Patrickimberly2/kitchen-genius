@@ -1,4 +1,5 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { InventoryItem } from "@/types/kitchen";
 import { getDefaultShape, getDefaultDimensions, getCategoryColor } from "@/utils/itemShapeUtils";
@@ -7,15 +8,44 @@ interface Item3DProps {
   item: InventoryItem;
   position: { x: number; y: number; z: number };
   isHighlighted?: boolean;
+  onClick?: () => void;
 }
 
-export function Item3D({ item, position, isHighlighted }: Item3DProps) {
+export function Item3D({ item, position, isHighlighted, onClick }: Item3DProps) {
+  const groupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+  const [isHovered, setIsHovered] = useState(false);
   
   const shape = item.shape || getDefaultShape(item.category, item.unit);
   const dimensions = item.dimensions || getDefaultDimensions(shape, item.category);
   const color = item.color || getCategoryColor(item.category);
   
+  // Smooth hover animation
+  useFrame((_, delta) => {
+    if (!groupRef.current) return;
+    
+    // Target values for hover effect
+    const targetZ = isHovered ? 0.03 : 0; // Pop forward on hover
+    const targetScale = isHovered ? 1.08 : 1; // Slight scale up
+    
+    // Lerp position
+    groupRef.current.position.z = THREE.MathUtils.lerp(
+      groupRef.current.position.z,
+      position.z + targetZ,
+      delta * 12
+    );
+    
+    // Lerp scale
+    const currentScale = groupRef.current.scale.x;
+    const newScale = THREE.MathUtils.lerp(currentScale, targetScale, delta * 12);
+    groupRef.current.scale.setScalar(newScale);
+    
+    // Subtle floating when highlighted
+    if (isHighlighted && meshRef.current) {
+      meshRef.current.position.y = Math.sin(Date.now() * 0.003) * 0.005;
+    }
+  });
+
   const geometry = useMemo(() => {
     switch (shape) {
       case "bottle":
@@ -86,6 +116,8 @@ export function Item3D({ item, position, isHighlighted }: Item3DProps) {
     
     if (isHighlighted) {
       baseColor.multiplyScalar(1.3);
+    } else if (isHovered) {
+      baseColor.multiplyScalar(1.15);
     }
     
     // Different materials for different shapes
@@ -130,7 +162,7 @@ export function Item3D({ item, position, isHighlighted }: Item3DProps) {
           metalness: 0.1,
         });
     }
-  }, [color, shape, isHighlighted]);
+  }, [color, shape, isHighlighted, isHovered]);
 
   // Render cap/lid for jars and bottles
   const renderCap = () => {
@@ -170,17 +202,59 @@ export function Item3D({ item, position, isHighlighted }: Item3DProps) {
     );
   };
 
+  // Soft shadow plane under item
+  const renderShadow = () => {
+    const shadowSize = Math.max(dimensions.width, dimensions.depth) * 1.2;
+    return (
+      <mesh 
+        position={[0, -dimensions.height / 2 + 0.002, 0]} 
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <circleGeometry args={[shadowSize / 2, 16]} />
+        <meshBasicMaterial 
+          color="#000000" 
+          transparent 
+          opacity={isHovered ? 0.2 : 0.12} 
+        />
+      </mesh>
+    );
+  };
+
   return (
-    <group position={[position.x, position.y, position.z]}>
-      <mesh ref={meshRef} geometry={geometry} material={material} castShadow receiveShadow />
+    <group 
+      ref={groupRef} 
+      position={[position.x, position.y, position.z]}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        setIsHovered(true);
+        document.body.style.cursor = "pointer";
+      }}
+      onPointerOut={(e) => {
+        e.stopPropagation();
+        setIsHovered(false);
+        document.body.style.cursor = "auto";
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick?.();
+      }}
+    >
+      <mesh 
+        ref={meshRef} 
+        geometry={geometry} 
+        material={material} 
+        castShadow 
+        receiveShadow 
+      />
       {renderCap()}
       {renderLabel()}
+      {renderShadow()}
       
       {/* Selection/highlight outline */}
-      {isHighlighted && (
+      {(isHighlighted || isHovered) && (
         <lineSegments>
           <edgesGeometry args={[geometry]} />
-          <lineBasicMaterial color="#fbbf24" linewidth={2} />
+          <lineBasicMaterial color={isHighlighted ? "#fbbf24" : "#ffffff"} linewidth={2} />
         </lineSegments>
       )}
     </group>

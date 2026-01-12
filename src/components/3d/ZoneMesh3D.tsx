@@ -1,10 +1,11 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useMemo } from "react";
 import { useFrame, useThree, ThreeEvent } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { KitchenZone } from "@/types/kitchen";
 import { useKitchen } from "@/context/KitchenContext";
 import { getZoneColor } from "@/utils/kitchenUtils";
+import { ZoneItems3D } from "./ZoneItems3D";
 
 interface ZoneMesh3DProps {
   zone: KitchenZone;
@@ -50,36 +51,48 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const isWindowType = zone.zone_type === "window";
   const isMicrowaveType = zone.zone_type === "microwave";
   
+  // Calculate number of shelves based on height
+  const shelfCount = useMemo(() => {
+    if (!isCabinetType) return 0;
+    const h = zone.dimensions.height;
+    if (h < 0.3) return 0;
+    if (h < 0.5) return 1;
+    if (h < 0.8) return 2;
+    return 3;
+  }, [isCabinetType, zone.dimensions.height]);
+  
   useFrame((_, delta) => {
     if (meshRef.current) {
-      // Smooth scale transition for hover
-      const targetScale = isHovered ? 1.015 : 1;
-      setHoverScale((prev) => THREE.MathUtils.lerp(prev, targetScale, delta * 8));
+      // Smooth scale transition for hover - more subtle
+      const targetScale = isHovered ? 1.01 : 1;
+      setHoverScale((prev) => THREE.MathUtils.lerp(prev, targetScale, delta * 10));
       meshRef.current.scale.setScalar(hoverScale);
       
       // Subtle floating animation for selected (relative to local origin)
       if (isSelected) {
-        meshRef.current.position.y = Math.sin(Date.now() * 0.002) * 0.015;
+        meshRef.current.position.y = Math.sin(Date.now() * 0.002) * 0.01;
       } else {
         meshRef.current.position.y = 0;
       }
     }
     
-    // Animate door/drawer opening
+    // Animate door/drawer opening with easing
     const targetProgress = isOpen ? 1 : 0;
-    const newProgress = THREE.MathUtils.lerp(openProgress, targetProgress, delta * 6);
-    if (Math.abs(newProgress - openProgress) > 0.001) {
+    // Use smoother easing - slower at start and end
+    const easeFactor = isOpen ? 8 : 6;
+    const newProgress = THREE.MathUtils.lerp(openProgress, targetProgress, delta * easeFactor);
+    if (Math.abs(newProgress - openProgress) > 0.0001) {
       setOpenProgress(newProgress);
     }
     
-    // Apply door rotation for cabinets
+    // Apply door rotation for cabinets - opens past 90° slightly
     if (doorRef.current && isCabinetType) {
-      doorRef.current.rotation.y = -openProgress * Math.PI * 0.45; // 81 degree swing
+      doorRef.current.rotation.y = -openProgress * Math.PI * 0.52; // 93.6 degree swing
     }
     
     // Apply drawer translation (relative to local origin)
     if (drawerRef.current && isDrawerType) {
-      drawerRef.current.position.z = zone.dimensions.depth / 2 + openProgress * zone.dimensions.depth * 0.6;
+      drawerRef.current.position.z = zone.dimensions.depth / 2 + openProgress * zone.dimensions.depth * 0.65;
     }
   });
 
@@ -585,7 +598,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       );
     }
     
-    // Pantry Shelf
+    // Pantry Shelf - with items always visible
     if (isPantryShelfType) {
       return (
         <group>
@@ -606,11 +619,14 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             <boxGeometry args={[width - 0.02, 0.015, 0.002]} />
             <meshStandardMaterial color="#d0c4b0" roughness={0.7} metalness={0.05} />
           </mesh>
+          
+          {/* Items on shelf */}
+          <ZoneItems3D zone={zone} isOpen={true} openProgress={1} />
         </group>
       );
     }
     
-    // Freezer Shelf
+    // Freezer Shelf - with items always visible
     if (isFreezerShelfType) {
       return (
         <group>
@@ -637,6 +653,9 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             <boxGeometry args={[width - 0.04, height - 0.04, 0.01]} />
             <meshStandardMaterial color="#e8f0f8" roughness={0.8} metalness={0.1} transparent opacity={0.3} />
           </mesh>
+          
+          {/* Items on shelf */}
+          <ZoneItems3D zone={zone} isOpen={true} openProgress={1} />
         </group>
       );
     }
@@ -692,16 +711,16 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       );
     }
     
-    // Pantry with door and 8 interior shelves
+    // Pantry with door and 8 interior shelves + items
     if (isPantryType) {
       const doorWidth = width - 0.02;
       const doorHeight = height - 0.02;
       const doorDepth = 0.02;
       
       // 8 shelves evenly distributed
-      const shelfCount = 8;
-      const shelfSpacing = (height - 0.1) / (shelfCount + 1);
-      const shelfYPositions = Array.from({ length: shelfCount }, (_, i) => 
+      const pantryShelfCount = 8;
+      const shelfSpacing = (height - 0.1) / (pantryShelfCount + 1);
+      const shelfYPositions = Array.from({ length: pantryShelfCount }, (_, i) => 
         -height / 2 + 0.05 + shelfSpacing * (i + 1)
       );
       
@@ -748,6 +767,9 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             </mesh>
           ))}
           
+          {/* Items inside pantry */}
+          <ZoneItems3D zone={zone} isOpen={isOpen} openProgress={openProgress} />
+          
           {/* Pantry door (hinged on left side) */}
           <group
             ref={doorRef}
@@ -775,11 +797,18 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       );
     }
     
-    // Upright Freezer with single hinged door
+    // Upright Freezer with single hinged door + items
     if (isUprightFreezerType) {
       const doorWidth = width - 0.02;
       const doorHeight = height - 0.02;
       const doorDepth = 0.025;
+      
+      // 4 shelves for freezer
+      const freezerShelfCount = 4;
+      const shelfSpacing = (height - 0.1) / (freezerShelfCount + 1);
+      const shelfYPositions = Array.from({ length: freezerShelfCount }, (_, i) => 
+        -height / 2 + 0.05 + shelfSpacing * (i + 1)
+      );
       
       return (
         <group>
@@ -807,6 +836,26 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
               />
             </mesh>
           )}
+          
+          {/* Interior shelves (visible when door opens) */}
+          {openProgress > 0.15 && shelfYPositions.map((yPos, idx) => (
+            <mesh 
+              key={`freezer-shelf-${idx}`} 
+              position={[0, yPos, -depth / 6]}
+            >
+              <boxGeometry args={[width - 0.06, 0.015, depth - 0.12]} />
+              <meshStandardMaterial 
+                color="#3a3a3a" 
+                roughness={0.5} 
+                metalness={0.3}
+                transparent 
+                opacity={Math.min(openProgress * 1.5, 1)} 
+              />
+            </mesh>
+          ))}
+          
+          {/* Items inside freezer */}
+          <ZoneItems3D zone={zone} isOpen={isOpen} openProgress={openProgress} />
           
           {/* Single door (hinged on left side) */}
           <group
@@ -841,15 +890,24 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       );
     }
     
-    // Cabinets with doors
+    // Cabinets with doors, interior shelves, and items
     if (isCabinetType) {
       const doorWidth = width - 0.02;
       const doorHeight = height - 0.02;
       const doorDepth = 0.02;
       
+      // Calculate shelf positions
+      const shelfPositions: number[] = [];
+      if (shelfCount > 0) {
+        const shelfSpacing = (height - 0.06) / (shelfCount + 1);
+        for (let i = 1; i <= shelfCount; i++) {
+          shelfPositions.push(-height / 2 + 0.03 + shelfSpacing * i);
+        }
+      }
+      
       return (
         <group>
-          {/* Cabinet body */}
+          {/* Cabinet body - the frame */}
           <mesh
             ref={meshRef}
             position={[0, 0, 0]}
@@ -860,6 +918,62 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             <boxGeometry args={[width, height, depth]} />
             {getMaterial()}
           </mesh>
+          
+          {/* Dark interior back panel (visible when door opens) */}
+          {openProgress > 0.05 && (
+            <mesh position={[0, 0, -depth / 2 + 0.01]}>
+              <boxGeometry args={[width - 0.03, height - 0.03, 0.01]} />
+              <meshStandardMaterial 
+                color="#2a2420" 
+                roughness={0.85} 
+                transparent 
+                opacity={Math.min(openProgress * 1.5, 0.95)} 
+              />
+            </mesh>
+          )}
+          
+          {/* Interior side walls (visible when open) */}
+          {openProgress > 0.1 && (
+            <>
+              <mesh position={[-width / 2 + 0.015, 0, 0]}>
+                <boxGeometry args={[0.015, height - 0.03, depth - 0.04]} />
+                <meshStandardMaterial 
+                  color="#3d3530" 
+                  roughness={0.8} 
+                  transparent 
+                  opacity={Math.min(openProgress * 1.5, 0.9)} 
+                />
+              </mesh>
+              <mesh position={[width / 2 - 0.015, 0, 0]}>
+                <boxGeometry args={[0.015, height - 0.03, depth - 0.04]} />
+                <meshStandardMaterial 
+                  color="#3d3530" 
+                  roughness={0.8} 
+                  transparent 
+                  opacity={Math.min(openProgress * 1.5, 0.9)} 
+                />
+              </mesh>
+            </>
+          )}
+          
+          {/* Interior shelves (visible when door opens) */}
+          {openProgress > 0.15 && shelfPositions.map((yPos, idx) => (
+            <mesh 
+              key={`shelf-${idx}`} 
+              position={[0, yPos, -depth * 0.1]}
+            >
+              <boxGeometry args={[width - 0.04, 0.015, depth - 0.08]} />
+              <meshStandardMaterial 
+                color="#4d4540" 
+                roughness={0.7} 
+                transparent 
+                opacity={Math.min(openProgress * 1.3, 0.95)} 
+              />
+            </mesh>
+          ))}
+          
+          {/* Items inside cabinet */}
+          <ZoneItems3D zone={zone} isOpen={isOpen} openProgress={openProgress} />
           
           {/* Cabinet door (hinged on left side) */}
           <group
@@ -884,22 +998,11 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
               <meshStandardMaterial color={handleColor} metalness={handleMetalness} roughness={0.3} />
             </mesh>
           </group>
-          
-          {/* Interior shelf hint (visible when open) */}
-          {zone.notes?.includes("shelf") && openProgress > 0.3 && (
-            <mesh
-              position={[0, 0, 0]}
-              castShadow
-            >
-              <boxGeometry args={[width - 0.04, 0.015, depth - 0.04]} />
-              <meshStandardMaterial color="#c4a77d" roughness={0.7} transparent opacity={openProgress} />
-            </mesh>
-          )}
         </group>
       );
     }
     
-    // Drawers that slide out
+    // Drawers that slide out with interior and items
     if (isDrawerType) {
       // Single drawer for short heights (<=0.3m), 3-drawer stack for taller units
       const isSingleDrawer = height <= 0.3;
@@ -923,6 +1026,25 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             {getMaterial()}
           </mesh>
           
+          {/* Dark interior (visible when open) */}
+          {openProgress > 0.1 && (
+            <mesh position={[0, 0, depth * 0.3 + openProgress * depth * 0.3]}>
+              <boxGeometry args={[width - 0.04, height - 0.04, depth * 0.9]} />
+              <meshStandardMaterial 
+                color="#2a2420" 
+                roughness={0.85} 
+                side={THREE.BackSide}
+                transparent 
+                opacity={Math.min(openProgress * 1.5, 0.9)} 
+              />
+            </mesh>
+          )}
+          
+          {/* Items inside drawer */}
+          <group position={[0, 0, openProgress * depth * 0.6]}>
+            <ZoneItems3D zone={zone} isOpen={isOpen} openProgress={openProgress} />
+          </group>
+          
           {/* Drawer fronts */}
           {yOffsets.map((yOffset, idx) => (
             <mesh
@@ -931,7 +1053,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
               position={[
                 0,
                 yOffset,
-                depth / 2 + 0.01 + (idx === 0 ? openProgress * depth * 0.6 : 0)
+                depth / 2 + 0.01 + (idx === 0 ? openProgress * depth * 0.65 : 0)
               ]}
               castShadow
             >
@@ -947,7 +1069,7 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
               position={[
                 0,
                 yOffset,
-                depth / 2 + 0.035 + (idx === 0 ? openProgress * depth * 0.6 : 0)
+                depth / 2 + 0.04 + (idx === 0 ? openProgress * depth * 0.65 : 0)
               ]}
               castShadow
             >
