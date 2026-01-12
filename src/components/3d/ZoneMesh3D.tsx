@@ -34,9 +34,13 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const baseColor = zone.color || getZoneColor(zone.zone_type);
   
   // Determine if this zone can be opened
-  const canOpen = ["upper_cabinet", "lower_cabinet", "drawer", "refrigerator", "freezer", "pantry", "dishwasher", "upright_freezer"].includes(zone.zone_type);
+  const canOpen = ["upper_cabinet", "lower_cabinet", "drawer", "refrigerator", "freezer", "pantry", "dishwasher", "upright_freezer", "fridge_door", "fridge_drawer"].includes(zone.zone_type);
   const isDrawerType = zone.zone_type === "drawer";
   const isPantryType = zone.zone_type === "pantry";
+  const isPantryShelfType = zone.zone_type === "pantry_shelf";
+  const isFreezerShelfType = zone.zone_type === "freezer_shelf";
+  const isFridgeDoorType = zone.zone_type === "fridge_door";
+  const isFridgeDrawerType = zone.zone_type === "fridge_drawer";
   const isCabinetType = ["upper_cabinet", "lower_cabinet"].includes(zone.zone_type);
   const isApplianceType = ["refrigerator", "freezer"].includes(zone.zone_type);
   const isUprightFreezerType = zone.zone_type === "upright_freezer";
@@ -503,6 +507,135 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
           <mesh position={[width / 8, 0, depth / 2 + 0.025]}>
             <boxGeometry args={[0.02, height * 0.5, 0.02]} />
             <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.8} />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Fridge Door (French door style - hinged)
+    if (isFridgeDoorType) {
+      const doorDepth = 0.03;
+      const isLeftDoor = zone.name.includes("Left");
+      
+      return (
+        <group>
+          {/* Door panel */}
+          <group
+            ref={doorRef}
+            position={[
+              isLeftDoor ? width / 2 - 0.01 : -width / 2 + 0.01,
+              0,
+              depth / 2
+            ]}
+          >
+            <mesh
+              ref={meshRef}
+              position={[isLeftDoor ? -width / 2 + 0.01 : width / 2 - 0.01, 0, doorDepth / 2]}
+              {...commonProps}
+              castShadow
+              receiveShadow
+            >
+              <boxGeometry args={[width - 0.02, height - 0.02, doorDepth]} />
+              <meshStandardMaterial color="#1a1a1a" roughness={0.15} metalness={0.4} />
+            </mesh>
+            
+            {/* Vertical handle */}
+            <mesh position={[isLeftDoor ? 0.03 : -0.03, 0, doorDepth + 0.02]}>
+              <boxGeometry args={[0.025, height * 0.5, 0.035]} />
+              <meshStandardMaterial color="#c0c0c0" metalness={0.85} roughness={0.15} />
+            </mesh>
+          </group>
+        </group>
+      );
+    }
+    
+    // Fridge Drawer (pull-out drawer style)
+    if (isFridgeDrawerType) {
+      const drawerFrontDepth = 0.03;
+      
+      return (
+        <group>
+          {/* Drawer body */}
+          <mesh
+            position={[0, 0, 0]}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.2} metalness={0.3} />
+          </mesh>
+          
+          {/* Drawer front */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, depth / 2 + drawerFrontDepth / 2 + openProgress * depth * 0.5]}
+            {...commonProps}
+            castShadow
+          >
+            <boxGeometry args={[width - 0.02, height - 0.02, drawerFrontDepth]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.15} metalness={0.4} />
+          </mesh>
+          
+          {/* Horizontal handle */}
+          <mesh position={[0, height * 0.1, depth / 2 + drawerFrontDepth + 0.02 + openProgress * depth * 0.5]}>
+            <boxGeometry args={[width * 0.6, 0.025, 0.025]} />
+            <meshStandardMaterial color="#c0c0c0" metalness={0.85} roughness={0.15} />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Pantry Shelf
+    if (isPantryShelfType) {
+      return (
+        <group>
+          {/* Shelf box */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#e8ddd0" roughness={0.6} metalness={0.05} />
+          </mesh>
+          
+          {/* Shelf divider line at top */}
+          <mesh position={[0, height / 2 - 0.01, depth / 2 + 0.001]}>
+            <boxGeometry args={[width - 0.02, 0.015, 0.002]} />
+            <meshStandardMaterial color="#d0c4b0" roughness={0.7} metalness={0.05} />
+          </mesh>
+        </group>
+      );
+    }
+    
+    // Freezer Shelf
+    if (isFreezerShelfType) {
+      return (
+        <group>
+          {/* Shelf box */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.2} metalness={0.4} />
+          </mesh>
+          
+          {/* Shelf divider line at top */}
+          <mesh position={[0, height / 2 - 0.01, depth / 2 + 0.001]}>
+            <boxGeometry args={[width - 0.02, 0.015, 0.002]} />
+            <meshStandardMaterial color="#2a2a2a" roughness={0.3} metalness={0.3} />
+          </mesh>
+          
+          {/* Frost effect on interior */}
+          <mesh position={[0, 0, -depth / 4]}>
+            <boxGeometry args={[width - 0.04, height - 0.04, 0.01]} />
+            <meshStandardMaterial color="#e8f0f8" roughness={0.8} metalness={0.1} transparent opacity={0.3} />
           </mesh>
         </group>
       );

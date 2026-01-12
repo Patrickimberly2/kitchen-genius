@@ -613,47 +613,169 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     /* =========================================================
      * PANTRY — To the right of French Door Fridge
      * Same size as fridge (width: 0.9, height: 1.8, depth: 0.8)
-     * Door faces the island, contains 8 internal shelves
+     * Door faces the island, contains 8 internal shelves as separate clickable zones
+     * Shelf height: 1.8m / 8 = 0.225m each
      * ========================================================= */
     {
       id: generateId(),
-      name: "Pantry",
-      zone_type: "pantry",
-      position: { x: 1.75, y: LOWER_Y + 0.15, z: 2.4 },
-      dimensions: { width: 0.9, height: 1.8, depth: 0.8 },
+      name: "Pantry Shelf 1",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 0.1125, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
       rotation: { x: 0, y: Math.PI, z: 0 },
-      notes: "Pantry with door and 8 interior shelves",
+      notes: "Pantry - shelf 1 (bottom)",
+    },
+    {
+      id: generateId(),
+      name: "Pantry Shelf 2",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 0.3375, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry - shelf 2",
+    },
+    {
+      id: generateId(),
+      name: "Pantry Shelf 3",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 0.5625, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry - shelf 3",
+    },
+    {
+      id: generateId(),
+      name: "Pantry Shelf 4",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 0.7875, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry - shelf 4",
+    },
+    {
+      id: generateId(),
+      name: "Pantry Shelf 5",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 1.0125, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry - shelf 5",
+    },
+    {
+      id: generateId(),
+      name: "Pantry Shelf 6",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 1.2375, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry - shelf 6",
+    },
+    {
+      id: generateId(),
+      name: "Pantry Shelf 7",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 1.4625, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry - shelf 7",
+    },
+    {
+      id: generateId(),
+      name: "Pantry Shelf 8",
+      zone_type: "pantry_shelf",
+      position: { x: 1.75, y: 1.6875, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.225, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry - shelf 8 (top)",
     },
 
     /* =========================================================
      * UPRIGHT FREEZER — To the right of Pantry
      * Same size as fridge (width: 0.9, height: 1.8, depth: 0.8)
-     * Single door opens on left hinge
+     * Contains 4 interior shelves as separate clickable zones
+     * Shelf height: 1.8m / 4 = 0.45m each
      * ========================================================= */
     {
       id: generateId(),
-      name: "Upright Freezer",
-      zone_type: "upright_freezer",
-      position: { x: 2.70, y: LOWER_Y + 0.15, z: 2.4 },
-      dimensions: { width: 0.9, height: 1.8, depth: 0.8 },
+      name: "Freezer Shelf 1",
+      zone_type: "freezer_shelf",
+      position: { x: 2.70, y: 0.225, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.45, depth: 0.8 },
       rotation: { x: 0, y: Math.PI, z: 0 },
-      notes: "Upright freezer with single door",
+      notes: "Upright freezer - shelf 1 (bottom)",
+    },
+    {
+      id: generateId(),
+      name: "Freezer Shelf 2",
+      zone_type: "freezer_shelf",
+      position: { x: 2.70, y: 0.675, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.45, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upright freezer - shelf 2",
+    },
+    {
+      id: generateId(),
+      name: "Freezer Shelf 3",
+      zone_type: "freezer_shelf",
+      position: { x: 2.70, y: 1.125, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.45, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upright freezer - shelf 3",
+    },
+    {
+      id: generateId(),
+      name: "Freezer Shelf 4",
+      zone_type: "freezer_shelf",
+      position: { x: 2.70, y: 1.575, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.45, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upright freezer - shelf 4 (top)",
     },
 
     /* =========================================================
      * FRENCH DOOR FRIDGE — Parallel to Oven, opposite side of island
      * Oven is at x: 0.8, z: -1.2, island at z: 0.6
      * Distance from oven to island = 1.8m, so fridge at z: 2.4
-     * Facing the island (rotation y: 0 since it opens toward negative z)
+     * Facing the island (rotation y: Math.PI since it opens toward negative z)
+     * Split into 4 clickable zones: left door, right door, deli drawer, freezer drawer
+     * Total height: 1.8m, width: 0.9m, depth: 0.8m
+     * Layout from top: Left/Right doors (1.0m), Deli drawer (0.3m), Freezer drawer (0.5m)
      * ========================================================= */
     {
       id: generateId(),
-      name: "French Door Fridge",
-      zone_type: "refrigerator",
-      position: { x: 0.8, y: LOWER_Y + 0.15, z: 2.4 },
-      dimensions: { width: 0.9, height: 1.8, depth: 0.8 },
+      name: "Fridge Left Door",
+      zone_type: "fridge_door",
+      position: { x: 0.575, y: 1.4, z: 2.4 },
+      dimensions: { width: 0.45, height: 1.0, depth: 0.8 },
       rotation: { x: 0, y: Math.PI, z: 0 },
-      notes: "French door fridge with deli drawer and freezer drawer",
+      notes: "French door fridge - left door",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Right Door",
+      zone_type: "fridge_door",
+      position: { x: 1.025, y: 1.4, z: 2.4 },
+      dimensions: { width: 0.45, height: 1.0, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "French door fridge - right door",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Deli Drawer",
+      zone_type: "fridge_drawer",
+      position: { x: 0.8, y: 0.75, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.3, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "French door fridge - deli drawer (middle)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Freezer Drawer",
+      zone_type: "fridge_drawer",
+      position: { x: 0.8, y: 0.35, z: 2.4 },
+      dimensions: { width: 0.9, height: 0.5, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "French door fridge - freezer drawer (bottom)",
     },
 
     /* =========================================================
