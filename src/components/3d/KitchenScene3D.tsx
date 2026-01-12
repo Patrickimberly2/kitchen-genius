@@ -1,10 +1,22 @@
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useRef, createContext, useContext } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 import { useKitchen } from "@/context/KitchenContext";
 import { ZoneMesh3D } from "./ZoneMesh3D";
 import { KitchenEnvironment } from "./KitchenEnvironment";
+import { KitchenZone } from "@/types/kitchen";
+
+interface KitchenScene3DProps {
+  onOpenInterior?: (zone: KitchenZone) => void;
+}
+
+// Context to pass the callback into the Canvas
+const InteriorCallbackContext = createContext<((zone: KitchenZone) => void) | undefined>(undefined);
+
+export function useInteriorCallback() {
+  return useContext(InteriorCallbackContext);
+}
 
 function KitchenLighting() {
   return (
@@ -128,29 +140,31 @@ function LoadingFallback() {
   );
 }
 
-export function KitchenScene3D() {
+export function KitchenScene3D({ onOpenInterior }: KitchenScene3DProps) {
   return (
-    <div className="w-full h-full bg-gradient-to-b from-muted/30 to-muted/60">
-      <Canvas
-        shadows
-        dpr={[1, 2]}
-        gl={{
-          antialias: true,
-          toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.1,
-        }}
-      >
-        <Suspense fallback={<LoadingFallback />}>
-          <PerspectiveCamera
-            makeDefault
-            position={[6, 6, 10]}
-            fov={50}
-            near={0.1}
-            far={100}
-          />
-          <SceneContent />
-        </Suspense>
-      </Canvas>
-    </div>
+    <InteriorCallbackContext.Provider value={onOpenInterior}>
+      <div className="w-full h-full bg-gradient-to-b from-muted/30 to-muted/60">
+        <Canvas
+          shadows
+          dpr={[1, 2]}
+          gl={{
+            antialias: true,
+            toneMapping: THREE.ACESFilmicToneMapping,
+            toneMappingExposure: 1.1,
+          }}
+        >
+          <Suspense fallback={<LoadingFallback />}>
+            <PerspectiveCamera
+              makeDefault
+              position={[6, 6, 10]}
+              fov={50}
+              near={0.1}
+              far={100}
+            />
+            <SceneContent />
+          </Suspense>
+        </Canvas>
+      </div>
+    </InteriorCallbackContext.Provider>
   );
 }

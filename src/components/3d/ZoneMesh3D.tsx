@@ -6,6 +6,7 @@ import { KitchenZone } from "@/types/kitchen";
 import { useKitchen } from "@/context/KitchenContext";
 import { getZoneColor } from "@/utils/kitchenUtils";
 import { ZoneItems3D } from "./ZoneItems3D";
+import { useInteriorCallback } from "./KitchenScene3D";
 
 interface ZoneMesh3DProps {
   zone: KitchenZone;
@@ -156,10 +157,17 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
     }
   };
   
+  // Get the interior callback from context
+  const onOpenInterior = useInteriorCallback();
+  
   const handleDoubleClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
     if (canOpen) {
       setIsOpen(!isOpen);
+      // Also open the interior modal if available
+      if (onOpenInterior && !isOpen) {
+        onOpenInterior(zone);
+      }
     }
   };
 
