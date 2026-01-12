@@ -36,6 +36,16 @@ export type ItemCategory =
   | "beverages"
   | "other";
 
+// Item shape types for 3D rendering
+export type ItemShape = "box" | "cylinder" | "bottle" | "jar" | "bag" | "can" | "carton" | "pouch";
+
+// Item dimensions for realistic sizing
+export interface ItemDimensions {
+  width: number;
+  height: number;
+  depth: number;
+}
+
 export interface KitchenZone {
   id: string;
   name: string;
@@ -46,6 +56,9 @@ export interface KitchenZone {
   color?: string;
   notes?: string;
   inventory?: any[];
+  // Capacity tracking
+  maxItems?: number;
+  capacityWarning?: number; // Percentage threshold for warnings (e.g., 80)
 }
 
 export interface InventoryItem {
@@ -61,6 +74,12 @@ export interface InventoryItem {
   low_stock_threshold?: number | null;
   image_url?: string;
   barcode?: string;
+  // 3D item properties
+  shape?: ItemShape;
+  dimensions?: ItemDimensions;
+  color?: string;
+  // Position within zone for 3D packing
+  localPosition?: { x: number; y: number; z: number };
 }
 
 export type KitchenPresetKey = "l-shaped" | "galley" | "u-shaped" | "island" | "custom-u-shaped" | "empty-room";
@@ -81,10 +100,33 @@ export interface PresetLabel {
 
 export interface AISuggestion {
   id: string;
-  type: "organization" | "expiry" | "placement" | "optimization";
+  type: "organization" | "expiry" | "placement" | "optimization" | "capacity";
   title: string;
   description: string;
   zone_id?: string;
   item_ids?: string[];
   priority: "low" | "medium" | "high";
+  // New: Action data for apply functionality
+  action?: {
+    type: "move_items" | "redistribute" | "consolidate";
+    targetZoneId?: string;
+    sourceZoneId?: string;
+    itemIds?: string[];
+  };
+}
+
+// Capacity info for zones
+export interface ZoneCapacityInfo {
+  zoneId: string;
+  zoneName: string;
+  itemCount: number;
+  maxItems: number;
+  usagePercent: number;
+  status: "ok" | "warning" | "full";
+}
+
+// Drag and drop context
+export interface DragItem {
+  itemId: string;
+  item: InventoryItem;
 }
