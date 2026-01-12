@@ -1,16 +1,17 @@
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { useKitchen } from "@/context/KitchenContext";
-import { KitchenZone, InventoryItem } from "@/types/kitchen";
+import { KitchenZone } from "@/types/kitchen";
 import { Item3D } from "./Item3D";
 import { getDefaultShape, getDefaultDimensions, packItemsInZone } from "@/utils/itemShapeUtils";
 
 interface ZoneItems3DProps {
   zone: KitchenZone;
   isOpen?: boolean;
+  openProgress?: number;
 }
 
-export function ZoneItems3D({ zone, isOpen = false }: ZoneItems3DProps) {
-  const { getItemsInZone, suggestions } = useKitchen();
+export function ZoneItems3D({ zone, isOpen = false, openProgress = 0 }: ZoneItems3DProps) {
+  const { getItemsInZone, suggestions, selectZone } = useKitchen();
   
   const items = getItemsInZone(zone.id);
   
@@ -34,7 +35,7 @@ export function ZoneItems3D({ zone, isOpen = false }: ZoneItems3DProps) {
     });
   }, [items]);
   
-  // Calculate packed positions
+  // Calculate packed positions with shelf-aware placement
   const packedPositions = useMemo(() => {
     // Reduce zone dimensions slightly to keep items inside
     const innerWidth = zone.dimensions.width * 0.85;
@@ -56,21 +57,39 @@ export function ZoneItems3D({ zone, isOpen = false }: ZoneItems3DProps) {
     return alwaysVisibleTypes.includes(zone.zone_type) || isOpen;
   }, [zone.zone_type, isOpen]);
   
+  // Handle item click
+  const handleItemClick = useCallback(() => {
+    selectZone(zone.id);
+  }, [selectZone, zone.id]);
+  
+  // Calculate visibility opacity based on door opening
+  const itemOpacity = useMemo(() => {
+    const alwaysVisibleTypes = ["countertop", "pantry_shelf", "freezer_shelf", "shelf"];
+    if (alwaysVisibleTypes.includes(zone.zone_type)) return 1;
+    // Fade items in as door opens
+    return Math.min(1, openProgress * 2);
+  }, [zone.zone_type, openProgress]);
+  
   if (items.length === 0 || !shouldShowItems) return null;
   
+  // Position items relative to zone interior - pushed back into cabinet
+  const interiorOffset = zone.zone_type.includes("cabinet") ? -zone.dimensions.depth * 0.15 : 0;
+  
   return (
-    <group>
+    <group position={[0, 0, interiorOffset]}>
       {itemsWithDimensions.map(({ id, item }) => {
         const position = packedPositions.get(id) || { x: 0, y: 0, z: 0 };
         const isHighlighted = highlightedItemIds.has(id);
         
         return (
-          <Item3D
-            key={id}
-            item={item}
-            position={position}
-            isHighlighted={isHighlighted}
-          />
+          <group key={id}>
+            <Item3D
+              item={item}
+              position={position}
+              isHighlighted={isHighlighted}
+              onClick={handleItemClick}
+            />
+          </group>
         );
       })}
     </group>
