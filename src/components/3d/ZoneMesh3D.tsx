@@ -679,6 +679,19 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
     if (isApplianceType) {
       const isFrenchDoor = zone.notes?.includes("French");
       
+      // French door fridge proportions (based on reference image)
+      // Top section: ~55% height for double doors
+      // Middle section: ~15% height for narrow deli drawer
+      // Bottom section: ~30% height for deep freezer drawer
+      const topDoorsHeight = height * 0.55;
+      const deliDrawerHeight = height * 0.15;
+      const freezerDrawerHeight = height * 0.30;
+      
+      // Y positions (from center)
+      const topDoorsY = height / 2 - topDoorsHeight / 2;
+      const deliDrawerY = height / 2 - topDoorsHeight - deliDrawerHeight / 2;
+      const freezerDrawerY = -height / 2 + freezerDrawerHeight / 2;
+      
       return (
         <group>
           {/* Appliance body */}
@@ -693,33 +706,83 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             {getMaterial()}
           </mesh>
           
-          {/* Handle(s) */}
           {isFrenchDoor ? (
             <>
-              {/* Left door handle */}
-              <mesh position={[-0.02, 0, depth / 2 + 0.02]}>
-                <boxGeometry args={[0.02, 0.35, 0.03]} />
-                <meshStandardMaterial color="#888888" metalness={0.8} roughness={0.2} />
+              {/* === TOP SECTION: French Doors === */}
+              {/* Left door panel */}
+              <mesh position={[-width / 4, topDoorsY, depth / 2 + 0.005]}>
+                <boxGeometry args={[width / 2 - 0.015, topDoorsHeight - 0.02, 0.01]} />
+                <meshStandardMaterial color="#1a1a1a" roughness={0.15} metalness={0.4} />
               </mesh>
-              {/* Right door handle */}
-              <mesh position={[0.02, 0, depth / 2 + 0.02]}>
+              {/* Right door panel */}
+              <mesh position={[width / 4, topDoorsY, depth / 2 + 0.005]}>
+                <boxGeometry args={[width / 2 - 0.015, topDoorsHeight - 0.02, 0.01]} />
+                <meshStandardMaterial color="#1a1a1a" roughness={0.15} metalness={0.4} />
+              </mesh>
+              
+              {/* Left door vertical handle */}
+              <mesh position={[-0.03, topDoorsY, depth / 2 + 0.03]}>
+                <boxGeometry args={[0.025, topDoorsHeight * 0.6, 0.035]} />
+                <meshStandardMaterial color="#c0c0c0" metalness={0.85} roughness={0.15} />
+              </mesh>
+              {/* Right door vertical handle */}
+              <mesh position={[0.03, topDoorsY, depth / 2 + 0.03]}>
+                <boxGeometry args={[0.025, topDoorsHeight * 0.6, 0.035]} />
+                <meshStandardMaterial color="#c0c0c0" metalness={0.85} roughness={0.15} />
+              </mesh>
+              
+              {/* Center seam for French doors */}
+              <mesh position={[0, topDoorsY, depth / 2 + 0.012]}>
+                <boxGeometry args={[0.008, topDoorsHeight - 0.02, 0.002]} />
+                <meshBasicMaterial color="#222222" />
+              </mesh>
+              
+              {/* === MIDDLE SECTION: Deli Drawer === */}
+              {/* Deli drawer panel */}
+              <mesh position={[0, deliDrawerY, depth / 2 + 0.005]}>
+                <boxGeometry args={[width - 0.02, deliDrawerHeight - 0.015, 0.01]} />
+                <meshStandardMaterial color="#1a1a1a" roughness={0.15} metalness={0.4} />
+              </mesh>
+              
+              {/* Deli drawer horizontal handle */}
+              <mesh position={[0, deliDrawerY, depth / 2 + 0.025]}>
+                <boxGeometry args={[width * 0.6, 0.025, 0.025]} />
+                <meshStandardMaterial color="#c0c0c0" metalness={0.85} roughness={0.15} />
+              </mesh>
+              
+              {/* Horizontal seam above deli drawer */}
+              <mesh position={[0, deliDrawerY + deliDrawerHeight / 2, depth / 2 + 0.012]}>
+                <boxGeometry args={[width - 0.01, 0.006, 0.002]} />
+                <meshBasicMaterial color="#222222" />
+              </mesh>
+              
+              {/* === BOTTOM SECTION: Freezer Drawer === */}
+              {/* Freezer drawer panel */}
+              <mesh position={[0, freezerDrawerY, depth / 2 + 0.005]}>
+                <boxGeometry args={[width - 0.02, freezerDrawerHeight - 0.015, 0.01]} />
+                <meshStandardMaterial color="#1a1a1a" roughness={0.15} metalness={0.4} />
+              </mesh>
+              
+              {/* Freezer drawer horizontal handle */}
+              <mesh position={[0, freezerDrawerY + freezerDrawerHeight * 0.2, depth / 2 + 0.025]}>
+                <boxGeometry args={[width * 0.6, 0.028, 0.025]} />
+                <meshStandardMaterial color="#c0c0c0" metalness={0.85} roughness={0.15} />
+              </mesh>
+              
+              {/* Horizontal seam above freezer drawer */}
+              <mesh position={[0, freezerDrawerY + freezerDrawerHeight / 2, depth / 2 + 0.012]}>
+                <boxGeometry args={[width - 0.01, 0.006, 0.002]} />
+                <meshBasicMaterial color="#222222" />
+              </mesh>
+            </>
+          ) : (
+            /* Single door refrigerator/freezer */
+            <>
+              <mesh position={[-width / 2 + 0.06, 0, depth / 2 + 0.02]}>
                 <boxGeometry args={[0.02, 0.35, 0.03]} />
                 <meshStandardMaterial color="#888888" metalness={0.8} roughness={0.2} />
               </mesh>
             </>
-          ) : (
-            <mesh position={[-width / 2 + 0.06, 0, depth / 2 + 0.02]}>
-              <boxGeometry args={[0.02, 0.35, 0.03]} />
-              <meshStandardMaterial color="#888888" metalness={0.8} roughness={0.2} />
-            </mesh>
-          )}
-          
-          {/* Door seam lines */}
-          {isFrenchDoor && (
-            <mesh position={[0, 0, depth / 2 + 0.001]}>
-              <boxGeometry args={[0.005, height - 0.02, 0.001]} />
-              <meshBasicMaterial color="#333333" />
-            </mesh>
           )}
         </group>
       );
