@@ -5,6 +5,7 @@ export type ZoneType =
   | "pantry"
   | "refrigerator"
   | "freezer"
+  | "upright_freezer"
   | "island"
   | "peninsula"
   | "appliance"

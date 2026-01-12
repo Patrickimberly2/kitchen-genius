@@ -34,11 +34,12 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   const baseColor = zone.color || getZoneColor(zone.zone_type);
   
   // Determine if this zone can be opened
-  const canOpen = ["upper_cabinet", "lower_cabinet", "drawer", "refrigerator", "freezer", "pantry", "dishwasher"].includes(zone.zone_type);
+  const canOpen = ["upper_cabinet", "lower_cabinet", "drawer", "refrigerator", "freezer", "pantry", "dishwasher", "upright_freezer"].includes(zone.zone_type);
   const isDrawerType = zone.zone_type === "drawer";
   const isPantryType = zone.zone_type === "pantry";
   const isCabinetType = ["upper_cabinet", "lower_cabinet"].includes(zone.zone_type);
   const isApplianceType = ["refrigerator", "freezer"].includes(zone.zone_type);
+  const isUprightFreezerType = zone.zone_type === "upright_freezer";
   const isSinkType = zone.zone_type === "sink";
   const isStoveType = zone.zone_type === "stove";
   const isDishwasherType = zone.zone_type === "dishwasher";
@@ -635,6 +636,72 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
             <mesh position={[doorWidth - 0.06, 0, doorDepth + 0.015]}>
               <boxGeometry args={[0.02, 0.12, 0.025]} />
               <meshStandardMaterial color={handleColor} metalness={handleMetalness} roughness={0.3} />
+            </mesh>
+          </group>
+        </group>
+      );
+    }
+    
+    // Upright Freezer with single hinged door
+    if (isUprightFreezerType) {
+      const doorWidth = width - 0.02;
+      const doorHeight = height - 0.02;
+      const doorDepth = 0.025;
+      
+      return (
+        <group>
+          {/* Freezer body */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.2} metalness={0.4} />
+          </mesh>
+          
+          {/* Interior (visible when open) */}
+          {openProgress > 0.1 && (
+            <mesh position={[0, 0, -depth / 2 + 0.01]}>
+              <boxGeometry args={[width - 0.04, height - 0.04, 0.01]} />
+              <meshStandardMaterial 
+                color="#2a2a2a" 
+                roughness={0.6} 
+                transparent 
+                opacity={Math.min(openProgress * 2, 1)} 
+              />
+            </mesh>
+          )}
+          
+          {/* Single door (hinged on left side) */}
+          <group
+            ref={doorRef}
+            position={[
+              -width / 2 + 0.01,
+              0,
+              depth / 2
+            ]}
+          >
+            <mesh
+              position={[doorWidth / 2, 0, doorDepth / 2]}
+              castShadow
+            >
+              <boxGeometry args={[doorWidth, doorHeight, doorDepth]} />
+              <meshStandardMaterial color="#1a1a1a" roughness={0.15} metalness={0.4} />
+            </mesh>
+            
+            {/* Door handle - vertical bar on left side */}
+            <mesh position={[0.06, 0, doorDepth + 0.02]}>
+              <boxGeometry args={[0.025, height * 0.4, 0.035]} />
+              <meshStandardMaterial color="#c0c0c0" metalness={0.85} roughness={0.15} />
+            </mesh>
+            
+            {/* Small logo/badge near top */}
+            <mesh position={[doorWidth / 2, height * 0.35, doorDepth + 0.005]}>
+              <boxGeometry args={[0.08, 0.04, 0.005]} />
+              <meshStandardMaterial color="#888888" metalness={0.6} roughness={0.3} />
             </mesh>
           </group>
         </group>

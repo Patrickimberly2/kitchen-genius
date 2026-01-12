@@ -626,6 +626,21 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     },
 
     /* =========================================================
+     * UPRIGHT FREEZER — To the right of Pantry
+     * Same size as fridge (width: 0.9, height: 1.8, depth: 0.8)
+     * Single door opens on left hinge
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Upright Freezer",
+      zone_type: "upright_freezer",
+      position: { x: 2.70, y: LOWER_Y + 0.15, z: 2.4 },
+      dimensions: { width: 0.9, height: 1.8, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upright freezer with single door",
+    },
+
+    /* =========================================================
      * FRENCH DOOR FRIDGE — Parallel to Oven, opposite side of island
      * Oven is at x: 0.8, z: -1.2, island at z: 0.6
      * Distance from oven to island = 1.8m, so fridge at z: 2.4
