@@ -781,14 +781,14 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     /* =========================================================
      * UPPER CABINETS ABOVE FRIDGE — Two side-by-side half-height cabinets
      * Aligned with fridge (x: 0.8, width: 0.9), positioned 6" above fridge top
-     * Fridge top at ~1.475m, 6" (0.15m) gap, cabinet bottom at 1.625m
-     * Half height (0.36m), center y = 1.625 + 0.18 = 1.805m
+     * Fridge top at 1.9m (1.4 + 0.5), 6" (0.15m) gap, cabinet bottom at 2.05m
+     * Half height (0.36m), center y = 2.05 + 0.18 = 2.23m
      * ========================================================= */
     {
       id: generateId(),
       name: "Fridge Upper Left",
       zone_type: "upper_cabinet",
-      position: { x: 0.575, y: 1.805, z: 2.4 },
+      position: { x: 0.575, y: 2.23, z: 2.4 },
       dimensions: { width: 0.45, height: UPPER_HEIGHT / 2, depth: 0.35 },
       rotation: { x: 0, y: Math.PI, z: 0 },
       notes: "Half-height upper cabinet above fridge (left)",
@@ -797,7 +797,7 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       id: generateId(),
       name: "Fridge Upper Right",
       zone_type: "upper_cabinet",
-      position: { x: 1.025, y: 1.805, z: 2.4 },
+      position: { x: 1.025, y: 2.23, z: 2.4 },
       dimensions: { width: 0.45, height: UPPER_HEIGHT / 2, depth: 0.35 },
       rotation: { x: 0, y: Math.PI, z: 0 },
       notes: "Half-height upper cabinet above fridge (right)",
