@@ -71,7 +71,6 @@ export function CabinetInteriorModal({ zone, isOpen, onClose }: CabinetInteriorM
         category: newItemCategory,
         quantity: 1,
         zone_id: zone.id,
-        created_at: new Date().toISOString(),
       });
       setNewItemName("");
       setShowAddForm(false);
