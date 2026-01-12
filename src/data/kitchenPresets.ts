@@ -680,6 +680,153 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       rotation: { x: 0, y: Math.PI, z: 0 },
       notes: "Half-height upper cabinet above fridge (right)",
     },
+
+    /* =========================================================
+     * UPPER CABINETS LEFT OF FRIDGE — 5 side-by-side
+     * Fridge left edge at x: 0.35, cabinets extend leftward
+     * Depth: half of fridge (0.4m), aligned at same z as fridge
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Fridge Side Upper 1",
+      zone_type: "upper_cabinet",
+      position: { x: -0.05, y: UPPER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: UPPER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upper cabinet left of fridge (1 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Upper 2",
+      zone_type: "upper_cabinet",
+      position: { x: -0.45, y: UPPER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: UPPER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upper cabinet left of fridge (2 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Upper 3",
+      zone_type: "upper_cabinet",
+      position: { x: -0.85, y: UPPER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: UPPER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upper cabinet left of fridge (3 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Upper 4",
+      zone_type: "upper_cabinet",
+      position: { x: -1.25, y: UPPER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: UPPER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upper cabinet left of fridge (4 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Upper 5",
+      zone_type: "upper_cabinet",
+      position: { x: -1.65, y: UPPER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: UPPER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Upper cabinet left of fridge (5 of 5)",
+    },
+
+    /* =========================================================
+     * LOWER CABINETS LEFT OF FRIDGE — 5 side-by-side with drawers
+     * Each lower cabinet has a drawer above the door
+     * Depth: half of fridge (0.4m)
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Fridge Side Base 1",
+      zone_type: "lower_cabinet",
+      position: { x: -0.05, y: LOWER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: LOWER_HEIGHT - DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Lower cabinet left of fridge (1 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Drawer 1",
+      zone_type: "drawer",
+      position: { x: -0.05, y: LOWER_Y + (LOWER_HEIGHT - DRAWER_HEIGHT) / 2 + DRAWER_HEIGHT / 2, z: 2.4 },
+      dimensions: { width: 0.4, height: DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Drawer above Fridge Side Base 1",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Base 2",
+      zone_type: "lower_cabinet",
+      position: { x: -0.45, y: LOWER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: LOWER_HEIGHT - DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Lower cabinet left of fridge (2 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Drawer 2",
+      zone_type: "drawer",
+      position: { x: -0.45, y: LOWER_Y + (LOWER_HEIGHT - DRAWER_HEIGHT) / 2 + DRAWER_HEIGHT / 2, z: 2.4 },
+      dimensions: { width: 0.4, height: DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Drawer above Fridge Side Base 2",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Base 3",
+      zone_type: "lower_cabinet",
+      position: { x: -0.85, y: LOWER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: LOWER_HEIGHT - DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Lower cabinet left of fridge (3 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Drawer 3",
+      zone_type: "drawer",
+      position: { x: -0.85, y: LOWER_Y + (LOWER_HEIGHT - DRAWER_HEIGHT) / 2 + DRAWER_HEIGHT / 2, z: 2.4 },
+      dimensions: { width: 0.4, height: DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Drawer above Fridge Side Base 3",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Base 4",
+      zone_type: "lower_cabinet",
+      position: { x: -1.25, y: LOWER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: LOWER_HEIGHT - DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Lower cabinet left of fridge (4 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Drawer 4",
+      zone_type: "drawer",
+      position: { x: -1.25, y: LOWER_Y + (LOWER_HEIGHT - DRAWER_HEIGHT) / 2 + DRAWER_HEIGHT / 2, z: 2.4 },
+      dimensions: { width: 0.4, height: DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Drawer above Fridge Side Base 4",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Base 5",
+      zone_type: "lower_cabinet",
+      position: { x: -1.65, y: LOWER_Y, z: 2.4 },
+      dimensions: { width: 0.4, height: LOWER_HEIGHT - DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Lower cabinet left of fridge (5 of 5)",
+    },
+    {
+      id: generateId(),
+      name: "Fridge Side Drawer 5",
+      zone_type: "drawer",
+      position: { x: -1.65, y: LOWER_Y + (LOWER_HEIGHT - DRAWER_HEIGHT) / 2 + DRAWER_HEIGHT / 2, z: 2.4 },
+      dimensions: { width: 0.4, height: DRAWER_HEIGHT, depth: 0.4 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Drawer above Fridge Side Base 5",
+    },
   ],
 };
 
