@@ -611,6 +611,21 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
     },
 
     /* =========================================================
+     * PANTRY — To the left of French Door Fridge
+     * Same size as fridge (width: 0.9, height: 1.8, depth: 0.8)
+     * Door faces the island, contains 8 internal shelves
+     * ========================================================= */
+    {
+      id: generateId(),
+      name: "Pantry",
+      zone_type: "pantry",
+      position: { x: -0.15, y: LOWER_Y + 0.15, z: 2.4 },
+      dimensions: { width: 0.9, height: 1.8, depth: 0.8 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "Pantry with door and 8 interior shelves",
+    },
+
+    /* =========================================================
      * FRENCH DOOR FRIDGE — Parallel to Oven, opposite side of island
      * Oven is at x: 0.8, z: -1.2, island at z: 0.6
      * Distance from oven to island = 1.8m, so fridge at z: 2.4

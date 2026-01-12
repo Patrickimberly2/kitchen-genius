@@ -36,7 +36,8 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
   // Determine if this zone can be opened
   const canOpen = ["upper_cabinet", "lower_cabinet", "drawer", "refrigerator", "freezer", "pantry", "dishwasher"].includes(zone.zone_type);
   const isDrawerType = zone.zone_type === "drawer";
-  const isCabinetType = ["upper_cabinet", "lower_cabinet", "pantry"].includes(zone.zone_type);
+  const isPantryType = zone.zone_type === "pantry";
+  const isCabinetType = ["upper_cabinet", "lower_cabinet"].includes(zone.zone_type);
   const isApplianceType = ["refrigerator", "freezer"].includes(zone.zone_type);
   const isSinkType = zone.zone_type === "sink";
   const isStoveType = zone.zone_type === "stove";
@@ -553,6 +554,89 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
               ))}
             </>
           )}
+        </group>
+      );
+    }
+    
+    // Pantry with door and 8 interior shelves
+    if (isPantryType) {
+      const doorWidth = width - 0.02;
+      const doorHeight = height - 0.02;
+      const doorDepth = 0.02;
+      
+      // 8 shelves evenly distributed
+      const shelfCount = 8;
+      const shelfSpacing = (height - 0.1) / (shelfCount + 1);
+      const shelfYPositions = Array.from({ length: shelfCount }, (_, i) => 
+        -height / 2 + 0.05 + shelfSpacing * (i + 1)
+      );
+      
+      return (
+        <group>
+          {/* Pantry body */}
+          <mesh
+            ref={meshRef}
+            position={[0, 0, 0]}
+            {...commonProps}
+            castShadow
+            receiveShadow
+          >
+            <boxGeometry args={[width, height, depth]} />
+            {getMaterial("#f5efe6")}
+          </mesh>
+          
+          {/* Interior back panel (visible when open) */}
+          {openProgress > 0.1 && (
+            <mesh position={[0, 0, -depth / 2 + 0.01]}>
+              <boxGeometry args={[width - 0.04, height - 0.04, 0.01]} />
+              <meshStandardMaterial 
+                color="#2a2420" 
+                roughness={0.8} 
+                transparent 
+                opacity={Math.min(openProgress * 2, 1)} 
+              />
+            </mesh>
+          )}
+          
+          {/* Interior shelves (visible when door opens) */}
+          {openProgress > 0.15 && shelfYPositions.map((yPos, idx) => (
+            <mesh 
+              key={`shelf-${idx}`} 
+              position={[0, yPos, -depth / 6]}
+            >
+              <boxGeometry args={[width - 0.06, 0.02, depth - 0.15]} />
+              <meshStandardMaterial 
+                color="#3d3530" 
+                roughness={0.7} 
+                transparent 
+                opacity={Math.min(openProgress * 1.5, 1)} 
+              />
+            </mesh>
+          ))}
+          
+          {/* Pantry door (hinged on left side) */}
+          <group
+            ref={doorRef}
+            position={[
+              -width / 2 + 0.01,
+              0,
+              depth / 2
+            ]}
+          >
+            <mesh
+              position={[doorWidth / 2, 0, doorDepth / 2]}
+              castShadow
+            >
+              <boxGeometry args={[doorWidth, doorHeight, doorDepth]} />
+              {getMaterial("#e8ddd0")}
+            </mesh>
+            
+            {/* Door handle */}
+            <mesh position={[doorWidth - 0.06, 0, doorDepth + 0.015]}>
+              <boxGeometry args={[0.02, 0.12, 0.025]} />
+              <meshStandardMaterial color={handleColor} metalness={handleMetalness} roughness={0.3} />
+            </mesh>
+          </group>
         </group>
       );
     }
