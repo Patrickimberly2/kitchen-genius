@@ -622,7 +622,8 @@ export const kitchenPresets: Record<KitchenPreset, KitchenZone[]> = {
       zone_type: "refrigerator",
       position: { x: 0.8, y: LOWER_Y + 0.15, z: 2.4 },
       dimensions: { width: 0.9, height: 1.8, depth: 0.8 },
-      rotation: { x: 0, y: 0, z: 0 },
+      rotation: { x: 0, y: Math.PI, z: 0 },
+      notes: "French door fridge with deli drawer and freezer drawer",
     },
   ],
 };
