@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Package } from "lucide-react";
 import {
   Dialog,
@@ -45,11 +45,11 @@ export function AddItemDialog({ open, onOpenChange, preselectedZoneId }: AddItem
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Update zone when preselected zone changes
-  useState(() => {
+  useEffect(() => {
     if (preselectedZoneId) {
       setZoneId(preselectedZoneId);
     }
-  });
+  }, [preselectedZoneId]);
 
   const categories: ItemCategory[] = [
     "food",
