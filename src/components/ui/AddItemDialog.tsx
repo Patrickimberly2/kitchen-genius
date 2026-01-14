@@ -26,6 +26,7 @@ const categories: ItemCategory[] = [
   "storage",
   "cleaning",
   "appliances",
+  "other",
 ];
 
 export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDialogProps) {
@@ -85,6 +86,9 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
     if (formData.expiryDate) {
       const expiryDate = new Date(formData.expiryDate);
       const today = new Date();
+      
+      // Normalize both dates to midnight for accurate comparison
+      expiryDate.setHours(0, 0, 0, 0);
       today.setHours(0, 0, 0, 0);
       
       if (expiryDate < today) {
@@ -104,9 +108,9 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
       return;
     }
 
-    // Create new item with unique ID
+    // Create new item with unique ID using crypto.randomUUID or fallback
     const newItem: InventoryItem = {
-      id: Math.random().toString(36).substring(2, 11),
+      id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       name: formData.name.trim(),
       category: formData.category,
       quantity: parseFloat(formData.quantity),
