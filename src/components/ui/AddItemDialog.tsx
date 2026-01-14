@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useKitchen } from "@/context/KitchenContext";
-import { ItemCategory, InventoryItem, ItemShape } from "@/types/kitchen";
+import { ItemCategory, InventoryItem } from "@/types/kitchen";
 import { getCategoryIcon, getCategoryLabel } from "@/utils/kitchenUtils";
 import { getDefaultShape, getDefaultDimensions, getCategoryColor } from "@/utils/itemShapeUtils";
 import {
@@ -46,23 +46,7 @@ interface AddItemFormData {
 }
 
 // Generate unique ID for new items
-const generateItemId = () => `inv-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
-// Get default shape based on category
-const getDefaultItemShape = (category: ItemCategory): ItemShape => {
-  switch (category) {
-    case "beverages": return "bottle";
-    case "food": return "box";
-    case "spices": return "jar";
-    case "cookware": return "box";
-    case "utensils": return "box";
-    case "dishes": return "box";
-    case "storage": return "box";
-    case "cleaning": return "bottle";
-    case "appliances": return "box";
-    default: return "box";
-  }
-};
+const generateItemId = () => `inv-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 
 export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialogProps) {
   const { addItem, zones } = useKitchen();
@@ -121,7 +105,7 @@ export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialog
       return;
     }
 
-    const shape = getDefaultItemShape(formData.category);
+    const shape = getDefaultShape(formData.category, formData.unit);
     const newItem: InventoryItem = {
       id: generateItemId(),
       name: formData.name.trim(),
