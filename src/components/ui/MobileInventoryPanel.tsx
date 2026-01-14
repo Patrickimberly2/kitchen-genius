@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Package, Search, Filter, ChevronDown, GripVertical, AlertCircle } from "lucide-react";
+import { Package, Search, Filter, ChevronDown, GripVertical, AlertCircle, Plus } from "lucide-react";
 import { useKitchen } from "@/context/KitchenContext";
 import { InventoryItem, ItemCategory } from "@/types/kitchen";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getCategoryIcon, getCategoryLabel } from "@/utils/kitchenUtils";
 import { getCategoryColor } from "@/utils/itemShapeUtils";
+import { AddItemDialog } from "./AddItemDialog";
 
 interface DraggableItemProps {
   item: InventoryItem;
@@ -64,8 +65,10 @@ export function MobileInventoryPanel() {
   const [selectedCategory, setSelectedCategory] = useState<ItemCategory | "all">("all");
   const [showFilters, setShowFilters] = useState(false);
   const [dragOverZone, setDragOverZone] = useState<string | null>(null);
+  const [showAddItem, setShowAddItem] = useState(false);
+  const [selectedZoneForAdd, setSelectedZoneForAdd] = useState<{ id: string; name: string } | null>(null);
 
-  const categories: (ItemCategory | "all")[] = ["all", "food", "beverages", "spices", "cookware", "utensils", "dishes", "storage", "cleaning", "appliances"];
+  const categories: (ItemCategory | "all")[] = ["all", "food", "beverages", "spices", "cookware", "utensils", "dishes", "storage", "cleaning", "appliances", "other"];
   
   const filteredItems = items.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -203,9 +206,23 @@ export function MobileInventoryPanel() {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-sm">{zone.name}</span>
-                    <Badge variant="outline" className="text-xs">
-                      {zoneItems.length} items
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setSelectedZoneForAdd({ id: zone.id, name: zone.name });
+                          setShowAddItem(true);
+                        }}
+                        className="h-6 px-2 text-xs"
+                      >
+                        <Plus className="w-3 h-3 mr-1" />
+                        Add
+                      </Button>
+                      <Badge variant="outline" className="text-xs">
+                        {zoneItems.length} items
+                      </Badge>
+                    </div>
                   </div>
                   
                   {zoneItems.length > 0 && (
@@ -230,6 +247,19 @@ export function MobileInventoryPanel() {
             })}
         </div>
       </div>
+
+      {/* Add Item Dialog */}
+      {selectedZoneForAdd && (
+        <AddItemDialog
+          isOpen={showAddItem}
+          onClose={() => {
+            setShowAddItem(false);
+            setSelectedZoneForAdd(null);
+          }}
+          zoneId={selectedZoneForAdd.id}
+          zoneName={selectedZoneForAdd.name}
+        />
+      )}
     </div>
   );
 }
