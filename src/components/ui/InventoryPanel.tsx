@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Package, Calendar, Edit2, Trash2 } from "lucide-react";
 import { useKitchen } from "@/context/KitchenContext";
 import { getZoneLabel, getCategoryIcon, getCategoryLabel } from "@/utils/kitchenUtils";
 import { format, parseISO, differenceInDays } from "date-fns";
+import { AddItemDialog } from "@/components/ui/AddItemDialog";
 
 export function InventoryPanel() {
   const {
@@ -12,6 +14,8 @@ export function InventoryPanel() {
     getItemsInZone,
     removeItem,
   } = useKitchen();
+
+  const [showAddDialog, setShowAddDialog] = useState(false);
 
   const selectedZone = zones.find((z) => z.id === selectedZoneId);
   const items = selectedZoneId ? getItemsInZone(selectedZoneId) : [];
@@ -128,11 +132,20 @@ export function InventoryPanel() {
 
           {/* Footer */}
           <div className="p-4 border-t border-border/50">
-            <button className="btn-kitchen w-full">
+            <button 
+              className="btn-kitchen w-full"
+              onClick={() => setShowAddDialog(true)}
+            >
               <Package className="w-4 h-4" />
               Add Item
             </button>
           </div>
+
+          <AddItemDialog 
+            isOpen={showAddDialog}
+            onClose={() => setShowAddDialog(false)}
+            selectedZoneId={selectedZoneId}
+          />
         </motion.div>
       )}
     </AnimatePresence>
