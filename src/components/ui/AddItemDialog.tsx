@@ -70,7 +70,7 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
     // Generate unique ID
     const itemId = typeof crypto !== 'undefined' && crypto.randomUUID 
       ? crypto.randomUUID() 
-      : 'item-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+      : 'item-' + Date.now() + '-' + Math.random().toString(36).substring(2, 11);
     
     // Create new item
     const newItem = {
