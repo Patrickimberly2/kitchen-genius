@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Package, Search, Filter, ChevronDown, GripVertical, AlertCircle } from "lucide-react";
+import { Package, Search, Filter, ChevronDown, GripVertical, AlertCircle, Plus } from "lucide-react";
 import { useKitchen } from "@/context/KitchenContext";
 import { InventoryItem, ItemCategory } from "@/types/kitchen";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getCategoryIcon, getCategoryLabel } from "@/utils/kitchenUtils";
 import { getCategoryColor } from "@/utils/itemShapeUtils";
+import { AddItemDialog } from "./AddItemDialog";
 
 interface DraggableItemProps {
   item: InventoryItem;
@@ -64,6 +65,7 @@ export function MobileInventoryPanel() {
   const [selectedCategory, setSelectedCategory] = useState<ItemCategory | "all">("all");
   const [showFilters, setShowFilters] = useState(false);
   const [dragOverZone, setDragOverZone] = useState<string | null>(null);
+  const [showAddDialog, setShowAddDialog] = useState(false);
 
   const categories: (ItemCategory | "all")[] = ["all", "food", "beverages", "spices", "cookware", "utensils", "dishes", "storage", "cleaning", "appliances"];
   
@@ -126,6 +128,16 @@ export function MobileInventoryPanel() {
             {selectedCategory === "all" ? "All Categories" : getCategoryLabel(selectedCategory)}
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`} />
+        </Button>
+        
+        {/* Add Item Button */}
+        <Button
+          onClick={() => setShowAddDialog(true)}
+          className="w-full mt-2"
+          size="sm"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Item
         </Button>
         
         {/* Category filters */}
@@ -230,6 +242,12 @@ export function MobileInventoryPanel() {
             })}
         </div>
       </div>
+      
+      <AddItemDialog 
+        open={showAddDialog}
+        onOpenChange={setShowAddDialog}
+        preselectedZoneId={null}
+      />
     </div>
   );
 }
