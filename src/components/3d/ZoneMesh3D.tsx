@@ -217,6 +217,27 @@ export function ZoneMesh3D({ zone }: ZoneMesh3DProps) {
       );
     }
     
+    // Realistic oak wood material for cabinets and drawers
+    if (["upper_cabinet", "lower_cabinet", "drawer"].includes(zone.zone_type)) {
+      const oakColor = new THREE.Color("#A68064");
+      
+      // Apply hover/selection effects
+      if (isSelected) {
+        oakColor.multiplyScalar(1.12);
+      } else if (isHovered) {
+        oakColor.multiplyScalar(1.06);
+      }
+      
+      return (
+        <meshStandardMaterial
+          color={oakColor}
+          roughness={0.7}
+          metalness={0.1}
+          envMapIntensity={0.4}
+        />
+      );
+    }
+    
     return (
       <meshStandardMaterial
         color={color}
