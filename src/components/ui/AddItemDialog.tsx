@@ -50,6 +50,15 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
   const [expiryDate, setExpiryDate] = useState("");
   const [notes, setNotes] = useState("");
 
+  const clearForm = () => {
+    setName("");
+    setCategory("");
+    setQuantity("");
+    setUnit("");
+    setExpiryDate("");
+    setNotes("");
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -71,27 +80,12 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
     };
 
     addItem(newItem);
-
-    // Clear form
-    setName("");
-    setCategory("");
-    setQuantity("");
-    setUnit("");
-    setExpiryDate("");
-    setNotes("");
-
-    // Close dialog
+    clearForm();
     onClose();
   };
 
   const handleClose = () => {
-    // Clear form on close
-    setName("");
-    setCategory("");
-    setQuantity("");
-    setUnit("");
-    setExpiryDate("");
-    setNotes("");
+    clearForm();
     onClose();
   };
 
