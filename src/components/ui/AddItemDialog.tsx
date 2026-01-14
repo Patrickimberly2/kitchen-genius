@@ -39,6 +39,7 @@ const CATEGORIES: ItemCategory[] = [
   "storage",
   "cleaning",
   "appliances",
+  "other",
 ];
 
 export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDialogProps) {
@@ -75,7 +76,7 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
       name: name.trim(),
       zone_id: zoneId,
       category,
-      quantity: parseInt(quantity) || 1,
+      quantity: parseInt(quantity, 10) || 1,
       unit,
       expiry_date: expiryDate || undefined,
       notes: notes || undefined,
