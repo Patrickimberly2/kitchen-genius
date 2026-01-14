@@ -73,6 +73,7 @@ export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialog
     "storage",
     "cleaning",
     "appliances",
+    "other",
   ];
 
   const validateForm = (): boolean => {
@@ -86,12 +87,16 @@ export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialog
       newErrors.category = "Category is required";
     }
 
-    if (formData.quantity <= 0) {
-      newErrors.quantity = "Quantity must be greater than 0";
+    if (formData.quantity <= 0 || !Number.isInteger(formData.quantity)) {
+      newErrors.quantity = "Quantity must be a positive whole number";
     }
 
     if (!formData.unit.trim()) {
       newErrors.unit = "Unit is required";
+    }
+
+    if (!selectedZoneId) {
+      newErrors.zone = "Please select a zone first";
     }
 
     setErrors(newErrors);
@@ -140,7 +145,7 @@ export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialog
     onClose();
   };
 
-  const isFormValid = formData.name.trim() && formData.category && formData.quantity > 0 && formData.unit.trim();
+  const isFormValid = formData.name.trim() && formData.category && formData.quantity > 0 && formData.unit.trim() && selectedZoneId;
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -152,8 +157,13 @@ export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialog
           <DialogDescription>
             {selectedZone 
               ? `Adding item to ${selectedZone.name}`
-              : "Fill in the details below to add a new inventory item"}
+              : "Please select a zone first before adding items"}
           </DialogDescription>
+          {!selectedZone && (
+            <p className="text-sm text-destructive mt-2">
+              ⚠️ No zone selected. Please select a zone from the 3D view first.
+            </p>
+          )}
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -212,9 +222,14 @@ export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialog
                 id="quantity"
                 type="number"
                 min="1"
+                step="1"
                 placeholder="1"
                 value={formData.quantity}
-                onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 1 })}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const parsed = parseInt(value, 10);
+                  setFormData({ ...formData, quantity: !isNaN(parsed) && parsed > 0 ? parsed : 1 });
+                }}
                 className={errors.quantity ? "border-destructive" : ""}
               />
               {errors.quantity && (
@@ -300,12 +315,21 @@ export function AddItemDialog({ isOpen, onClose, selectedZoneId }: AddItemDialog
               id="threshold"
               type="number"
               min="0"
+              step="1"
               placeholder="e.g., 2"
               value={formData.low_stock_threshold || ""}
-              onChange={(e) => setFormData({ 
-                ...formData, 
-                low_stock_threshold: e.target.value ? parseInt(e.target.value) : undefined 
-              })}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === "") {
+                  setFormData({ ...formData, low_stock_threshold: undefined });
+                } else {
+                  const parsed = parseInt(value, 10);
+                  setFormData({ 
+                    ...formData, 
+                    low_stock_threshold: !isNaN(parsed) && parsed >= 0 ? parsed : undefined 
+                  });
+                }
+              }}
             />
           </div>
 
