@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode, useMemo } from "react";
+import React, { createContext, useContext, useState, useCallback, ReactNode, useMemo, useEffect } from "react";
 import { KitchenZone, InventoryItem, KitchenPresetKey, AISuggestion, ZoneCapacityInfo, DragItem } from "@/types/kitchen";
 import { kitchenPresets } from "@/data/kitchenPresets";
 import { sampleInventory } from "@/data/sampleInventory";
@@ -106,6 +106,9 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
     setCurrentPreset(preset);
     setSelectedZoneId(null);
     
+    // Save to localStorage
+    localStorage.setItem('kitchen-preset', preset);
+    
     // Auto-assign items to zones based on type
     const newItems = [...items];
     const refrigerator = presetZones.find((z) => z.zone_type === "refrigerator" || z.zone_type === "fridge_door" || z.zone_type === "fridge_drawer");
@@ -129,6 +132,14 @@ export function KitchenProvider({ children }: { children: ReactNode }) {
     
     setItems(newItems);
   }, [items]);
+
+  // Load saved preset on mount
+  useEffect(() => {
+    const savedPreset = localStorage.getItem('kitchen-preset');
+    if (savedPreset && savedPreset in kitchenPresets) {
+      loadPreset(savedPreset as KitchenPresetKey);
+    }
+  }, []);
 
   const addItem = useCallback((item: InventoryItem) => {
     setItems((prev) => [...prev, item]);
