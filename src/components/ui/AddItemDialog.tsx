@@ -26,6 +26,7 @@ const ITEM_CATEGORIES: ItemCategory[] = [
   "storage",
   "cleaning",
   "appliances",
+  "other",
 ];
 
 export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDialogProps) {
@@ -82,7 +83,7 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
 
     // Generate unique ID
     const newItem = {
-      id: Math.random().toString(36).substring(2, 11),
+      id: crypto.randomUUID(),
       name: name.trim(),
       category,
       quantity: parseFloat(quantity),
