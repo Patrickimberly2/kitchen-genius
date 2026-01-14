@@ -26,6 +26,7 @@ const ITEM_CATEGORIES: ItemCategory[] = [
   "storage",
   "cleaning",
   "appliances",
+  "other",
 ];
 
 const UNIT_SUGGESTIONS = [

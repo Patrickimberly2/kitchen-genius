@@ -139,7 +139,7 @@ export function InventoryPanel() {
           </div>
           
           {/* Add Item Dialog */}
-          {selectedZoneId && (
+          {selectedZone && selectedZoneId && (
             <AddItemDialog
               isOpen={showAddDialog}
               onClose={() => setShowAddDialog(false)}
