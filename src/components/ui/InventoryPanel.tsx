@@ -139,12 +139,14 @@ export function InventoryPanel() {
           </div>
           
           {/* Add Item Dialog */}
-          <AddItemDialog
-            isOpen={showAddDialog}
-            onClose={() => setShowAddDialog(false)}
-            zoneId={selectedZoneId}
-            zoneName={selectedZone.name}
-          />
+          {selectedZoneId && (
+            <AddItemDialog
+              isOpen={showAddDialog}
+              onClose={() => setShowAddDialog(false)}
+              zoneId={selectedZoneId}
+              zoneName={selectedZone.name}
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>

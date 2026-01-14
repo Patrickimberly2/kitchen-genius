@@ -59,7 +59,7 @@ export function AddItemDialog({ isOpen, onClose, zoneId, zoneName }: AddItemDial
 
     // Create new item
     const newItem = {
-      id: `inv-${Date.now()}`,
+      id: `inv-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
       name,
       zone_id: zoneId,
       category: category as ItemCategory,
