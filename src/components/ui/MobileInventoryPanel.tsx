@@ -68,7 +68,7 @@ export function MobileInventoryPanel() {
   const [showAddItem, setShowAddItem] = useState(false);
   const [selectedZoneForAdd, setSelectedZoneForAdd] = useState<{ id: string; name: string } | null>(null);
 
-  const categories: (ItemCategory | "all")[] = ["all", "food", "beverages", "spices", "cookware", "utensils", "dishes", "storage", "cleaning", "appliances"];
+  const categories: (ItemCategory | "all")[] = ["all", "food", "beverages", "spices", "cookware", "utensils", "dishes", "storage", "cleaning", "appliances", "other"];
   
   const filteredItems = items.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
